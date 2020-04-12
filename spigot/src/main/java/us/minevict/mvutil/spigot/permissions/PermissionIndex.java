@@ -4,12 +4,16 @@ import java.util.List;
 import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 class PermissionIndex {
   @NotNull
   private final Plugin plugin;
 
   @NotNull
+  private final Class<?> type;
+
+  @Nullable
   private final Object index;
 
   @NotNull
@@ -17,12 +21,22 @@ class PermissionIndex {
 
   public PermissionIndex(
       @NotNull Plugin plugin,
-      @NotNull Object index,
+      @NotNull Class<?> type,
+      @Nullable Object index,
       @NotNull List<Permission> ownedPermissions
   ) {
     this.plugin = plugin;
+    this.type = type;
     this.index = index;
     this.ownedPermissions = ownedPermissions;
+  }
+
+  public PermissionIndex(
+      @NotNull Plugin plugin,
+      @NotNull Object index,
+      @NotNull List<Permission> ownedPermissions
+  ) {
+    this(plugin, index.getClass(), index, ownedPermissions);
   }
 
   @NotNull
@@ -31,6 +45,11 @@ class PermissionIndex {
   }
 
   @NotNull
+  public Class<?> getType() {
+    return type;
+  }
+
+  @Nullable
   public Object getIndex() {
     return index;
   }
