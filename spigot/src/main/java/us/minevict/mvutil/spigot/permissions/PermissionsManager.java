@@ -51,7 +51,7 @@ public class PermissionsManager implements Listener {
             + index.getClass().getSimpleName()
             + ")."
     );
-    PermissionIndex permissionIndex = new PermissionIndex(
+    var permissionIndex = new PermissionIndex(
         owner,
         index,
         findPermissions(index.getClass(), index, field -> true)
@@ -75,7 +75,7 @@ public class PermissionsManager implements Listener {
             + index.getSimpleName()
             + ")."
     );
-    PermissionIndex permissionIndex = new PermissionIndex(
+    var permissionIndex = new PermissionIndex(
         owner,
         index,
         null,
@@ -94,13 +94,13 @@ public class PermissionsManager implements Listener {
       @Nullable Object index,
       @Nullable Function<Field, Boolean> fieldValid
   ) {
-    @Nullable Permissions annotationPermissions = type.getAnnotation(Permissions.class);
-    PermissionDefault indexDefault = annotationPermissions != null
+    @Nullable var annotationPermissions = type.getAnnotation(Permissions.class);
+    var indexDefault = annotationPermissions != null
         ? annotationPermissions.permissionDefault().value()
         : PermissionDefault.OP;
 
-    List<Permission> list = new ArrayList<>();
-    for (Field field : type.getFields()) {
+    var list = new ArrayList<Permission>();
+    for (var field : type.getFields()) {
       if (isFieldInvalid(field) || (fieldValid != null && !fieldValid.apply(field))) {
         continue;
       }
@@ -121,13 +121,13 @@ public class PermissionsManager implements Listener {
         continue;
       }
 
-      PermissionDefault permissionDefault = getFieldDefault(field, indexDefault);
-      String description = getFieldDescription(field);
-      Map<String, Boolean> children = getFieldChildren(field);
+      var permissionDefault = getFieldDefault(field, indexDefault);
+      var description = getFieldDescription(field);
+      var children = getFieldChildren(field);
 
-      String permissionName = (String) varHandle.get(Modifier.isStatic(field.getModifiers()) ? index : null);
+      var permissionName = (String) varHandle.get(Modifier.isStatic(field.getModifiers()) ? index : null);
 
-      Permission permission = new Permission(permissionName, permissionDefault);
+      var permission = new Permission(permissionName, permissionDefault);
       if (description != null) {
         permission.setDescription(description);
       }
@@ -149,7 +149,7 @@ public class PermissionsManager implements Listener {
 
   @NotNull
   private PermissionDefault getFieldDefault(@NotNull Field field, @NotNull PermissionDefault indexDefault) {
-    @Nullable Default annotationDefault = field.getAnnotation(Default.class);
+    var annotationDefault = field.getAnnotation(Default.class);
     return annotationDefault != null
         ? annotationDefault.value()
         : indexDefault;
@@ -157,7 +157,7 @@ public class PermissionsManager implements Listener {
 
   @Nullable
   private String getFieldDescription(@NotNull Field field) {
-    @Nullable Description annotationDescription = field.getAnnotation(Description.class);
+    var annotationDescription = field.getAnnotation(Description.class);
     return annotationDescription != null
         ? annotationDescription.value()
         : null;
@@ -165,7 +165,7 @@ public class PermissionsManager implements Listener {
 
   @Nullable
   private Map<String, Boolean> getFieldChildren(@NotNull Field field) {
-    @Nullable Child[] annotationChildren = field.getAnnotationsByType(Child.class);
+    var annotationChildren = field.getAnnotationsByType(Child.class);
     return annotationChildren != null
         ? Arrays.stream(annotationChildren).collect(Collectors.toMap(Child::name, Child::value))
         : null;
@@ -173,7 +173,7 @@ public class PermissionsManager implements Listener {
 
   @EventHandler
   public void onPluginDisable(PluginDisableEvent event) {
-    PermissionIndex index = permissionIndices.remove(event.getPlugin());
+    var index = permissionIndices.remove(event.getPlugin());
     if (index != null) {
       index.getOwnedPermissions()
           .parallelStream()
