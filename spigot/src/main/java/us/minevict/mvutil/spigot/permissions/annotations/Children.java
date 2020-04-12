@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * Sets children for a permission.
- *
+ * <p>
  * This is usually set through just using {@link Child @Child}.
  */
 @Retention(RetentionPolicy.RUNTIME)

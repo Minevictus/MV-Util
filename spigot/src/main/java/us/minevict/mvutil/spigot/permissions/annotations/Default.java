@@ -8,7 +8,7 @@ import org.bukkit.permissions.PermissionDefault;
 
 /**
  * Sets the default permission grant for a permission.
- *
+ * <p>
  * This is not mandatory. If not present, it inherits the type's default.
  */
 @Retention(RetentionPolicy.RUNTIME)

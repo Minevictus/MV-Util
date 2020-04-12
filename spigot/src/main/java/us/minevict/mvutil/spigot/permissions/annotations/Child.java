@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 
 /**
  * Sets a child for a permission.
- *
+ * <p>
  * This is mandatory for permissions which are supposed to have children.
  */
 @Repeatable(Children.class)
@@ -22,7 +22,7 @@ public @interface Child {
 
   /**
    * The value to use for this child.
-   *
+   * <p>
    * This is not mandatory and defaults to `true`.
    */
   boolean value() default true;

@@ -18,6 +18,14 @@ public class MinevictusUtilsBungee
     instance = this;
   }
 
+  /**
+   * Gets the current instance of this plugin.
+   */
+  @NotNull
+  public static MinevictusUtilsBungee getInstance() {
+    return instance;
+  }
+
   @Override
   public void onDisable() {
     getProxy().getPluginManager().unregisterListeners(this);
@@ -31,13 +39,5 @@ public class MinevictusUtilsBungee
   @NotNull
   public Logger getPlatformLogger() {
     return getLogger();
-  }
-
-  /**
-   * Gets the current instance of this plugin.
-   */
-  @NotNull
-  public static MinevictusUtilsBungee getInstance() {
-    return instance;
   }
 }

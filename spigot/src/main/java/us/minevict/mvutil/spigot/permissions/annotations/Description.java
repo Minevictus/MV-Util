@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * Sets the description for a permission.
- *
+ * <p>
  * This is not mandatory.
  */
 @Retention(RetentionPolicy.RUNTIME)
