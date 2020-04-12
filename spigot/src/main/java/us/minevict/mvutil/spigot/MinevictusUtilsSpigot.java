@@ -15,6 +15,12 @@ public class MinevictusUtilsSpigot
 
   public MinevictusUtilsSpigot() {
     super();
+    saveDefaultConfig();
+    getConfig().options().copyDefaults(true);
+
+    MegaChunk.MEGA_CHUNK_SIZE = getConfig().getInt("megachunk-size", 8);
+    MegaChunk.MEGA_CHUNK_OFFSET_X = getConfig().getInt("megachunk-offset-x", 0);
+    MegaChunk.MEGA_CHUNK_OFFSET_Z = getConfig().getInt("megachunk-offset-z", 0);
 
     this.permissionsManager = new PermissionsManager(this);
   }

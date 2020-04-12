@@ -1,0 +1,20 @@
+# This defines the size of a standard megachunk.
+# The unit is chunks; a megachunk will be this value*16 blocks wide and long.
+#
+# Default: 8
+# Definition range: [1, ->>
+megachunk-size: 8
+
+# This defines the offset of the X coordinate for megachunks.
+# The unit is chunks; a megachunk will be shifted this value chunks along the X axis.
+#
+# Default: 0
+# Definition range: Z
+megachunk-offset-x: 0
+
+# This defines the offset of the Z coordinate for megachunks.
+# The unit is chunks; a megachunk will be shifted this value chunks along the Z axis.
+#
+# Default: 0
+# Definition range: Z
+megachunk-offset-z: 0
