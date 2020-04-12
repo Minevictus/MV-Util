@@ -72,7 +72,7 @@ public class PermissionsManager implements Listener {
         "Registering permissions index for "
             + owner.getName()
             + " ("
-            + index.getClass().getSimpleName()
+            + index.getSimpleName()
             + ")."
     );
     PermissionIndex permissionIndex = new PermissionIndex(
