@@ -8,17 +8,13 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.ComponentBuilder.FormatRetention;
 import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.HoverEvent.Action;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
  * A wrapper for {@link ComponentBuilder} to have even easier building of text.
- * <p>
- * The most notable methods of this are the colour ones ({@link #yellow}, {@link #pink}, etc.), the no-parameter
- * versions {@link #bold()}, {@link #magic()}/{@link #obfuscated()}, {@link #underlined()}, {@link #strikethrough()},
- * and {@link #italic()}, and the event methods {@link #hover(HoverEvent.Action, BaseComponent[])}, {@link
- * #hover(HoverEvent.Action, String)}, and {@link #click(ClickEvent.Action, String)}.
  */
 @SuppressWarnings("unused")
 public class ComponentBuilderV2 {
@@ -748,6 +744,28 @@ public class ComponentBuilderV2 {
   @NotNull
   public ComponentBuilderV2 hover(@NotNull HoverEvent.Action action, @NotNull String value) {
     return event(new HoverEvent(action, new BaseComponent[]{new TextComponent(value)}));
+  }
+
+  /**
+   * Sets the {@link HoverEvent} for the current part.
+   *
+   * @param value  The value for this {@link HoverEvent}; this will just be a {@link TextComponent} of the value.
+   * @return This {@link ComponentBuilderV2} for chaining.
+   */
+  @NotNull
+  public ComponentBuilderV2 hoverText(@NotNull String value) {
+    return event(new HoverEvent(Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(value)}));
+  }
+
+  /**
+   * Sets the {@link HoverEvent} for the current part.
+   *
+   * @param value  The {@link BaseComponent BaseComponent[]} value for this {@link HoverEvent}.
+   * @return This {@link ComponentBuilderV2} for chaining.
+   */
+  @NotNull
+  public ComponentBuilderV2 hoverText(@NotNull BaseComponent[] value) {
+    return event(new HoverEvent(Action.SHOW_TEXT, value));
   }
 
   /**
