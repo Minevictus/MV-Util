@@ -26,7 +26,7 @@ public class GuiUtils {
    * @return The calculated rows.
    */
   public static String[] calculateRows(int items) {
-    return calculateRows(items, 6, true);
+    return calculateRows(items, 6, true, false);
   }
 
   /**
@@ -39,18 +39,19 @@ public class GuiUtils {
    * @return The calculated rows.
    */
   public static String[] calculateRows(int items, int inventoryRows) {
-    return calculateRows(items, inventoryRows, true);
+    return calculateRows(items, inventoryRows, true, false);
   }
 
   /**
    * Calculates how many rows a specific amount of items may need.
    *
-   * @param items         How many items are to be stored in this inventory.
-   * @param inventoryRows The max amount of rows allowed. This is capped to 6 at most and 1 at least.
-   * @param growing       Whether the rows should grow per the amount of items.
+   * @param items           How many items are to be stored in this inventory.
+   * @param inventoryRows   The max amount of rows allowed. This is capped to 6 at most and 1 at least.
+   * @param growing         Whether the rows should grow per the amount of items.
+   * @param emptyCharacters Skip the use of GUI_CHARACTERS and use a space instead.
    * @return The calculated rows.
    */
-  public static String[] calculateRows(int items, int inventoryRows, boolean growing) {
+  public static String[] calculateRows(int items, int inventoryRows, boolean growing, boolean emptyCharacters) {
     var maximumPageRows = Math.max(1, Math.min(inventoryRows, 6));
     int requiredRows;
     if (!growing) {
@@ -62,8 +63,10 @@ public class GuiUtils {
     }
 
     var rows = new String[requiredRows + (items > maximumPageRows * 9 ? 1 : 0)];
-    for (int i = 0; i < requiredRows; ++i) {
-      rows[i] = GUI_CHARACTERS.substring(i, i + 9);
+    var index = 0;
+    for (int i = 0; i < requiredRows; ++i) { // this was shifting the characters ABC BCD CDE
+      rows[i] = emptyCharacters ? " ".repeat(9) : GUI_CHARACTERS.substring(index, index + 9);
+      index += 9;
     }
 
     if (items < requiredRows * 9) {
@@ -134,18 +137,20 @@ public class GuiUtils {
    * @return The calculated rows.
    */
   public static String[] calculatePagingRows(int items, int pageRows, boolean growing, boolean attemptFit) {
-    return calculatePagingRows(items, pageRows, growing, attemptFit, "<   ~   >");
+    return calculatePagingRows(items, pageRows, growing, attemptFit, false, "<   ~   >");
   }
 
   /**
    * Calculates how many rows a specific amount of items may need with regard to a paging bar at the bottom.
    *
-   * @param items      How many items are to be stored in this inventory.
-   * @param pageRows   The max amount of rows allowed in a single page. This is capped to 5 at most and 1 at least.
-   * @param growing    Whether the rows should grow per the amount of items.
-   * @param attemptFit Whether we should attempt to fit any overflowing items in the 6th row instead of using a paging
-   *                   bar.
-   * @param pageBar    The format for the paging bar.
+   * @param items           How many items are to be stored in this inventory.
+   * @param pageRows        The max amount of rows allowed in a single page. This is capped to 5 at most and 1 at least.
+   * @param growing         Whether the rows should grow per the amount of items.
+   * @param attemptFit      Whether we should attempt to fit any overflowing items in the 6th row instead of using a
+   *                        pagingbar.
+   * @param emptyCharacters Skip the use of GUI_CHARACTERS and use a space instead.
+   * @param pageBar         The format for the paging bar.
+   *
    * @return The calculated rows.
    */
   public static String[] calculatePagingRows(
@@ -153,6 +158,7 @@ public class GuiUtils {
       int pageRows,
       boolean growing,
       boolean attemptFit,
+      boolean emptyCharacters,
       String pageBar
   ) {
     var requiredRows = Math.max(1, Math.min(pageRows, 5));
@@ -168,7 +174,7 @@ public class GuiUtils {
             ? requiredRows + 1
             : (int) Math.ceil((double) items / 9));
 
-    var rows = calculateRows(items, pagingBar ? requiredRows : calculatingRows, growing);
+    var rows = calculateRows(items, pagingBar ? requiredRows : calculatingRows, growing, emptyCharacters);
 
     if (pagingBar) {
       rows[rows.length - 1] = pageBar;
