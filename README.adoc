@@ -1,0 +1,120 @@
+= MV-Util
+
+A utility plugin for both Spigot and BungeeCord for Minevictus.
+
+== Build
+
+Requirements:
+
+. Java 8-14 JDK.
+
+Method:
+
+. Execute `./gradlew shadowJar`.
+. Find the jars in `build/libs`.
+
+== Usage
+
+Plop the respective jars into their respective `plugins` directories.
+
+The plugins are support being unloaded and loaded at will using Plugman or
+something alike on BungeeCord.
+
+== Depend
+
+Both versions require the following repository:
+
+[source,xml]
+----
+<repositories>
+  <repository>
+    <id>proxi-nexus</id>
+    <url>https://nexus.proximyst.com/repository/maven-public/</url>
+  </repository>
+</repositories>
+----
+
+[source,kotlin]
+----
+repositories {
+    maven {
+        name = "proxi-nexus"
+        // Groovy DSL does not require the `uri` call.
+        url = uri("https://nexus.proximyst.com/repository/maven-public/")
+    }
+}
+----
+
+== Spigot
+
+Current version: `0.1.0`.
+
+[source,xml]
+----
+<dependencies>
+  <dependency>
+    <groupId>us.minevict.mvutil</groupId>
+    <artifactId>spigot</artifactId>
+    <version>insert here</version>
+    <scope>provided</scope>
+  </dependency>
+</dependencies>
+----
+
+[source,kotlin]
+----
+dependencies {
+    compileOnly("us.minevict.mvutil:spigot:insert here")
+}
+----
+
+`plugin.yml`:
+[source,yaml]
+----
+depend: [MV-Util]
+----
+
+`minecrell/plugin-yml`:
+[source,kotlin]
+----
+bukkit {
+    depends = listOf("MV-Util")
+}
+----
+
+== BungeeCord
+
+Current version: `0.1.0`.
+
+[source,xml]
+----
+<dependencies>
+  <dependency>
+    <groupId>us.minevict.mvutil</groupId>
+    <artifactId>bungee</artifactId>
+    <version>insert here</version>
+    <scope>provided</scope>
+  </dependency>
+</dependencies>
+----
+
+[source,kotlin]
+----
+dependencies {
+    compileOnly("us.minevict.mvutil:bungee:insert here")
+}
+----
+
+`bungee.yml`:
+[source,yaml]
+----
+depends: [MV-Util]
+----
+
+`minecrell/plugin-yml`:
+[source,kotlin]
+----
+bungee {
+    depend = setOf("MV-Util")
+}
+----
