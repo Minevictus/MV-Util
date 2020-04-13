@@ -58,17 +58,17 @@ public class GuiUtils {
     } else {
       requiredRows = items > maximumPageRows * 9
           ? maximumPageRows
-          : items / (maximumPageRows * 9);
+          : (int) Math.ceil((double) items / 9);
     }
 
     var rows = new String[requiredRows + (items > maximumPageRows * 9 ? 1 : 0)];
     for (int i = 0; i < requiredRows; ++i) {
-      rows[i] = GUI_CHARACTERS.substring(i, i + 8);
+      rows[i] = GUI_CHARACTERS.substring(i, i + 9);
     }
 
     if (items < requiredRows * 9) {
-      var last = Math.abs(items - requiredRows * 9);
-      rows[rows.length - 1] = rows[rows.length - 1].substring(0, last - 1) + " ".repeat(last);
+      var last = Math.abs(items - (requiredRows * 9));
+      rows[rows.length - 1] = rows[rows.length - 1].substring(0, 9 - last) + " ".repeat(last);
     }
 
     return rows;
