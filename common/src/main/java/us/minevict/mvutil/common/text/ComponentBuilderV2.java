@@ -235,10 +235,9 @@ public class ComponentBuilderV2 {
 
   /**
    * Appends a {@link String#valueOf(Object)} of the object to the builder and makes it the current target for
-   * formatting. You can specify the amount of
-   * formatting retained from previous part.
+   * formatting. You can specify the amount of formatting retained from previous part.
    *
-   * @param object The object to append.
+   * @param object    The object to append.
    * @param retention The formatting to retain.
    * @return This {@link ComponentBuilderV2} for chaining.
    */
