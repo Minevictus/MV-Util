@@ -1,6 +1,7 @@
 package us.minevict.mvutil.spigot;
 
 import java.util.Objects;
+import java.util.Optional;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -83,6 +84,26 @@ public final class MegaChunk {
     );
   }
 
+  /**
+   * Constructs a new {@link MegaChunk} from coordinates within a potentially existing {@link World world}.
+   *
+   * @param world The {@link World} to get a {@link MegaChunk} within.
+   * @param x     The X coordinate in the world. This is an absolute coordinate.
+   * @param z     The Z coordinate in the world. This is an absolute coordinate.
+   * @return The {@link MegaChunk} which contains the given coordinates.
+   */
+  @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
+  @NotNull
+  public static MegaChunk fromCoordinates(@NotNull Optional<World> world, int x, int z) {
+    Objects.requireNonNull(world, "the world optional cannot be null!");
+
+    return new MegaChunk(
+        world.orElse(null),
+        x / 16 / MEGA_CHUNK_SIZE + MEGA_CHUNK_OFFSET_X,
+        z / 16 / MEGA_CHUNK_SIZE + MEGA_CHUNK_OFFSET_Z
+    );
+  }
+
   MegaChunk(@Nullable World world, int x, int z) {
     this.world = world;
     this.x = x;
@@ -104,11 +125,11 @@ public final class MegaChunk {
    * This is not necessarily available. If one is not available, all methods checking containment will ignore the {@link
    * World}.
    *
-   * @return A {@link World} for this {@link MegaChunk}, or null.
+   * @return An {@link Optional} wrapped {@link World} for this {@link MegaChunk}, or null.
    */
-  @Nullable
-  public World getWorld() {
-    return world;
+  @NotNull
+  public Optional<World> getWorld() {
+    return Optional.ofNullable(world);
   }
 
   /**
@@ -164,6 +185,8 @@ public final class MegaChunk {
    * @return Whether the given {@link Location} is within this {@link MegaChunk}.
    */
   public boolean isContained(@NotNull Location location) {
+    Objects.requireNonNull(location, "location cannot be null!");
+
     // Check that our worlds are the same.
     return location.getWorld() == world
 
