@@ -10,6 +10,7 @@ import java.util.Objects;
  *
  * @param <A> The first type to store.
  * @param <B> The second type to store.
+ * @since 0.1.0
  */
 public class Pair<A, B> {
   private final A a;

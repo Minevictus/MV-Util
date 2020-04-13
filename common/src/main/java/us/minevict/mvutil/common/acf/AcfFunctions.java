@@ -2,6 +2,9 @@ package us.minevict.mvutil.common.acf;
 
 import co.aikar.commands.CommandManager;
 
+/**
+ * @since 0.1.0
+ */
 public class AcfFunctions {
   private AcfFunctions() throws IllegalAccessException {
     throw new IllegalAccessException(getClass().getSimpleName() + " cannot be instantiated.");

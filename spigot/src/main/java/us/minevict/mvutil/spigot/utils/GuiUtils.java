@@ -2,6 +2,8 @@ package us.minevict.mvutil.spigot.utils;
 
 /**
  * Utilities regarding GUIs, mainly for use with InventoryGUI.
+ *
+ * @since 0.2.0
  */
 public class GuiUtils {
   private GuiUtils() throws IllegalAccessException {

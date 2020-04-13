@@ -29,6 +29,8 @@ import us.minevict.mvutil.spigot.permissions.annotations.Permissions;
 
 /**
  * A manager for handling other plugins' permissions needs.
+ *
+ * @since 0.1.0
  */
 public class PermissionsManager implements Listener {
   @NotNull private static final MethodHandles.Lookup PUBLIC_LOOKUP = MethodHandles.publicLookup();

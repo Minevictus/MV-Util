@@ -3,6 +3,9 @@ package us.minevict.mvutil.spigot.utils;
 import com.proximyst.mvnms.MvNms;
 import org.bukkit.Bukkit;
 
+/**
+ * @since 0.1.0
+ */
 public class PluginUtils {
   private PluginUtils() throws IllegalAccessException {
     throw new IllegalAccessException(getClass().getSimpleName() + " cannot be instantiated.");

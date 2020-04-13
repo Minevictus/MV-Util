@@ -16,17 +16,17 @@ public final class MegaChunk {
   /**
    * The size of a single {@link MegaChunk} in chunks.
    */
-  static int MEGA_CHUNK_SIZE;
+  static int MEGA_CHUNK_SIZE = 8;
 
   /**
    * The shift of a {@link MegaChunk} on the X axis.
    */
-  static int MEGA_CHUNK_OFFSET_X;
+  static int MEGA_CHUNK_OFFSET_X = 0;
 
   /**
    * The shift of a {@link MegaChunk} on the Z axis.
    */
-  static int MEGA_CHUNK_OFFSET_Z;
+  static int MEGA_CHUNK_OFFSET_Z = 0;
 
   @Nullable
   private final World world;

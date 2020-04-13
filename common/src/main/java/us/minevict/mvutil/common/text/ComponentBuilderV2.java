@@ -14,6 +14,8 @@ import java.util.Optional;
 
 /**
  * A wrapper for {@link ComponentBuilder} to have even easier building of text.
+ *
+ * @since 0.2.0
  */
 @SuppressWarnings("unused")
 public class ComponentBuilderV2 {

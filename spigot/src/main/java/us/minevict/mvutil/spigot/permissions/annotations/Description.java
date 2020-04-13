@@ -9,6 +9,8 @@ import java.lang.annotation.Target;
  * Sets the description for a permission.
  * <p>
  * This is not mandatory.
+ *
+ * @since 0.1.0
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)

@@ -6,6 +6,9 @@ import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * @since 0.1.0
+ */
 class PermissionIndex {
   @NotNull
   private final Plugin plugin;

@@ -10,6 +10,8 @@ import org.bukkit.permissions.PermissionDefault;
  * Used to give common data about the values within a type declaring permissions.
  * <p>
  * This is not mandatory, but is usually preferred.
+ *
+ * @since 0.1.0
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)

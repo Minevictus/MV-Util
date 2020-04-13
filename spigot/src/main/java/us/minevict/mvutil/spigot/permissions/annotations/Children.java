@@ -9,6 +9,8 @@ import java.lang.annotation.Target;
  * Sets children for a permission.
  * <p>
  * This is usually set through just using {@link Child @Child}.
+ *
+ * @since 0.1.0
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)

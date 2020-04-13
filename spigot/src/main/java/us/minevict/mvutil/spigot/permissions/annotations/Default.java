@@ -10,6 +10,8 @@ import org.bukkit.permissions.PermissionDefault;
  * Sets the default permission grant for a permission.
  * <p>
  * This is not mandatory. If not present, it inherits the type's default.
+ *
+ * @since 0.1.0
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)

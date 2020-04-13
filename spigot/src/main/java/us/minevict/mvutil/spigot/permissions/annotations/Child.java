@@ -10,6 +10,8 @@ import java.lang.annotation.Target;
  * Sets a child for a permission.
  * <p>
  * This is mandatory for permissions which are supposed to have children.
+ *
+ * @since 0.1.0
  */
 @Repeatable(Children.class)
 @Retention(RetentionPolicy.RUNTIME)
