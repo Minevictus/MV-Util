@@ -75,7 +75,7 @@ public class GuiUtils {
   /**
    * Calculates how many rows a specific amount of items may need with regard to a paging bar at the bottom.
    * <p>
-   * This uses the paging bar <pre>"<   ~   >"</pre> by default and always attempts to fit any overflowing items in the
+   * This uses the paging bar <pre>{@code "<   ~   >"}</pre> by default and always attempts to fit any overflowing items in the
    * 6th row if a paging bar may be omitted.
    * <p>
    * This also grows the amount of rows necessary per the amount of items stored. By default, it will attempt to cap at
@@ -91,7 +91,7 @@ public class GuiUtils {
   /**
    * Calculates how many rows a specific amount of items may need with regard to a paging bar at the bottom.
    * <p>
-   * This uses the paging bar <pre>"<   ~   >"</pre> by default and always attempts to fit any overflowing items in the
+   * This uses the paging bar <pre>{@code "<   ~   >"}</pre> by default and always attempts to fit any overflowing items in the
    * 6th row if a paging bar may be omitted.
    * <p>
    * This also grows the amount of rows necessary per the amount of items stored.
@@ -107,7 +107,7 @@ public class GuiUtils {
   /**
    * Calculates how many rows a specific amount of items may need with regard to a paging bar at the bottom.
    * <p>
-   * This uses the paging bar <pre>"<   ~   >"</pre> by default and always attempts to fit any overflowing items in the
+   * This uses the paging bar <pre>{@code "<   ~   >"}</pre> by default and always attempts to fit any overflowing items in the
    * 6th row if a paging bar may be omitted.
    *
    * @param items    How many items are to be stored in this inventory.
@@ -122,7 +122,7 @@ public class GuiUtils {
   /**
    * Calculates how many rows a specific amount of items may need with regard to a paging bar at the bottom.
    * <p>
-   * This uses the paging bar <pre>"<   ~   >"</pre> by default.
+   * This uses the paging bar <pre>{@code "<   ~   >"}</pre> by default.
    *
    * @param items      How many items are to be stored in this inventory.
    * @param pageRows   The max amount of rows allowed in a single page. This is capped to 5 at most and 1 at least.

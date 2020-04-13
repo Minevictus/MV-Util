@@ -1,12 +1,13 @@
 package us.minevict.mvutil.spigot;
 
-import java.util.Objects;
-import java.util.Optional;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * This defines a mega-chunk potentially within a world.
@@ -114,6 +115,8 @@ public final class MegaChunk {
    * Gets the current size of a single {@link MegaChunk}.
    * <p>
    * The size unit is Minecraft chunks, i.e. 16 x 16 block areas, in each direction from the origin.
+   *
+   * @return current size of a single {@link MegaChunk}
    */
   public static int getMegaChunkSize() {
     return MEGA_CHUNK_SIZE;
@@ -136,6 +139,8 @@ public final class MegaChunk {
    * Gets the {@link MegaChunk}'s X coordinate.
    * <p>
    * This is not a world coordinate.
+   *
+   * @return {@link MegaChunk}'s X coordinate.
    */
   public int getX() {
     return x;
@@ -145,6 +150,8 @@ public final class MegaChunk {
    * Gets the {@link MegaChunk}'s Z coordinate.
    * <p>
    * This is not a world coordinate.
+   *
+   * @return {@link MegaChunk}'s Z coordinate.
    */
   public int getZ() {
     return z;
@@ -152,6 +159,8 @@ public final class MegaChunk {
 
   /**
    * Gets the {@link MegaChunk}'s minimum X coordinate in the world.
+   *
+   * @return {@link MegaChunk}'s minimum X coordinate in the world.
    */
   public int getMinX() {
     return x * 16;
@@ -159,6 +168,8 @@ public final class MegaChunk {
 
   /**
    * Gets the {@link MegaChunk}'s minimum Z coordinate in the world.
+   *
+   * @return {@link MegaChunk}'s minimum Z coordinate in the world.
    */
   public int getMinZ() {
     return z * 16;
@@ -166,6 +177,8 @@ public final class MegaChunk {
 
   /**
    * Gets the {@link MegaChunk}'s maximum X coordinate in the world.
+   *
+   * @return {@link MegaChunk}'s maximum X coordinate in the world.
    */
   public int getMaxX() {
     return (x + 1) * 16 - 1;
@@ -173,6 +186,8 @@ public final class MegaChunk {
 
   /**
    * Gets the {@link MegaChunk}'s maximum Z coordinate in the world.
+   *
+   * @return {@link MegaChunk}'s maximum Z coordinate in the world.
    */
   public int getMaxZ() {
     return (z + 1) * 16 - 1;

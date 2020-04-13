@@ -1,11 +1,12 @@
 package us.minevict.mvutil.spigot;
 
-import java.util.logging.Logger;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import us.minevict.mvutil.common.MinevictusUtilsPlatform;
 import us.minevict.mvutil.spigot.permissions.PermissionsManager;
+
+import java.util.logging.Logger;
 
 public class MinevictusUtilsSpigot
     extends JavaPlugin
@@ -43,6 +44,8 @@ public class MinevictusUtilsSpigot
 
   /**
    * Gets the current instance of this plugin.
+   *
+   * @return current instance of this plugin.
    */
   @NotNull
   public static MinevictusUtilsSpigot getInstance() {
@@ -51,6 +54,8 @@ public class MinevictusUtilsSpigot
 
   /**
    * Gets the permissions manager for managing a dependent's permissions.
+   *
+   * @return {@link PermissionsManager} for this instance.
    */
   @NotNull
   public PermissionsManager getPermissionsManager() {
