@@ -4,6 +4,8 @@ plugins {
     id("net.minecrell.plugin-yml.bungee") version "0.3.0"
 }
 
+version = "0.1.0"
+
 dependencies {
     compileOnly("io.github.waterfallmc:waterfall-api:1.15-SNAPSHOT")
     api(project(":common"))

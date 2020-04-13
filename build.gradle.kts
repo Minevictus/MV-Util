@@ -90,6 +90,15 @@ subprojects {
         }
 
         maven {
+            name = "minebench"
+            url = uri("https://repo.minebench.de/")
+
+            content {
+                includeGroup("de.themoep")
+            }
+        }
+
+        maven {
             name = "proxi-nexus"
             url = uri("https://nexus.proximyst.com/repository/maven-public/")
         }

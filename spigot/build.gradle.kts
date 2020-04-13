@@ -5,6 +5,8 @@ plugins {
     id("net.minecrell.plugin-yml.bukkit") version "0.3.0"
 }
 
+version = "0.2.0"
+
 dependencies {
     compileOnly("com.destroystokyo.paper:paper-api:1.15-R0.1-SNAPSHOT")
     compileOnly("com.proximyst:mv-nms:0.+")
@@ -12,6 +14,9 @@ dependencies {
 
     api("co.aikar:taskchain-bukkit:3.7.2")
     api("co.aikar:acf-paper:${rootProject.ext["acfVer"]}")
+    api("de.themoep:inventorygui:1.4.1-SNAPSHOT") {
+        exclude("org.bukkit")
+    }
 }
 
 tasks.withType<ShadowJar> {
@@ -32,7 +37,8 @@ tasks.withType<ShadowJar> {
         "io.netty",
         "io.lettuce",
         "org.slf4j",
-        "com.zaxxer"
+        "com.zaxxer",
+        "de.themoep.inventorygui"
     )
     mergeServiceFiles()
 }
