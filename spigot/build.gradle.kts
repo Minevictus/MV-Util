@@ -5,7 +5,7 @@ plugins {
     id("net.minecrell.plugin-yml.bukkit") version "0.3.0"
 }
 
-version = "0.2.1"
+version = "0.2.2"
 
 dependencies {
     compileOnly("com.destroystokyo.paper:paper-api:1.15-R0.1-SNAPSHOT")
