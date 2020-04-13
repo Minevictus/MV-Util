@@ -183,8 +183,23 @@ public class ComponentBuilderV2 {
    * @return This {@link ComponentBuilderV2} for chaining.
    */
   @NotNull
-  public ComponentBuilderV2 append(String text) {
+  public ComponentBuilderV2 append(@NotNull String text) {
+    Objects.requireNonNull(text, "the provided text cannot be null!");
+
     builder.append(text);
+    return this;
+  }
+
+  /**
+   * Appends a {@link String#valueOf(Object)} of the object to the builder and makes it the current target for
+   * formatting. The text will have all the formatting from previous part.
+   *
+   * @param object The object to append.
+   * @return This {@link ComponentBuilderV2} for chaining.
+   */
+  @NotNull
+  public ComponentBuilderV2 append(@Nullable Object object) {
+    builder.append(String.valueOf(object));
     return this;
   }
 
@@ -210,8 +225,28 @@ public class ComponentBuilderV2 {
    * @return This {@link ComponentBuilderV2} for chaining.
    */
   @NotNull
-  public ComponentBuilderV2 append(String text, FormatRetention retention) {
+  public ComponentBuilderV2 append(@NotNull String text, @NotNull FormatRetention retention) {
+    Objects.requireNonNull(text, "the provided text cannot be null!");
+    Objects.requireNonNull(retention, "the provided retention cannot be null!");
+
     builder.append(text, retention);
+    return this;
+  }
+
+  /**
+   * Appends a {@link String#valueOf(Object)} of the object to the builder and makes it the current target for
+   * formatting. You can specify the amount of
+   * formatting retained from previous part.
+   *
+   * @param object The object to append.
+   * @param retention The formatting to retain.
+   * @return This {@link ComponentBuilderV2} for chaining.
+   */
+  @NotNull
+  public ComponentBuilderV2 append(@Nullable Object object, @NotNull FormatRetention retention) {
+    Objects.requireNonNull(retention, "the provided retention cannot be null!");
+
+    builder.append(String.valueOf(object));
     return this;
   }
 
@@ -325,6 +360,17 @@ public class ComponentBuilderV2 {
   }
 
   /**
+   * Sets the colour of the object provided to be black.
+   *
+   * @param object Object to add to the builder before setting the colour.
+   * @return This {@link ComponentBuilderV2} for chaining.
+   */
+  @NotNull
+  public ComponentBuilderV2 black(@Nullable Object object) {
+    return append(object).black();
+  }
+
+  /**
    * Sets the colour of the current part to be dark blue.
    *
    * @return This {@link ComponentBuilderV2} for chaining.
@@ -332,6 +378,17 @@ public class ComponentBuilderV2 {
   @NotNull
   public ComponentBuilderV2 darkBlue() {
     return colour(ChatColor.DARK_BLUE);
+  }
+
+  /**
+   * Sets the colour of the object provided to be dark blue.
+   *
+   * @param object Object to add to the builder before setting the colour.
+   * @return This {@link ComponentBuilderV2} for chaining.
+   */
+  @NotNull
+  public ComponentBuilderV2 darkBlue(@Nullable Object object) {
+    return append(object).darkBlue();
   }
 
   /**
@@ -345,6 +402,17 @@ public class ComponentBuilderV2 {
   }
 
   /**
+   * Sets the colour of the object provided to be dark green.
+   *
+   * @param object Object to add to the builder before setting the colour.
+   * @return This {@link ComponentBuilderV2} for chaining.
+   */
+  @NotNull
+  public ComponentBuilderV2 darkGreen(@Nullable Object object) {
+    return append(object).darkGreen();
+  }
+
+  /**
    * Sets the colour of the current part to be dark aqua.
    *
    * @return This {@link ComponentBuilderV2} for chaining.
@@ -352,6 +420,17 @@ public class ComponentBuilderV2 {
   @NotNull
   public ComponentBuilderV2 darkAqua() {
     return colour(ChatColor.DARK_AQUA);
+  }
+
+  /**
+   * Sets the colour of the object provided to be dark aqua.
+   *
+   * @param object Object to add to the builder before setting the colour.
+   * @return This {@link ComponentBuilderV2} for chaining.
+   */
+  @NotNull
+  public ComponentBuilderV2 darkAqua(@Nullable Object object) {
+    return append(object).darkAqua();
   }
 
   /**
@@ -365,6 +444,17 @@ public class ComponentBuilderV2 {
   }
 
   /**
+   * Sets the colour of the object provided to be dark red.
+   *
+   * @param object Object to add to the builder before setting the colour.
+   * @return This {@link ComponentBuilderV2} for chaining.
+   */
+  @NotNull
+  public ComponentBuilderV2 darkRed(@Nullable Object object) {
+    return append(object).darkRed();
+  }
+
+  /**
    * Sets the colour of the current part to be purple.
    *
    * @return This {@link ComponentBuilderV2} for chaining.
@@ -372,6 +462,17 @@ public class ComponentBuilderV2 {
   @NotNull
   public ComponentBuilderV2 purple() {
     return colour(ChatColor.DARK_PURPLE);
+  }
+
+  /**
+   * Sets the colour of the object provided to be purple.
+   *
+   * @param object Object to add to the builder before setting the colour.
+   * @return This {@link ComponentBuilderV2} for chaining.
+   */
+  @NotNull
+  public ComponentBuilderV2 purple(@Nullable Object object) {
+    return append(object).purple();
   }
 
   /**
@@ -387,6 +488,19 @@ public class ComponentBuilderV2 {
   }
 
   /**
+   * Sets the colour of the object provided to be purple.
+   *
+   * @param object Object to add to the builder before setting the colour.
+   * @return This {@link ComponentBuilderV2} for chaining.
+   * @deprecated Use {@link #purple(Object)} instead.
+   */
+  @NotNull
+  @Deprecated
+  public ComponentBuilderV2 darkPurple(@Nullable Object object) {
+    return append(object).purple();
+  }
+
+  /**
    * Sets the colour of the current part to be gold.
    *
    * @return This {@link ComponentBuilderV2} for chaining.
@@ -394,6 +508,17 @@ public class ComponentBuilderV2 {
   @NotNull
   public ComponentBuilderV2 gold() {
     return colour(ChatColor.GOLD);
+  }
+
+  /**
+   * Sets the colour of the object provided to be gold.
+   *
+   * @param object Object to add to the builder before setting the colour.
+   * @return This {@link ComponentBuilderV2} for chaining.
+   */
+  @NotNull
+  public ComponentBuilderV2 gold(@Nullable Object object) {
+    return append(object).gold();
   }
 
   /**
@@ -407,6 +532,17 @@ public class ComponentBuilderV2 {
   }
 
   /**
+   * Sets the colour of the object provided to be grey.
+   *
+   * @param object Object to add to the builder before setting the colour.
+   * @return This {@link ComponentBuilderV2} for chaining.
+   */
+  @NotNull
+  public ComponentBuilderV2 grey(@Nullable Object object) {
+    return append(object).grey();
+  }
+
+  /**
    * Sets the colour of the current part to be grey.
    *
    * @return This {@link ComponentBuilderV2} for chaining.
@@ -414,6 +550,17 @@ public class ComponentBuilderV2 {
   @NotNull
   public ComponentBuilderV2 gray() {
     return colour(ChatColor.GRAY);
+  }
+
+  /**
+   * Sets the colour of the object provided to be gray.
+   *
+   * @param object Object to add to the builder before setting the colour.
+   * @return This {@link ComponentBuilderV2} for chaining.
+   */
+  @NotNull
+  public ComponentBuilderV2 gray(@Nullable Object object) {
+    return append(object).gray();
   }
 
   /**
@@ -427,6 +574,17 @@ public class ComponentBuilderV2 {
   }
 
   /**
+   * Sets the colour of the object provided to be dark grey.
+   *
+   * @param object Object to add to the builder before setting the colour.
+   * @return This {@link ComponentBuilderV2} for chaining.
+   */
+  @NotNull
+  public ComponentBuilderV2 darkGrey(@Nullable Object object) {
+    return append(object).darkGrey();
+  }
+
+  /**
    * Sets the colour of the current part to be dark grey.
    *
    * @return This {@link ComponentBuilderV2} for chaining.
@@ -434,6 +592,17 @@ public class ComponentBuilderV2 {
   @NotNull
   public ComponentBuilderV2 darkGray() {
     return colour(ChatColor.DARK_GRAY);
+  }
+
+  /**
+   * Sets the colour of the object provided to be dark gray.
+   *
+   * @param object Object to add to the builder before setting the colour.
+   * @return This {@link ComponentBuilderV2} for chaining.
+   */
+  @NotNull
+  public ComponentBuilderV2 darkGray(@Nullable Object object) {
+    return append(object).darkGray();
   }
 
   /**
@@ -447,6 +616,17 @@ public class ComponentBuilderV2 {
   }
 
   /**
+   * Sets the colour of the object provided to be blue.
+   *
+   * @param object Object to add to the builder before setting the colour.
+   * @return This {@link ComponentBuilderV2} for chaining.
+   */
+  @NotNull
+  public ComponentBuilderV2 blue(@Nullable Object object) {
+    return append(object).blue();
+  }
+
+  /**
    * Sets the colour of the current part to be green.
    *
    * @return This {@link ComponentBuilderV2} for chaining.
@@ -454,6 +634,17 @@ public class ComponentBuilderV2 {
   @NotNull
   public ComponentBuilderV2 green() {
     return colour(ChatColor.GREEN);
+  }
+
+  /**
+   * Sets the colour of the object provided to be green.
+   *
+   * @param object Object to add to the builder before setting the colour.
+   * @return This {@link ComponentBuilderV2} for chaining.
+   */
+  @NotNull
+  public ComponentBuilderV2 green(@Nullable Object object) {
+    return append(object).green();
   }
 
   /**
@@ -467,6 +658,17 @@ public class ComponentBuilderV2 {
   }
 
   /**
+   * Sets the colour of the object provided to be aqua.
+   *
+   * @param object Object to add to the builder before setting the colour.
+   * @return This {@link ComponentBuilderV2} for chaining.
+   */
+  @NotNull
+  public ComponentBuilderV2 aqua(@Nullable Object object) {
+    return append(object).aqua();
+  }
+
+  /**
    * Sets the colour of the current part to be red.
    *
    * @return This {@link ComponentBuilderV2} for chaining.
@@ -477,6 +679,17 @@ public class ComponentBuilderV2 {
   }
 
   /**
+   * Sets the colour of the object provided to be red.
+   *
+   * @param object Object to add to the builder before setting the colour.
+   * @return This {@link ComponentBuilderV2} for chaining.
+   */
+  @NotNull
+  public ComponentBuilderV2 red(@Nullable Object object) {
+    return append(object).red();
+  }
+
+  /**
    * Sets the colour of the current part to be pink.
    *
    * @return This {@link ComponentBuilderV2} for chaining.
@@ -484,6 +697,17 @@ public class ComponentBuilderV2 {
   @NotNull
   public ComponentBuilderV2 pink() {
     return colour(ChatColor.LIGHT_PURPLE);
+  }
+
+  /**
+   * Sets the colour of the object provided to be pink.
+   *
+   * @param object Object to add to the builder before setting the colour.
+   * @return This {@link ComponentBuilderV2} for chaining.
+   */
+  @NotNull
+  public ComponentBuilderV2 pink(@Nullable Object object) {
+    return append(object).pink();
   }
 
   /**
@@ -499,6 +723,19 @@ public class ComponentBuilderV2 {
   }
 
   /**
+   * Sets the colour of the object provided to be pink.
+   *
+   * @param object Object to add to the builder before setting the colour.
+   * @return This {@link ComponentBuilderV2} for chaining.
+   * @deprecated Use {@link #pink(Object)} instead.
+   */
+  @NotNull
+  @Deprecated
+  public ComponentBuilderV2 lightPurple(@Nullable Object object) {
+    return append(object).pink();
+  }
+
+  /**
    * Sets the colour of the current part to be yellow.
    *
    * @return This {@link ComponentBuilderV2} for chaining.
@@ -509,6 +746,17 @@ public class ComponentBuilderV2 {
   }
 
   /**
+   * Sets the colour of the object provided to be yellow.
+   *
+   * @param object Object to add to the builder before setting the colour.
+   * @return This {@link ComponentBuilderV2} for chaining.
+   */
+  @NotNull
+  public ComponentBuilderV2 yellow(@Nullable Object object) {
+    return append(object).yellow();
+  }
+
+  /**
    * Sets the colour of the current part to be white.
    *
    * @return This {@link ComponentBuilderV2} for chaining.
@@ -516,6 +764,17 @@ public class ComponentBuilderV2 {
   @NotNull
   public ComponentBuilderV2 white() {
     return colour(ChatColor.WHITE);
+  }
+
+  /**
+   * Sets the colour of the object provided to be white.
+   *
+   * @param object Object to add to the builder before setting the colour.
+   * @return This {@link ComponentBuilderV2} for chaining.
+   */
+  @NotNull
+  public ComponentBuilderV2 white(@Nullable Object object) {
+    return append(object).white();
   }
 
   /**
@@ -749,7 +1008,7 @@ public class ComponentBuilderV2 {
   /**
    * Sets the {@link HoverEvent} for the current part.
    *
-   * @param value  The value for this {@link HoverEvent}; this will just be a {@link TextComponent} of the value.
+   * @param value The value for this {@link HoverEvent}; this will just be a {@link TextComponent} of the value.
    * @return This {@link ComponentBuilderV2} for chaining.
    */
   @NotNull
@@ -760,7 +1019,7 @@ public class ComponentBuilderV2 {
   /**
    * Sets the {@link HoverEvent} for the current part.
    *
-   * @param value  The {@link BaseComponent BaseComponent[]} value for this {@link HoverEvent}.
+   * @param value The {@link BaseComponent BaseComponent[]} value for this {@link HoverEvent}.
    * @return This {@link ComponentBuilderV2} for chaining.
    */
   @NotNull
