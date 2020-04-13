@@ -1,7 +1,8 @@
 package us.minevict.mvutil.common;
 
-import java.util.Objects;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 /**
  * A version for MV-Util.
@@ -21,10 +22,8 @@ public final class MvUtilVersion implements Comparable<MvUtilVersion> {
    * @param version The version to set it to.
    * @throws IllegalAccessException If the version has already been set.
    * @hidden Internal API
-   * @hide Internal API
    * @deprecated Internal API
    */
-  @SuppressWarnings("JavaDoc") // @hidden vs. @hide; some support one, some support the other, let's make both happy.
   @Deprecated
   public static void setVersion(@NotNull final MvUtilVersion version) throws IllegalAccessException {
     if (currentVersion != null) {
