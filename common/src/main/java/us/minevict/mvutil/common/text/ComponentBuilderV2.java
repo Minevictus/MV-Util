@@ -1,19 +1,16 @@
 package us.minevict.mvutil.common.text;
 
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.*;
+import net.md_5.bungee.api.chat.ComponentBuilder.FormatRetention;
+import net.md_5.bungee.api.chat.HoverEvent.Action;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Objects;
 import java.util.Optional;
-import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.ComponentBuilder;
-import net.md_5.bungee.api.chat.ComponentBuilder.FormatRetention;
-import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.HoverEvent.Action;
-import net.md_5.bungee.api.chat.TextComponent;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * A wrapper for {@link ComponentBuilder} to have even easier building of text.
@@ -1054,7 +1051,7 @@ public class ComponentBuilderV2 {
   /**
    * Appends a floating point number with the specified amount of decimals.
    * <p>
-   * This rounds up at any equidistant numbers, i.e. 5.55 => 5.6, 5.54 => 5.5.
+   * This rounds up at any equidistant numbers, i.e. {@code 5.55 => 5.6}, {@code 5.54 => 5.5.}
    *
    * @param number   The number to round.
    * @param decimals The amount of decimals to include.
@@ -1068,7 +1065,7 @@ public class ComponentBuilderV2 {
   /**
    * Appends a floating point number with the specified amount of decimals.
    * <p>
-   * This rounds up at any equidistant numbers, i.e. 5.55 => 5.6, 5.54 => 5.5.
+   * This rounds up at any equidistant numbers, i.e. {@code 5.55 => 5.6}, {@code 5.54 => 5.5.}
    *
    * @param number   The number to round.
    * @param decimals The amount of decimals to include.
