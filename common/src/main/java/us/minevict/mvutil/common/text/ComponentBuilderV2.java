@@ -1,5 +1,7 @@
 package us.minevict.mvutil.common.text;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Objects;
 import java.util.Optional;
 import net.md_5.bungee.api.ChatColor;
@@ -1046,6 +1048,66 @@ public class ComponentBuilderV2 {
   @NotNull
   public ComponentBuilderV2 retain(FormatRetention retention) {
     builder.retain(retention);
+    return this;
+  }
+
+  /**
+   * Appends a floating point number with the specified amount of decimals.
+   * <p>
+   * This rounds up at any equidistant numbers, i.e. 5.55 => 5.6, 5.54 => 5.5.
+   *
+   * @param number   The number to round.
+   * @param decimals The amount of decimals to include.
+   * @return This {@link ComponentBuilderV2} for chaining.
+   */
+  @NotNull
+  public ComponentBuilderV2 decimal(double number, int decimals) {
+    return decimal(number, decimals, RoundingMode.HALF_UP);
+  }
+
+  /**
+   * Appends a floating point number with the specified amount of decimals.
+   * <p>
+   * This rounds up at any equidistant numbers, i.e. 5.55 => 5.6, 5.54 => 5.5.
+   *
+   * @param number   The number to round.
+   * @param decimals The amount of decimals to include.
+   * @return This {@link ComponentBuilderV2} for chaining.
+   */
+  @NotNull
+  public ComponentBuilderV2 decimal(float number, int decimals) {
+    return decimal(number, decimals, RoundingMode.HALF_UP);
+  }
+
+  /**
+   * Appends a floating point number with the specified amount of decimals.
+   *
+   * @param number       The number to round.
+   * @param decimals     The amount of decimals to include.
+   * @param roundingMode How the decimal should be rounded.
+   * @return This {@link ComponentBuilderV2} for chaining.
+   */
+  @NotNull
+  public ComponentBuilderV2 decimal(double number, int decimals, @NotNull RoundingMode roundingMode) {
+    Objects.requireNonNull(roundingMode, "the rounding mode cannot be null");
+
+    builder.append(BigDecimal.valueOf(number).setScale(decimals, roundingMode).toString());
+    return this;
+  }
+
+  /**
+   * Appends a floating point number with the specified amount of decimals.
+   *
+   * @param number       The number to round.
+   * @param decimals     The amount of decimals to include.
+   * @param roundingMode How the decimal should be rounded.
+   * @return This {@link ComponentBuilderV2} for chaining.
+   */
+  @NotNull
+  public ComponentBuilderV2 decimal(float number, int decimals, @NotNull RoundingMode roundingMode) {
+    Objects.requireNonNull(roundingMode, "the rounding mode cannot be null");
+
+    builder.append(BigDecimal.valueOf(number).setScale(decimals, roundingMode).toString());
     return this;
   }
 
