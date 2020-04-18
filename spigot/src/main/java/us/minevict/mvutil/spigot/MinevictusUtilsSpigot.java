@@ -1,13 +1,13 @@
 package us.minevict.mvutil.spigot;
 
+import java.util.logging.Logger;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import us.minevict.mvutil.common.MinevictusUtilsPlatform;
 import us.minevict.mvutil.common.MvUtilVersion;
+import us.minevict.mvutil.spigot.hidden.MegaChunkSizes;
 import us.minevict.mvutil.spigot.permissions.PermissionsManager;
-
-import java.util.logging.Logger;
 
 public class MinevictusUtilsSpigot
     extends JavaPlugin
@@ -30,7 +30,6 @@ public class MinevictusUtilsSpigot
       getLogger().severe("Cannot set the MV-Util version?");
       ex.printStackTrace();
       setEnabled(false);
-      return;
     }
   }
 
@@ -41,9 +40,9 @@ public class MinevictusUtilsSpigot
 
     getServer().getPluginManager().registerEvents(permissionsManager, this);
 
-    MegaChunk.MEGA_CHUNK_SIZE = getConfig().getInt("megachunk-size", MegaChunk.MEGA_CHUNK_SIZE);
-    MegaChunk.MEGA_CHUNK_OFFSET_X = getConfig().getInt("megachunk-offset-x", MegaChunk.MEGA_CHUNK_OFFSET_X);
-    MegaChunk.MEGA_CHUNK_OFFSET_Z = getConfig().getInt("megachunk-offset-z", MegaChunk.MEGA_CHUNK_OFFSET_Z);
+    MegaChunkSizes.MEGA_CHUNK_SIZE = getConfig().getInt("megachunk-size", MegaChunkSizes.MEGA_CHUNK_SIZE);
+    MegaChunkSizes.MEGA_CHUNK_OFFSET_X = getConfig().getInt("megachunk-offset-x", MegaChunkSizes.MEGA_CHUNK_OFFSET_X);
+    MegaChunkSizes.MEGA_CHUNK_OFFSET_Z = getConfig().getInt("megachunk-offset-z", MegaChunkSizes.MEGA_CHUNK_OFFSET_Z);
   }
 
   @Override

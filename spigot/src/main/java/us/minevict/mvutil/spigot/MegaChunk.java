@@ -1,5 +1,9 @@
 package us.minevict.mvutil.spigot;
 
+import static us.minevict.mvutil.spigot.hidden.MegaChunkSizes.MEGA_CHUNK_OFFSET_X;
+import static us.minevict.mvutil.spigot.hidden.MegaChunkSizes.MEGA_CHUNK_OFFSET_Z;
+import static us.minevict.mvutil.spigot.hidden.MegaChunkSizes.MEGA_CHUNK_SIZE;
+
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -13,21 +17,6 @@ import java.util.Optional;
  * This defines a mega-chunk potentially within a world.
  */
 public final class MegaChunk {
-  /**
-   * The size of a single {@link MegaChunk} in chunks.
-   */
-  static int MEGA_CHUNK_SIZE = 8;
-
-  /**
-   * The shift of a {@link MegaChunk} on the X axis.
-   */
-  static int MEGA_CHUNK_OFFSET_X = 0;
-
-  /**
-   * The shift of a {@link MegaChunk} on the Z axis.
-   */
-  static int MEGA_CHUNK_OFFSET_Z = 0;
-
   @Nullable
   private final World world;
 

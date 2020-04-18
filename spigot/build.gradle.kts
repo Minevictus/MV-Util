@@ -11,6 +11,7 @@ dependencies {
     compileOnly("com.destroystokyo.paper:paper-api:1.15-R0.1-SNAPSHOT")
     compileOnly("com.proximyst:mv-nms:0.+")
     api(project(":common"))
+    implementation(project(":spigot-impl-hidden-details"))
 
     api("co.aikar:taskchain-bukkit:3.7.2")
     api("co.aikar:acf-paper:${rootProject.ext["acfVer"]}")
