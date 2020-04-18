@@ -11,7 +11,10 @@ import java.lang.annotation.Target;
  * This is usually set through just using {@link Child @Child}.
  *
  * @since 0.1.0
+ * @deprecated This is not used during parsing and will be removed at a further date.
  */
+// Version 0.3.0: Remove this.
+@Deprecated
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface Children {

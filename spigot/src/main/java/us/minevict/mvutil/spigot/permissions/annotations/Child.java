@@ -13,6 +13,7 @@ import java.lang.annotation.Target;
  *
  * @since 0.1.0
  */
+@SuppressWarnings("deprecation") // @Children is deprecated.
 @Repeatable(Children.class)
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
