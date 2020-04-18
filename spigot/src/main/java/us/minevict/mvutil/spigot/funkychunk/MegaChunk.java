@@ -180,14 +180,7 @@ public class MegaChunk implements FunkyChunk {
 
     // Check that our worlds are the same.
     return location.getWorld() == world
-
-        // X chunk coordinate check is in [x, x + getMegaChunkSize()]
-        && location.getChunk().getX() >= getX()
-        && location.getChunk().getX() <= (getX() + getMegaChunkSize())
-
-        // Z chunk coordinate check is in [z, z + getMegaChunkSize()]
-        && location.getChunk().getZ() >= getZ()
-        && location.getChunk().getZ() <= (getZ() + getMegaChunkSize());
+        && areCoordinatesContained(location.getBlockX(), location.getBlockZ());
   }
 
   @Override
