@@ -17,6 +17,8 @@ import java.lang.annotation.Target;
 public @interface Children {
   /**
    * The children for this permission node.
+   *
+   * @return All children represented by this annotation.
    */
   Child[] value() default {};
 }

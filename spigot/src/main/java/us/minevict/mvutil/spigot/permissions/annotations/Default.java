@@ -18,6 +18,8 @@ import org.bukkit.permissions.PermissionDefault;
 public @interface Default {
   /**
    * The default permission grant for this permission.
+   *
+   * @return The default permission grant for this specific node.
    */
   PermissionDefault value() default PermissionDefault.OP;
 }

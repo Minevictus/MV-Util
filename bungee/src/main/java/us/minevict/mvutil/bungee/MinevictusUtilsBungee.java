@@ -21,21 +21,22 @@ public class MinevictusUtilsBungee
 
   /**
    * Gets the current instance of this plugin.
+   *
+   * @return The current instance of this plugin.
    */
   @NotNull
   public static MinevictusUtilsBungee getInstance() {
     return instance;
   }
 
+  @SuppressWarnings("deprecation") // Internal API warning.
   @Override
   public void onLoad() {
     try {
-      //noinspection deprecation - Internal API warning.
       MvUtilVersion.setVersion(new MvUtilVersion(0, 1, 1));
     } catch (IllegalAccessException ex) {
       getLogger().severe("Cannot set the MV-Util version?");
       ex.printStackTrace();
-      return;
     }
   }
 

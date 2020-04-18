@@ -4,6 +4,7 @@ plugins {
     id("net.minecrell.plugin-yml.bungee") version "0.3.0"
 }
 
+// Please remember to edit this in MinevictusUtilsBungee#onLoad too.
 version = "0.1.1"
 
 dependencies {

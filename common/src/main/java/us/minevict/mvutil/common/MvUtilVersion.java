@@ -137,6 +137,8 @@ public final class MvUtilVersion implements Comparable<MvUtilVersion> {
 
   /**
    * Gets the major version number of this version.
+   *
+   * @return The current major version number.
    */
   public int getMajor() {
     return major;
@@ -144,6 +146,8 @@ public final class MvUtilVersion implements Comparable<MvUtilVersion> {
 
   /**
    * Gets the minor version number of this version.
+   *
+   * @return The current minor version number.
    */
   public int getMinor() {
     return minor;
@@ -151,6 +155,8 @@ public final class MvUtilVersion implements Comparable<MvUtilVersion> {
 
   /**
    * Gets the patch version number of this version.
+   *
+   * @return The current patch version number.
    */
   public int getPatch() {
     return patch;

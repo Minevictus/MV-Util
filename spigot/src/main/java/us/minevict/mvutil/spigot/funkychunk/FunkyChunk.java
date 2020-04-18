@@ -7,6 +7,8 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * This defines a funky-chunk potentially within a world.
+ *
+ * @since 0.2.4
  */
 public interface FunkyChunk {
   /**

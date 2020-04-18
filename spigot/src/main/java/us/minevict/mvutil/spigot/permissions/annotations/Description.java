@@ -17,6 +17,8 @@ import java.lang.annotation.Target;
 public @interface Description {
   /**
    * The description of the permission node.
+   *
+   * @return The description of this node.
    */
   String value();
 }

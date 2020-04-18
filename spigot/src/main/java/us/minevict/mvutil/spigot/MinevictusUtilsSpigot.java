@@ -21,11 +21,11 @@ public class MinevictusUtilsSpigot
     this.permissionsManager = new PermissionsManager(this);
   }
 
+  @SuppressWarnings("deprecation") // Internal API warning.
   @Override
   public void onLoad() {
     try {
-      //noinspection deprecation - Internal API warning.
-      MvUtilVersion.setVersion(new MvUtilVersion(0, 2, 1));
+      MvUtilVersion.setVersion(new MvUtilVersion(0, 2, 4));
     } catch (IllegalAccessException ex) {
       getLogger().severe("Cannot set the MV-Util version?");
       ex.printStackTrace();

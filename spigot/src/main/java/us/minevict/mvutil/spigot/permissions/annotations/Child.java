@@ -19,6 +19,8 @@ import java.lang.annotation.Target;
 public @interface Child {
   /**
    * The child's permission node.
+   *
+   * @return The name of the child's permission node.
    */
   String name();
 
@@ -26,6 +28,8 @@ public @interface Child {
    * The value to use for this child.
    * <p>
    * This is not mandatory and defaults to `true`.
+   *
+   * @return The value of the child.
    */
   boolean value() default true;
 }

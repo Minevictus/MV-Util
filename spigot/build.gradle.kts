@@ -5,7 +5,8 @@ plugins {
     id("net.minecrell.plugin-yml.bukkit") version "0.3.0"
 }
 
-version = "0.2.3"
+// Please remember to edit this in MinevictusUtilsSpigot#onLoad too.
+version = "0.2.4"
 
 dependencies {
     compileOnly("com.destroystokyo.paper:paper-api:1.15-R0.1-SNAPSHOT")
