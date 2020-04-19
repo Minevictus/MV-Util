@@ -27,7 +27,7 @@ public class MinevictusUtilsSpigot
   @Override
   public void onLoad() {
     try {
-      MvUtilVersion.setVersion(new MvUtilVersion(0, 3, 0));
+      MvUtilVersion.setVersion(new MvUtilVersion(0, 3, 4));
     } catch (IllegalAccessException ex) {
       getLogger().severe("Cannot set the MV-Util version?");
       ex.printStackTrace();
