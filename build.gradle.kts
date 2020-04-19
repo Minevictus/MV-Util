@@ -103,6 +103,11 @@ subprojects {
             url = uri("https://nexus.proximyst.com/repository/maven-public/")
         }
 
+        maven {
+            name = "bintray-chatmenuapi"
+            url = uri("https://dl.bintray.com/nahuld/minevictus/")
+        }
+
         jcenter()
         mavenCentral()
     }

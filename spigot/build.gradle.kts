@@ -6,7 +6,7 @@ plugins {
 }
 
 // Please remember to edit this in MinevictusUtilsSpigot#onLoad too.
-version = "0.2.4"
+version = "0.3.4"
 
 dependencies {
     compileOnly("com.destroystokyo.paper:paper-api:1.15-R0.1-SNAPSHOT")
@@ -19,6 +19,7 @@ dependencies {
     api("de.themoep:inventorygui:1.4.1-SNAPSHOT") {
         exclude("org.bukkit")
     }
+    api("me.tom.sparse:ChatMenuAPI:1.1.1")
 }
 
 tasks.withType<ShadowJar> {
@@ -40,7 +41,8 @@ tasks.withType<ShadowJar> {
         "io.lettuce",
         "org.slf4j",
         "com.zaxxer",
-        "de.themoep.inventorygui"
+        "de.themoep.inventorygui",
+        "me.tom.sparse.spigot.chat"
     )
     mergeServiceFiles()
 }

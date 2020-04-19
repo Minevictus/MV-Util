@@ -1,6 +1,6 @@
 package us.minevict.mvutil.spigot;
 
-import java.util.logging.Logger;
+import me.tom.sparse.spigot.chat.menu.ChatMenuAPI;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -8,6 +8,8 @@ import us.minevict.mvutil.common.MinevictusUtilsPlatform;
 import us.minevict.mvutil.common.MvUtilVersion;
 import us.minevict.mvutil.spigot.hidden.MegaChunkSizes;
 import us.minevict.mvutil.spigot.permissions.PermissionsManager;
+
+import java.util.logging.Logger;
 
 public class MinevictusUtilsSpigot
     extends JavaPlugin
@@ -25,7 +27,7 @@ public class MinevictusUtilsSpigot
   @Override
   public void onLoad() {
     try {
-      MvUtilVersion.setVersion(new MvUtilVersion(0, 2, 4));
+      MvUtilVersion.setVersion(new MvUtilVersion(0, 3, 4));
     } catch (IllegalAccessException ex) {
       getLogger().severe("Cannot set the MV-Util version?");
       ex.printStackTrace();
@@ -43,10 +45,14 @@ public class MinevictusUtilsSpigot
     MegaChunkSizes.MEGA_CHUNK_SIZE = getConfig().getInt("megachunk-size", MegaChunkSizes.MEGA_CHUNK_SIZE);
     MegaChunkSizes.MEGA_CHUNK_OFFSET_X = getConfig().getInt("megachunk-offset-x", MegaChunkSizes.MEGA_CHUNK_OFFSET_X);
     MegaChunkSizes.MEGA_CHUNK_OFFSET_Z = getConfig().getInt("megachunk-offset-z", MegaChunkSizes.MEGA_CHUNK_OFFSET_Z);
+
+    ChatMenuAPI.init(this);
   }
 
   @Override
   public void onDisable() {
+    ChatMenuAPI.disable();
+
     HandlerList.unregisterAll(this);
   }
 
