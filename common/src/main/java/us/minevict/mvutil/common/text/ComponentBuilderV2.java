@@ -17,7 +17,7 @@ import java.util.Optional;
  *
  * @since 0.2.0
  */
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "UnusedReturnValue"})
 public class ComponentBuilderV2 {
   /**
    * The inner {@link ComponentBuilder}.
@@ -860,7 +860,6 @@ public class ComponentBuilderV2 {
    * @param strikethrough Whether this part is struck through.
    * @return This {@link ComponentBuilderV2} for chaining.
    */
-  @SuppressWarnings("SpellCheckingInspection")
   @NotNull
   public ComponentBuilderV2 strikethrough(boolean strikethrough) {
     builder.strikethrough(strikethrough);
@@ -872,7 +871,6 @@ public class ComponentBuilderV2 {
    *
    * @return This {@link ComponentBuilderV2} for chaining.
    */
-  @SuppressWarnings("SpellCheckingInspection")
   @NotNull
   public ComponentBuilderV2 strikethrough() {
     return strikethrough(true);
