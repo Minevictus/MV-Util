@@ -1,7 +1,10 @@
 package us.minevict.mvutil.spigot.utils;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
- * Utilities regarding GUIs, mainly for use with InventoryGUI.
+ * Utilities regarding GUIs, mainly for use with {@link de.themoep.inventorygui.InventoryGui
+ * InventoryGui}.
  *
  * @since 0.2.0
  */
@@ -18,40 +21,113 @@ public class GuiUtils {
   public static final String GUI_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqr";
 
   /**
-   * Calculates how many rows a specific amount of items may need.
+   * The default value for how many rows should be allowed at maximum for non-paging interfaces.
    * <p>
-   * This grows by default and uses 6 rows at most.
+   * This is only available for non-paging calculations.
+   *
+   * @since 0.3.5
+   */
+  public static final int DEFAULT_NONPAGING_INVENTORY_ROWS = 6;
+
+  /**
+   * The default value for how many rows should be allowed at maximum for paging interfaces.
+   * <p>
+   * This is only available for paging calculations.
+   *
+   * @since 0.3.5
+   */
+  public static final int DEFAULT_PAGING_INVENTORY_ROWS = 6;
+
+  /**
+   * The default value for whether the rows should grow per amount of items.
+   *
+   * @since 0.3.5
+   */
+  public static final boolean DEFAULT_GROWING = true;
+
+  /**
+   * The default value for whether we should attempt to fit any overflowing items in the 6th row
+   * instead of using a paging bar.
+   * <p>
+   * This is only available for paging calculations.
+   *
+   * @since 0.3.5
+   */
+  public static final boolean DEFAULT_ATTEMPT_FIT = true;
+
+  /**
+   * The default value for whether {@link #GUI_CHARACTERS} should be ignored and we should only use
+   * spaces instead.
+   *
+   * @since 0.3.5
+   */
+  public static final boolean DEFAULT_EMPTY_CHARACTERS = false;
+
+  /**
+   * The default value for what how the page bar should look like.
+   * <p>
+   * This is designed for the use of {@code "<"} as the previous page button, {@code "~"} as the
+   * current page information item, and {@code ">"} as the next page button.
+   * <p>
+   * This is only available for paging calculations.
+   *
+   * @since 0.3.5
+   */
+  public static final String DEFAULT_PAGE_BAR = "<   ~   >";
+
+  /**
+   * Calculates how many rows a specific amount of items may need.
    *
    * @param items How many items are to be stored in this inventory.
    * @return The calculated rows.
    */
   public static String[] calculateRows(int items) {
-    return calculateRows(items, 6, true, false);
+    return calculateRows(items,
+        DEFAULT_NONPAGING_INVENTORY_ROWS, DEFAULT_GROWING, DEFAULT_EMPTY_CHARACTERS);
   }
 
   /**
    * Calculates how many rows a specific amount of items may need.
-   * <p>
-   * This grows by default.
    *
-   * @param items         How many items are to be stored in this inventory.
-   * @param inventoryRows The max amount of rows allowed. This is capped to 6 at most and 1 at least.
+   * @param items How many items are to be stored in this inventory.
+   * @param inventoryRows The max amount of rows allowed. This is capped to 6 at most and 1 at
+   * least.
    * @return The calculated rows.
    */
   public static String[] calculateRows(int items, int inventoryRows) {
-    return calculateRows(items, inventoryRows, true, false);
+    return calculateRows(items, inventoryRows, DEFAULT_GROWING, DEFAULT_EMPTY_CHARACTERS);
   }
 
   /**
    * Calculates how many rows a specific amount of items may need.
    *
-   * @param items           How many items are to be stored in this inventory.
-   * @param inventoryRows   The max amount of rows allowed. This is capped to 6 at most and 1 at least.
-   * @param growing         Whether the rows should grow per the amount of items.
-   * @param emptyCharacters Skip the use of GUI_CHARACTERS and use a space instead.
+   * @param items How many items are to be stored in this inventory.
+   * @param inventoryRows The max amount of rows allowed. This is capped to 6 at most and 1 at
+   * least.
+   * @param growing Whether the rows should grow per the amount of items.
+   * @return The calculated rows.
+   * @since 0.3.5
+   */
+  public static String[] calculateRows(int items, int inventoryRows, boolean growing) {
+    return calculateRows(items, inventoryRows, growing, DEFAULT_EMPTY_CHARACTERS);
+  }
+
+  /**
+   * Calculates how many rows a specific amount of items may need.
+   *
+   * @param items How many items are to be stored in this inventory.
+   * @param inventoryRows The max amount of rows allowed. This is capped to 6 at most and 1 at
+   * least.
+   * @param growing Whether the rows should grow per the amount of items.
+   * @param emptyCharacters Skip the use of {@link #GUI_CHARACTERS} and use spaces instead.
    * @return The calculated rows.
    */
-  public static String[] calculateRows(int items, int inventoryRows, boolean growing, boolean emptyCharacters) {
+  public static String[] calculateRows(
+      int items,
+      int inventoryRows,
+      boolean growing,
+      boolean emptyCharacters
+  ) {
     var maximumPageRows = Math.max(1, Math.min(inventoryRows, 6));
     int requiredRows;
     if (!growing) {
@@ -78,79 +154,141 @@ public class GuiUtils {
   }
 
   /**
-   * Calculates how many rows a specific amount of items may need with regard to a paging bar at the bottom.
-   * <p>
-   * This uses the paging bar <pre>{@code "<   ~   >"}</pre> by default and always attempts to fit any overflowing items in the
-   * 6th row if a paging bar may be omitted.
-   * <p>
-   * This also grows the amount of rows necessary per the amount of items stored. By default, it will attempt to cap at
-   * 5 rows.
+   * Calculates how many rows a specific amount of items may need with regard to a paging bar at the
+   * bottom.
    *
    * @param items How many items are to be stored in this inventory.
    * @return The calculated rows.
    */
   public static String[] calculatePagingRows(int items) {
-    return calculatePagingRows(items, 5);
+    return calculatePagingRows(items, DEFAULT_PAGING_INVENTORY_ROWS);
   }
 
   /**
-   * Calculates how many rows a specific amount of items may need with regard to a paging bar at the bottom.
-   * <p>
-   * This uses the paging bar <pre>{@code "<   ~   >"}</pre> by default and always attempts to fit any overflowing items in the
-   * 6th row if a paging bar may be omitted.
-   * <p>
-   * This also grows the amount of rows necessary per the amount of items stored.
+   * Calculates how many rows a specific amount of items may need with regard to a paging bar at the
+   * bottom.
    *
-   * @param items    How many items are to be stored in this inventory.
-   * @param pageRows The max amount of rows allowed in a single page. This is capped to 5 at most and 1 at least.
+   * @param items How many items are to be stored in this inventory.
+   * @param pageRows The max amount of rows allowed in a single page. This is capped to 5 at most
+   * and 1 at least.
    * @return The calculated rows.
    */
   public static String[] calculatePagingRows(int items, int pageRows) {
-    return calculatePagingRows(items, pageRows, true);
+    return calculatePagingRows(items, pageRows, DEFAULT_GROWING);
   }
 
   /**
-   * Calculates how many rows a specific amount of items may need with regard to a paging bar at the bottom.
-   * <p>
-   * This uses the paging bar <pre>{@code "<   ~   >"}</pre> by default and always attempts to fit any overflowing items in the
-   * 6th row if a paging bar may be omitted.
+   * Calculates how many rows a specific amount of items may need with regard to a paging bar at the
+   * bottom.
    *
-   * @param items    How many items are to be stored in this inventory.
-   * @param pageRows The max amount of rows allowed in a single page. This is capped to 5 at most and 1 at least.
-   * @param growing  Whether the rows should grow per the amount of items.
+   * @param items How many items are to be stored in this inventory.
+   * @param pageRows The max amount of rows allowed in a single page. This is capped to 5 at most
+   * and 1 at least.
+   * @param growing Whether the rows should grow per the amount of items.
    * @return The calculated rows.
    */
   public static String[] calculatePagingRows(int items, int pageRows, boolean growing) {
-    return calculatePagingRows(items, pageRows, growing, true);
+    return calculatePagingRows(items, pageRows, growing, DEFAULT_ATTEMPT_FIT);
   }
 
   /**
-   * Calculates how many rows a specific amount of items may need with regard to a paging bar at the bottom.
-   * <p>
-   * This uses the paging bar <pre>{@code "<   ~   >"}</pre> by default.
+   * Calculates how many rows a specific amount of items may need with regard to a paging bar at the
+   * bottom.
    *
-   * @param items      How many items are to be stored in this inventory.
-   * @param pageRows   The max amount of rows allowed in a single page. This is capped to 5 at most and 1 at least.
-   * @param growing    Whether the rows should grow per the amount of items.
-   * @param attemptFit Whether we should attempt to fit any overflowing items in the 6th row instead of using a paging
-   *                   bar.
+   * @param items How many items are to be stored in this inventory.
+   * @param pageRows The max amount of rows allowed in a single page. This is capped to 5 at most
+   * and 1 at least.
+   * @param growing Whether the rows should grow per the amount of items.
+   * @return The calculated rows.
+   * @since 0.3.5
+   */
+  public static String[] calculatePagingRows(
+      int items,
+      int pageRows,
+      boolean growing,
+      @NotNull String pageBar
+  ) {
+    return calculatePagingRows(
+        items,
+        pageRows,
+        growing,
+        DEFAULT_ATTEMPT_FIT,
+        DEFAULT_EMPTY_CHARACTERS,
+        pageBar
+    );
+  }
+
+  /**
+   * Calculates how many rows a specific amount of items may need with regard to a paging bar at the
+   * bottom.
+   *
+   * @param items How many items are to be stored in this inventory.
+   * @param pageRows The max amount of rows allowed in a single page. This is capped to 5 at most
+   * and 1 at least.
+   * @param growing Whether the rows should grow per the amount of items.
+   * @param attemptFit Whether we should attempt to fit any overflowing items in the 6th row instead
+   * of using a paging bar.
    * @return The calculated rows.
    */
-  public static String[] calculatePagingRows(int items, int pageRows, boolean growing, boolean attemptFit) {
-    return calculatePagingRows(items, pageRows, growing, attemptFit, false, "<   ~   >");
+  public static String[] calculatePagingRows(
+      int items,
+      int pageRows,
+      boolean growing,
+      boolean attemptFit
+  ) {
+    return calculatePagingRows(
+        items,
+        pageRows,
+        growing,
+        attemptFit,
+        DEFAULT_EMPTY_CHARACTERS,
+        DEFAULT_PAGE_BAR
+    );
   }
 
   /**
-   * Calculates how many rows a specific amount of items may need with regard to a paging bar at the bottom.
+   * Calculates how many rows a specific amount of items may need with regard to a paging bar at the
+   * bottom.
    *
-   * @param items           How many items are to be stored in this inventory.
-   * @param pageRows        The max amount of rows allowed in a single page. This is capped to 5 at most and 1 at least.
-   * @param growing         Whether the rows should grow per the amount of items.
-   * @param attemptFit      Whether we should attempt to fit any overflowing items in the 6th row instead of using a
-   *                        pagingbar.
-   * @param emptyCharacters Skip the use of GUI_CHARACTERS and use a space instead.
-   * @param pageBar         The format for the paging bar.
+   * @param items How many items are to be stored in this inventory.
+   * @param pageRows The max amount of rows allowed in a single page. This is capped to 5 at most
+   * and 1 at least.
+   * @param growing Whether the rows should grow per the amount of items.
+   * @param attemptFit Whether we should attempt to fit any overflowing items in the 6th row instead
+   * of using a paging bar.
+   * @param emptyCharacters Skip the use of {@link #GUI_CHARACTERS} and use spaces instead.
+   * @return The calculated rows.
+   * @since 0.3.5
+   */
+  public static String[] calculatePagingRows(
+      int items,
+      int pageRows,
+      boolean growing,
+      boolean attemptFit,
+      boolean emptyCharacters
+  ) {
+    return calculatePagingRows(
+        items,
+        pageRows,
+        growing,
+        attemptFit,
+        emptyCharacters,
+        DEFAULT_PAGE_BAR
+    );
+  }
+
+  /**
+   * Calculates how many rows a specific amount of items may need with regard to a paging bar at the
+   * bottom.
    *
+   * @param items How many items are to be stored in this inventory.
+   * @param pageRows The max amount of rows allowed in a single page. This is capped to 5 at most
+   * and 1 at least.
+   * @param growing Whether the rows should grow per the amount of items.
+   * @param attemptFit Whether we should attempt to fit any overflowing items in the 6th row instead
+   * of using a pagingbar.
+   * @param emptyCharacters Skip the use of {@link #GUI_CHARACTERS} and use spaces instead.
+   * @param pageBar The format for the paging bar.
    * @return The calculated rows.
    */
   public static String[] calculatePagingRows(
@@ -174,7 +312,10 @@ public class GuiUtils {
             ? requiredRows + 1
             : (int) Math.ceil((double) items / 9));
 
-    var rows = calculateRows(items, pagingBar ? requiredRows : calculatingRows, growing, emptyCharacters);
+    var rows = calculateRows(items,
+        pagingBar ? requiredRows : calculatingRows,
+        growing,
+        emptyCharacters);
 
     if (pagingBar) {
       rows[rows.length - 1] = pageBar;
