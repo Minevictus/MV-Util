@@ -12,26 +12,7 @@ import java.util.Objects;
  * @since 0.2.2
  */
 public final class MvUtilVersion implements Comparable<MvUtilVersion> {
-  private static MvUtilVersion currentVersion = null;
-
-  /**
-   * <b>This is an internal API. Do not use this.</b>
-   * <p>
-   * Sets the current version of MV-Util.
-   *
-   * @param version The version to set it to.
-   * @throws IllegalAccessException If the version has already been set.
-   * @hidden Internal API
-   * @deprecated Internal API
-   */
-  @Deprecated
-  public static void setVersion(@NotNull final MvUtilVersion version) throws IllegalAccessException {
-    if (currentVersion != null) {
-      throw new IllegalAccessException("the version of MV-Util can only be set once!");
-    }
-
-    currentVersion = version;
-  }
+  private static final MvUtilVersion currentVersion = new MvUtilVersion(3, 1, 0);
 
   /**
    * Gets the current version of MV-Util.

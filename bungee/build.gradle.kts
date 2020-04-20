@@ -4,9 +4,6 @@ plugins {
     id("net.minecrell.plugin-yml.bungee") version "0.3.0"
 }
 
-// Please remember to edit this in MinevictusUtilsBungee#onLoad too.
-version = "0.1.2"
-
 dependencies {
     compileOnly("io.github.waterfallmc:waterfall-api:1.15-SNAPSHOT")
     api(project(":common"))

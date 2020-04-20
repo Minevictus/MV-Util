@@ -4,7 +4,6 @@ import java.util.logging.Logger;
 import net.md_5.bungee.api.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import us.minevict.mvutil.common.MinevictusUtilsPlatform;
-import us.minevict.mvutil.common.MvUtilVersion;
 
 public class MinevictusUtilsBungee
     extends Plugin
@@ -27,17 +26,6 @@ public class MinevictusUtilsBungee
   @NotNull
   public static MinevictusUtilsBungee getInstance() {
     return instance;
-  }
-
-  @SuppressWarnings("deprecation") // Internal API warning.
-  @Override
-  public void onLoad() {
-    try {
-      MvUtilVersion.setVersion(new MvUtilVersion(0, 1, 2));
-    } catch (IllegalAccessException ex) {
-      getLogger().severe("Cannot set the MV-Util version?");
-      ex.printStackTrace();
-    }
   }
 
   @Override

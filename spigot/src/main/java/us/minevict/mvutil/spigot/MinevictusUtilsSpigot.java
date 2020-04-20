@@ -1,15 +1,13 @@
 package us.minevict.mvutil.spigot;
 
+import java.util.logging.Logger;
 import me.tom.sparse.spigot.chat.menu.ChatMenuAPI;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import us.minevict.mvutil.common.MinevictusUtilsPlatform;
-import us.minevict.mvutil.common.MvUtilVersion;
 import us.minevict.mvutil.spigot.hidden.MegaChunkSizes;
 import us.minevict.mvutil.spigot.permissions.PermissionsManager;
-
-import java.util.logging.Logger;
 
 public class MinevictusUtilsSpigot
     extends JavaPlugin
@@ -21,18 +19,6 @@ public class MinevictusUtilsSpigot
     super();
 
     this.permissionsManager = new PermissionsManager(this);
-  }
-
-  @SuppressWarnings("deprecation") // Internal API warning.
-  @Override
-  public void onLoad() {
-    try {
-      MvUtilVersion.setVersion(new MvUtilVersion(0, 3, 5));
-    } catch (IllegalAccessException ex) {
-      getLogger().severe("Cannot set the MV-Util version?");
-      ex.printStackTrace();
-      setEnabled(false);
-    }
   }
 
   @Override
