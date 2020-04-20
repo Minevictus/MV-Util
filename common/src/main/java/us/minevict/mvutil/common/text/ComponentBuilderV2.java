@@ -1136,6 +1136,7 @@ public class ComponentBuilderV2 {
      * @param retention        The formatting to possibly retain.
      * @return Input {@link ComponentBuilderV2} for chaining.
      */
-    ComponentBuilderV2 join(ComponentBuilderV2 componentBuilder, FormatRetention retention);
+    @NotNull
+    ComponentBuilderV2 join(@NotNull ComponentBuilderV2 componentBuilder, @Nullable FormatRetention retention);
   }
 }
