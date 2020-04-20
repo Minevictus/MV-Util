@@ -99,6 +99,16 @@ public class ComponentBuilderV2 {
   }
 
   /**
+   * Creates an array of {@link BaseComponent} from the options given to this builder.
+   *
+   * @return The built {@link BaseComponent BaseComponent[]}.
+   */
+  @NotNull
+  public BaseComponent[] create() {
+    return builder.create();
+  }
+
+  /**
    * Resets the cursor to index of the last element.
    *
    * @return This {@link ComponentBuilderV2} for chaining.
