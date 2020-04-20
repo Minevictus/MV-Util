@@ -4,6 +4,8 @@ import com.proximyst.mvnms.MvNms;
 import org.bukkit.Bukkit;
 
 /**
+ * Utilities regarding plugins this plugin can depend on.
+ *
  * @since 0.1.0
  */
 public class PluginUtils {
