@@ -2,7 +2,6 @@ package us.minevict.mvutil.spigot.text;
 
 import com.proximyst.mvnms.BukkitVersion;
 import java.util.Objects;
-import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ComponentBuilder.FormatRetention;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -15,6 +14,8 @@ import us.minevict.mvutil.spigot.utils.PluginUtils;
  * <p>
  * This requires MV-NMS (checks {@link PluginUtils#isMvNmsPresent()}) to do anything. If the version
  * is unsupported, nothing is changed. The retention given to {@link #join} is ignored.
+ *
+ * @since 0.3.5
  */
 public final class ItemHoverJoiner implements ComponentBuilderV2.JoinerV2 {
   @NotNull

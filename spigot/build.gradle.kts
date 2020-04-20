@@ -6,7 +6,7 @@ plugins {
 }
 
 // Please remember to edit this in MinevictusUtilsSpigot#onLoad too.
-version = "0.3.4"
+version = "0.3.5"
 
 dependencies {
     compileOnly("com.destroystokyo.paper:paper-api:1.15-R0.1-SNAPSHOT")
