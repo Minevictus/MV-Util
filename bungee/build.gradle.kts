@@ -5,7 +5,7 @@ plugins {
 }
 
 // Please remember to edit this in MinevictusUtilsBungee#onLoad too.
-version = "0.1.1"
+version = "0.1.2"
 
 dependencies {
     compileOnly("io.github.waterfallmc:waterfall-api:1.15-SNAPSHOT")

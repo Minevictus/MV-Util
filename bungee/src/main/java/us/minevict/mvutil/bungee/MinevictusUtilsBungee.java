@@ -33,7 +33,7 @@ public class MinevictusUtilsBungee
   @Override
   public void onLoad() {
     try {
-      MvUtilVersion.setVersion(new MvUtilVersion(0, 1, 1));
+      MvUtilVersion.setVersion(new MvUtilVersion(0, 1, 2));
     } catch (IllegalAccessException ex) {
       getLogger().severe("Cannot set the MV-Util version?");
       ex.printStackTrace();
