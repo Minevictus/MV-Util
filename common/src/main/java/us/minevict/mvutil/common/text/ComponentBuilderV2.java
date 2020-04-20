@@ -102,6 +102,7 @@ public class ComponentBuilderV2 {
    * Creates an array of {@link BaseComponent} from the options given to this builder.
    *
    * @return The built {@link BaseComponent BaseComponent[]}.
+   * @since 0.3.5 on Spigot, 0.1.2 on Bungee.
    */
   @NotNull
   public BaseComponent[] create() {
