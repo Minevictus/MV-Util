@@ -141,8 +141,7 @@ public class GuiUtils {
     var rows = new String[requiredRows + (items > maximumPageRows * 9 ? 1 : 0)];
     var index = 0;
     for (int i = 0; i < requiredRows; ++i) { // this was shifting the characters ABC BCD CDE
-      rows[i] = emptyCharacters ? " ".repeat(9) : GUI_CHARACTERS.substring(index, index + 9);
-      index += 9;
+      rows[i] = emptyCharacters ? " ".repeat(9) : GUI_CHARACTERS.substring(index, index += 9);
     }
 
     if (items < requiredRows * 9) {
