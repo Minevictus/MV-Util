@@ -18,7 +18,7 @@ import java.util.Optional;
  * @since 0.2.0
  */
 @SuppressWarnings({"unused", "UnusedReturnValue"})
-public class ComponentBuilderV2 {
+public final class ComponentBuilderV2 {
   /**
    * The inner {@link ComponentBuilder}.
    */
