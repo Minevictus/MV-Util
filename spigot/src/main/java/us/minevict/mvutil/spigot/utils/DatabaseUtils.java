@@ -28,17 +28,23 @@ public class DatabaseUtils {
    * @param hostAndPort Host and port for the pool.
    * @return {@link PooledDatabaseOptions} built around the {@link Plugin}.
    */
-  public static PooledDatabaseOptions getRecommendedOptions(Plugin plugin, @NotNull String user, @NotNull String pass, @NotNull String db, @NotNull String hostAndPort) {
+  public static PooledDatabaseOptions getRecommendedOptions(
+      Plugin plugin,
+      @NotNull String user,
+      @NotNull String pass,
+      @NotNull String db,
+      @NotNull String hostAndPort
+  ) {
     DatabaseOptions options = DatabaseOptions
-            .builder()
-            .poolName(plugin.getDescription().getName() + " DB")
-            .logger(plugin.getLogger())
-            .mysql(user, pass, db, hostAndPort)
-            .build();
+        .builder()
+        .poolName(plugin.getDescription().getName() + " DB")
+        .logger(plugin.getLogger())
+        .mysql(user, pass, db, hostAndPort)
+        .build();
     return PooledDatabaseOptions
-            .builder()
-            .options(options)
-            .build();
+        .builder()
+        .options(options)
+        .build();
   }
 
   /**
@@ -54,7 +60,13 @@ public class DatabaseUtils {
    * @param hostAndPort Host and port for the pool.
    * @return {@link Database} built around the {@link Plugin}.
    */
-  public static Database createHikariDatabase(Plugin plugin, @NotNull String user, @NotNull String pass, @NotNull String db, @NotNull String hostAndPort) {
+  public static Database createHikariDatabase(
+      Plugin plugin,
+      @NotNull String user,
+      @NotNull String pass,
+      @NotNull String db,
+      @NotNull String hostAndPort
+  ) {
     return createHikariDatabase(plugin, getRecommendedOptions(plugin, user, pass, db, hostAndPort));
   }
 
