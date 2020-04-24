@@ -1,5 +1,6 @@
 package us.minevict.mvutil.bungee;
 
+import co.aikar.commands.BungeeCommandManager;
 import java.util.logging.Logger;
 import net.md_5.bungee.api.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
@@ -41,5 +42,17 @@ public class MinevictusUtilsBungee
   @NotNull
   public Logger getPlatformLogger() {
     return getLogger();
+  }
+
+  /**
+   * Prepare a command manager.
+   *
+   * @param commandManager The command manager to prepare.
+   * @return The command managed for use in chaining or the likes.
+   * @since 3.3.0
+   */
+  @NotNull
+  public BungeeCommandManager prepareAcf(BungeeCommandManager commandManager) {
+    return commandManager;
   }
 }

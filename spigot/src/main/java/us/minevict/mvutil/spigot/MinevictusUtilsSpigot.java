@@ -1,5 +1,6 @@
 package us.minevict.mvutil.spigot;
 
+import co.aikar.commands.PaperCommandManager;
 import java.util.logging.Logger;
 import me.tom.sparse.spigot.chat.menu.ChatMenuAPI;
 import org.bukkit.event.HandlerList;
@@ -66,5 +67,17 @@ public class MinevictusUtilsSpigot
   @NotNull
   public PermissionsManager getPermissionsManager() {
     return permissionsManager;
+  }
+
+  /**
+   * Prepare a command manager.
+   *
+   * @param commandManager The command manager to prepare.
+   * @return The command managed for use in chaining or the likes.
+   * @since 3.3.0
+   */
+  @NotNull
+  public PaperCommandManager prepareAcf(PaperCommandManager commandManager) {
+    return commandManager;
   }
 }
