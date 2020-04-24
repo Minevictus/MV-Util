@@ -49,7 +49,7 @@ public class DatabaseUtils {
 
   /**
    * Create an IDB {@link Database} instance to make SQL queries with the plugin as a base.
-   * This method will set the global {@link DB} to this by default and will close it when
+   * This method will not set the global {@link DB} to this by default and will close it when
    * {@link PluginDisableEvent} is fired.
    *
    *
@@ -72,7 +72,7 @@ public class DatabaseUtils {
 
   /**
    * Create an IDB {@link Database} instance to make SQL queries with the plugin as a base.
-   * This method will set the global {@link DB} to this by default and will close it when
+   * This method will not set the global {@link DB} to this by default and will close it when
    * {@link PluginDisableEvent} is fired.
    *
    * @param plugin      {@link Plugin} to register listeners and get settings from.
@@ -80,7 +80,7 @@ public class DatabaseUtils {
    * @return {@link Database} using {@link Plugin} to register listeners.
    */
   public static Database createHikariDatabase(Plugin plugin, PooledDatabaseOptions options) {
-    return createHikariDatabase(plugin, options, true);
+    return createHikariDatabase(plugin, options, false);
   }
 
   /**
