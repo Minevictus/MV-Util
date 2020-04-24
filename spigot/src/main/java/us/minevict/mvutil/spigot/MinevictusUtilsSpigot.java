@@ -79,7 +79,8 @@ public class MinevictusUtilsSpigot
    * @since 3.3.0
    */
   @NotNull
-  public PaperCommandManager prepareAcf(PaperCommandManager commandManager) {
+  public PaperCommandManager prepareAcf(@NotNull PaperCommandManager commandManager) {
+
     return commandManager;
   }
 }

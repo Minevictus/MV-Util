@@ -52,7 +52,7 @@ public class MinevictusUtilsBungee
    * @since 3.3.0
    */
   @NotNull
-  public BungeeCommandManager prepareAcf(BungeeCommandManager commandManager) {
+  public BungeeCommandManager prepareAcf(@NotNull BungeeCommandManager commandManager) {
     return commandManager;
   }
 }
