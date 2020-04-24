@@ -80,6 +80,7 @@ public class GuiUtils {
    *
    * @param items How many items are to be stored in this inventory.
    * @return The calculated rows.
+   * @see #calculateRows(int, int, boolean, boolean)
    */
   public static String[] calculateRows(int items) {
     return calculateRows(items,
@@ -93,6 +94,7 @@ public class GuiUtils {
    * @param inventoryRows The max amount of rows allowed. This is capped to 6 at most and 1 at
    * least.
    * @return The calculated rows.
+   * @see #calculateRows(int, int, boolean, boolean)
    */
   public static String[] calculateRows(int items, int inventoryRows) {
     return calculateRows(items, inventoryRows, DEFAULT_GROWING, DEFAULT_EMPTY_CHARACTERS);
@@ -106,6 +108,7 @@ public class GuiUtils {
    * least.
    * @param growing Whether the rows should grow per the amount of items.
    * @return The calculated rows.
+   * @see #calculateRows(int, int, boolean, boolean)
    * @since 0.3.5
    */
   public static String[] calculateRows(int items, int inventoryRows, boolean growing) {
@@ -158,6 +161,7 @@ public class GuiUtils {
    *
    * @param items How many items are to be stored in this inventory.
    * @return The calculated rows.
+   * @see #calculatePagingRows(int, int, boolean, boolean, boolean, String)
    */
   public static String[] calculatePagingRows(int items) {
     return calculatePagingRows(items, DEFAULT_PAGING_INVENTORY_ROWS);
@@ -171,6 +175,7 @@ public class GuiUtils {
    * @param pageRows The max amount of rows allowed in a single page. This is capped to 5 at most
    * and 1 at least.
    * @return The calculated rows.
+   * @see #calculatePagingRows(int, int, boolean, boolean, boolean, String)
    */
   public static String[] calculatePagingRows(int items, int pageRows) {
     return calculatePagingRows(items, pageRows, DEFAULT_GROWING);
@@ -185,6 +190,7 @@ public class GuiUtils {
    * and 1 at least.
    * @param growing Whether the rows should grow per the amount of items.
    * @return The calculated rows.
+   * @see #calculatePagingRows(int, int, boolean, boolean, boolean, String)
    */
   public static String[] calculatePagingRows(int items, int pageRows, boolean growing) {
     return calculatePagingRows(items, pageRows, growing, DEFAULT_ATTEMPT_FIT);
@@ -199,6 +205,7 @@ public class GuiUtils {
    * and 1 at least.
    * @param growing Whether the rows should grow per the amount of items.
    * @return The calculated rows.
+   * @see #calculatePagingRows(int, int, boolean, boolean, boolean, String)
    * @since 0.3.5
    */
   public static String[] calculatePagingRows(
@@ -228,6 +235,7 @@ public class GuiUtils {
    * @param attemptFit Whether we should attempt to fit any overflowing items in the 6th row instead
    * of using a paging bar.
    * @return The calculated rows.
+   * @see #calculatePagingRows(int, int, boolean, boolean, boolean, String)
    */
   public static String[] calculatePagingRows(
       int items,
@@ -257,6 +265,7 @@ public class GuiUtils {
    * of using a paging bar.
    * @param emptyCharacters Skip the use of {@link #GUI_CHARACTERS} and use spaces instead.
    * @return The calculated rows.
+   * @see #calculatePagingRows(int, int, boolean, boolean, boolean, String)
    * @since 0.3.5
    */
   public static String[] calculatePagingRows(
