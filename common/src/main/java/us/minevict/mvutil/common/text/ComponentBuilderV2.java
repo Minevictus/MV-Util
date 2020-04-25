@@ -1044,7 +1044,7 @@ public final class ComponentBuilderV2 {
   @NotNull
   public ComponentBuilderV2 reset() {
     builder.reset();
-    return this;
+    return this.hover(null).click(null);
   }
 
   /**
