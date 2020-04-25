@@ -52,8 +52,8 @@ public final class ComponentBuilderV2 {
    *
    * @param base The base text to use for this builder.
    */
-  public ComponentBuilderV2(@NotNull final String base) {
-    this(new ComponentBuilder(Objects.requireNonNull(base, "the given base cannot be null!")));
+  public ComponentBuilderV2(@Nullable final String base) {
+    this(new ComponentBuilder(String.valueOf(base)));
   }
 
   /**
@@ -63,7 +63,7 @@ public final class ComponentBuilderV2 {
    * @return The constructed {@link ComponentBuilderV2}.
    */
   @NotNull
-  public static ComponentBuilderV2 of(@NotNull final String base) {
+  public static ComponentBuilderV2 of(@Nullable final String base) {
     return new ComponentBuilderV2(base);
   }
 
@@ -141,7 +141,10 @@ public final class ComponentBuilderV2 {
    * @return This {@link ComponentBuilderV2} for chaining.
    */
   @NotNull
-  public ComponentBuilderV2 append(BaseComponent component) {
+  public ComponentBuilderV2 append(@Nullable BaseComponent component) {
+    if (component == null) {
+      return append((Object) null);
+    }
     builder.append(component);
     return this;
   }
@@ -155,7 +158,10 @@ public final class ComponentBuilderV2 {
    * @return This {@link ComponentBuilderV2} for chaining.
    */
   @NotNull
-  public ComponentBuilderV2 append(BaseComponent component, FormatRetention retention) {
+  public ComponentBuilderV2 append(@Nullable BaseComponent component, @NotNull FormatRetention retention) {
+    if (component == null) {
+      return append((Object) null, retention);
+    }
     builder.append(component, retention);
     return this;
   }
@@ -168,7 +174,10 @@ public final class ComponentBuilderV2 {
    * @return This {@link ComponentBuilderV2} for chaining.
    */
   @NotNull
-  public ComponentBuilderV2 append(BaseComponent[] components) {
+  public ComponentBuilderV2 append(@Nullable BaseComponent[] components) {
+    if (components == null) {
+      return append((Object) null);
+    }
     builder.append(components);
     return this;
   }
@@ -182,7 +191,10 @@ public final class ComponentBuilderV2 {
    * @return This {@link ComponentBuilderV2} for chaining.
    */
   @NotNull
-  public ComponentBuilderV2 append(BaseComponent[] components, FormatRetention retention) {
+  public ComponentBuilderV2 append(@Nullable BaseComponent[] components, @NotNull FormatRetention retention) {
+    if (components == null) {
+      return append((Object) null, retention);
+    }
     builder.append(components, retention);
     return this;
   }
@@ -195,9 +207,10 @@ public final class ComponentBuilderV2 {
    * @return This {@link ComponentBuilderV2} for chaining.
    */
   @NotNull
-  public ComponentBuilderV2 append(@NotNull String text) {
-    Objects.requireNonNull(text, "the provided text cannot be null!");
-
+  public ComponentBuilderV2 append(@Nullable String text) {
+    if (text == null) {
+      return append((Object) null);
+    }
     builder.append(text);
     return this;
   }
@@ -223,8 +236,8 @@ public final class ComponentBuilderV2 {
    * @return This {@link ComponentBuilderV2} for chaining.
    */
   @NotNull
-  public ComponentBuilderV2 appendLegacy(String text) {
-    builder.appendLegacy(text);
+  public ComponentBuilderV2 appendLegacy(@Nullable String text) {
+    builder.appendLegacy(String.valueOf(text));
     return this;
   }
 
@@ -237,11 +250,10 @@ public final class ComponentBuilderV2 {
    * @return This {@link ComponentBuilderV2} for chaining.
    */
   @NotNull
-  public ComponentBuilderV2 append(@NotNull String text, @NotNull FormatRetention retention) {
-    Objects.requireNonNull(text, "the provided text cannot be null!");
+  public ComponentBuilderV2 append(@Nullable String text, @NotNull FormatRetention retention) {
     Objects.requireNonNull(retention, "the provided retention cannot be null!");
 
-    builder.append(text, retention);
+    builder.append(String.valueOf(text), retention);
     return this;
   }
 
@@ -271,7 +283,7 @@ public final class ComponentBuilderV2 {
    * @return This {@link ComponentBuilderV2} for chaining.
    */
   @NotNull
-  public ComponentBuilderV2 append(JoinerV2 joiner) {
+  public ComponentBuilderV2 append(@NotNull JoinerV2 joiner) {
     return joiner.join(this, FormatRetention.ALL);
   }
 
@@ -285,7 +297,7 @@ public final class ComponentBuilderV2 {
    * @return This {@link ComponentBuilderV2} for chaining.
    */
   @NotNull
-  public ComponentBuilderV2 append(JoinerV2 joiner, FormatRetention retention) {
+  public ComponentBuilderV2 append(@NotNull JoinerV2 joiner, @NotNull FormatRetention retention) {
     return joiner.join(this, retention);
   }
 
@@ -299,6 +311,7 @@ public final class ComponentBuilderV2 {
     if (pos < 0 || pos >= builder.getParts().size()) {
       return false;
     }
+
     try {
       builder.removeComponent(pos);
       return true;
@@ -343,7 +356,7 @@ public final class ComponentBuilderV2 {
    * @return This {@link ComponentBuilderV2} for chaining.
    */
   @NotNull
-  public ComponentBuilderV2 color(ChatColor colour) {
+  public ComponentBuilderV2 color(@Nullable ChatColor colour) {
     builder.color(colour);
     return this;
   }
@@ -355,7 +368,7 @@ public final class ComponentBuilderV2 {
    * @return This {@link ComponentBuilderV2} for chaining.
    */
   @NotNull
-  public ComponentBuilderV2 colour(ChatColor colour) {
+  public ComponentBuilderV2 colour(@Nullable ChatColor colour) {
     builder.color(colour);
     return this;
   }
@@ -939,7 +952,7 @@ public final class ComponentBuilderV2 {
    * @return This {@link ComponentBuilderV2} for chaining.
    */
   @NotNull
-  public ComponentBuilderV2 event(ClickEvent clickEvent) {
+  public ComponentBuilderV2 event(@Nullable ClickEvent clickEvent) {
     builder.event(clickEvent);
     return this;
   }
@@ -951,7 +964,7 @@ public final class ComponentBuilderV2 {
    * @return This {@link ComponentBuilderV2} for chaining.
    */
   @NotNull
-  public ComponentBuilderV2 click(ClickEvent clickEvent) {
+  public ComponentBuilderV2 click(@Nullable ClickEvent clickEvent) {
     return event(clickEvent);
   }
 
@@ -974,7 +987,7 @@ public final class ComponentBuilderV2 {
    * @return This {@link ComponentBuilderV2} for chaining.
    */
   @NotNull
-  public ComponentBuilderV2 event(HoverEvent hoverEvent) {
+  public ComponentBuilderV2 event(@Nullable HoverEvent hoverEvent) {
     builder.event(hoverEvent);
     return this;
   }
@@ -986,7 +999,7 @@ public final class ComponentBuilderV2 {
    * @return This {@link ComponentBuilderV2} for chaining.
    */
   @NotNull
-  public ComponentBuilderV2 hover(HoverEvent hoverEvent) {
+  public ComponentBuilderV2 hover(@Nullable HoverEvent hoverEvent) {
     return event(hoverEvent);
   }
 
@@ -998,7 +1011,10 @@ public final class ComponentBuilderV2 {
    * @return This {@link ComponentBuilderV2} for chaining.
    */
   @NotNull
-  public ComponentBuilderV2 hover(@NotNull HoverEvent.Action action, @NotNull BaseComponent[] value) {
+  public ComponentBuilderV2 hover(@NotNull HoverEvent.Action action, @Nullable BaseComponent[] value) {
+    if (value == null) {
+      return hoverText("null");
+    }
     return event(new HoverEvent(action, value));
   }
 
@@ -1010,7 +1026,10 @@ public final class ComponentBuilderV2 {
    * @return This {@link ComponentBuilderV2} for chaining.
    */
   @NotNull
-  public ComponentBuilderV2 hover(@NotNull HoverEvent.Action action, @NotNull String value) {
+  public ComponentBuilderV2 hover(@NotNull HoverEvent.Action action, @Nullable String value) {
+    if (value == null) {
+      return hoverText("null");
+    }
     return event(new HoverEvent(action, new BaseComponent[]{new TextComponent(value)}));
   }
 
@@ -1021,8 +1040,8 @@ public final class ComponentBuilderV2 {
    * @return This {@link ComponentBuilderV2} for chaining.
    */
   @NotNull
-  public ComponentBuilderV2 hoverText(@NotNull String value) {
-    return event(new HoverEvent(Action.SHOW_TEXT, new BaseComponent[]{new TextComponent(value)}));
+  public ComponentBuilderV2 hoverText(@Nullable String value) {
+    return event(new HoverEvent(Action.SHOW_TEXT, of(value).build()));
   }
 
   /**
@@ -1032,7 +1051,10 @@ public final class ComponentBuilderV2 {
    * @return This {@link ComponentBuilderV2} for chaining.
    */
   @NotNull
-  public ComponentBuilderV2 hoverText(@NotNull BaseComponent[] value) {
+  public ComponentBuilderV2 hoverText(@Nullable BaseComponent[] value) {
+    if (value == null) {
+      return hoverText((String) null);
+    }
     return event(new HoverEvent(Action.SHOW_TEXT, value));
   }
 
@@ -1054,7 +1076,7 @@ public final class ComponentBuilderV2 {
    * @return This {@link ComponentBuilderV2} for chaining.
    */
   @NotNull
-  public ComponentBuilderV2 retain(FormatRetention retention) {
+  public ComponentBuilderV2 retain(@Nullable FormatRetention retention) {
     builder.retain(retention);
     return this;
   }
