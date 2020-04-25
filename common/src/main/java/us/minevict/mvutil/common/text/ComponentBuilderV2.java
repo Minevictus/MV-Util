@@ -74,7 +74,7 @@ public final class ComponentBuilderV2 {
    */
   public ComponentBuilderV2(@NotNull final BaseComponent... components) {
     this(new ComponentBuilder());
-    Objects.requireNonNull(components, "the given components cannot be null!");
+    append(components);
   }
 
   /**
