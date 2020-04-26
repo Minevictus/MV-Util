@@ -2,6 +2,7 @@ package us.minevict.mvutil.bungee;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.BungeeCommandManager;
+import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import us.minevict.mvutil.common.LazyValue;
@@ -161,6 +162,18 @@ public abstract class MvPlugin extends Plugin {
     var acf = getAcf();
     for (var command : commands) {
       acf.registerCommand(command);
+    }
+  }
+
+  /**
+   * Register listeners for this plugin.
+   *
+   * @param listeners The listeners to register.
+   */
+  public void listeners(@NotNull Listener... listeners) {
+    var pluginManager = getProxy().getPluginManager();
+    for (var listener : listeners) {
+      pluginManager.registerListener(this, listener);
     }
   }
 

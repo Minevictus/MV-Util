@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import org.bukkit.event.HandlerList;
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
@@ -192,6 +193,18 @@ public abstract class MvPlugin extends JavaPlugin {
     var acf = getAcf();
     for (var command : commands) {
       acf.registerCommand(command, force);
+    }
+  }
+
+  /**
+   * Register listeners for this plugin.
+   *
+   * @param listeners The listeners to register.
+   */
+  public void listeners(@NotNull Listener... listeners) {
+    var pluginManager = getServer().getPluginManager();
+    for (var listener : listeners) {
+      pluginManager.registerEvents(listener, this);
     }
   }
 
