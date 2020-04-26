@@ -1,8 +1,12 @@
 package us.minevict.mvutil.spigot;
 
 import org.bukkit.plugin.java.JavaPlugin;
-import us.minevict.mvutil.spigot.hidden.PluginErrorState;
 
+/**
+ * The base plugin for Spigot plugins using MV-Util.
+ *
+ * @since 3.4.0
+ */
 @SuppressWarnings("RedundantThrows") // They exist to show what is allowed to be thrown.
 public abstract class MvPlugin extends JavaPlugin {
   private PluginErrorState errorState = null;
@@ -93,5 +97,10 @@ public abstract class MvPlugin extends JavaPlugin {
    */
   protected void disable()
       throws Exception {
+  }
+
+  private enum PluginErrorState {
+    LOAD,
+    ENABLE,
   }
 }
