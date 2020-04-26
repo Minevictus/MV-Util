@@ -219,7 +219,7 @@ public abstract class MvPlugin extends Plugin {
     var configFile = new File(getDataFolder(), "config.yml");
     if (!configFile.isFile()) {
       try {
-        Files.delete(configFile.toPath());
+        Files.deleteIfExists(configFile.toPath());
         configFile.createNewFile();
         try (var input = getResourceAsStream("config.yml")) {
           if (input != null) {
