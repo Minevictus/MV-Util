@@ -224,8 +224,7 @@ public abstract class MvPlugin extends Plugin {
         try (var input = getResourceAsStream("config.yml")) {
           if (input != null) {
             Files.copy(input, configFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-          }
-          {
+          } else {
             // There was no default configuration to put there.
             configuration = new Configuration();
             return;
