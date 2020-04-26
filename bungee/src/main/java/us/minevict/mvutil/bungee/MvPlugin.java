@@ -2,8 +2,15 @@ package us.minevict.mvutil.bungee;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.BungeeCommandManager;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
+import net.md_5.bungee.config.Configuration;
+import net.md_5.bungee.config.ConfigurationProvider;
+import net.md_5.bungee.config.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 import us.minevict.mvutil.common.LazyValue;
 
@@ -15,6 +22,7 @@ import us.minevict.mvutil.common.LazyValue;
 @SuppressWarnings("RedundantThrows") // They exist to show what is allowed to be thrown.
 public abstract class MvPlugin extends Plugin {
   private final LazyValue<BungeeCommandManager> acf = new LazyValue<>(this::constructAcf);
+  private Configuration configuration = null;
   private PluginErrorState errorState = null;
   private boolean enabled = false;
 
@@ -184,6 +192,76 @@ public abstract class MvPlugin extends Plugin {
    */
   public boolean isEnabled() {
     return enabled;
+  }
+
+  /**
+   * Gets the configuration for this plugin. This calls {@link #reloadConfig()} if necessary.
+   *
+   * @return The current configuration.
+   * @since 3.5.2
+   */
+  @NotNull
+  public Configuration getConfig() {
+    if (configuration == null) {
+      reloadConfig();
+    }
+
+    return configuration;
+  }
+
+  /**
+   * Loads the configuration from file.
+   *
+   * @since 3.5.2
+   */
+  public void reloadConfig() {
+    getDataFolder().mkdirs();
+    var configFile = new File(getDataFolder(), "config.yml");
+    if (!configFile.isFile()) {
+      try {
+        Files.delete(configFile.toPath());
+        configFile.createNewFile();
+        try (var input = getResourceAsStream("config.yml")) {
+          if (input != null) {
+            Files.copy(input, configFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+          }
+          {
+            // There was no default configuration to put there.
+            configuration = new Configuration();
+            return;
+          }
+        }
+      } catch (IOException ex) {
+        throw new RuntimeException("Unable to create configuration file", ex);
+      }
+    }
+    try {
+      configuration = ConfigurationProvider
+          .getProvider(YamlConfiguration.class)
+          .load(configFile);
+    } catch (IOException ex) {
+      throw new RuntimeException("Unable to load configuration file", ex);
+    }
+  }
+
+  /**
+   * Saves the current configuration to file if it has been loaded.
+   *
+   * @since 3.5.2
+   */
+  public void saveConfig() {
+    if (configuration == null) {
+      // Nothing to save.
+      return;
+    }
+
+    try {
+      ConfigurationProvider
+          .getProvider(YamlConfiguration.class)
+          .save(configuration, new File(getDataFolder(), "config.yml"));
+    } catch (IOException ex) {
+      throw new RuntimeException("Unable to save configuration file", ex);
+    }
   }
 
   private enum PluginErrorState {

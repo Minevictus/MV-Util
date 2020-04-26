@@ -28,7 +28,7 @@ ext["acfVer"] = "0.5.0-SNAPSHOT"
 allprojects {
     group = "us.minevict.mvutil"
     // Please remember to set this in MvUtilVersion.
-    version = "3.5.1"
+    version = "3.5.2"
 }
 
 subprojects {
