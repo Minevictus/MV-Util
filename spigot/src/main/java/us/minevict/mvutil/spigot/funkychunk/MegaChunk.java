@@ -36,8 +36,8 @@ public class MegaChunk implements FunkyChunk {
 
     return new MegaChunk(
         location.getWorld(),
-        location.getChunk().getX() / MEGA_CHUNK_SIZE + MEGA_CHUNK_OFFSET_X,
-        location.getChunk().getZ() / MEGA_CHUNK_SIZE + MEGA_CHUNK_OFFSET_Z
+        (location.getChunk().getX() + MEGA_CHUNK_OFFSET_X) / MEGA_CHUNK_SIZE,
+        (location.getChunk().getZ() + MEGA_CHUNK_OFFSET_Z) / MEGA_CHUNK_SIZE
     );
   }
 
@@ -53,8 +53,8 @@ public class MegaChunk implements FunkyChunk {
 
     return new MegaChunk(
         chunk.getWorld(),
-        chunk.getX() / MEGA_CHUNK_SIZE + MEGA_CHUNK_OFFSET_X,
-        chunk.getZ() / MEGA_CHUNK_SIZE + MEGA_CHUNK_OFFSET_Z
+        (chunk.getX() + MEGA_CHUNK_OFFSET_X) / MEGA_CHUNK_SIZE,
+        (chunk.getZ() + MEGA_CHUNK_OFFSET_Z) / MEGA_CHUNK_SIZE
     );
   }
 
@@ -70,8 +70,8 @@ public class MegaChunk implements FunkyChunk {
   public static MegaChunk fromCoordinates(@Nullable World world, int x, int z) {
     return new MegaChunk(
         world,
-        x / 16 / MEGA_CHUNK_SIZE + MEGA_CHUNK_OFFSET_X,
-        z / 16 / MEGA_CHUNK_SIZE + MEGA_CHUNK_OFFSET_Z
+        (x / 16 + MEGA_CHUNK_OFFSET_X) / MEGA_CHUNK_SIZE,
+        (z / 16 + MEGA_CHUNK_OFFSET_Z) / MEGA_CHUNK_SIZE
     );
   }
 
@@ -90,8 +90,8 @@ public class MegaChunk implements FunkyChunk {
 
     return new MegaChunk(
         world.orElse(null),
-        x / 16 / MEGA_CHUNK_SIZE + MEGA_CHUNK_OFFSET_X,
-        z / 16 / MEGA_CHUNK_SIZE + MEGA_CHUNK_OFFSET_Z
+        (x / 16 + MEGA_CHUNK_OFFSET_X) / MEGA_CHUNK_SIZE,
+        (z / 16 + MEGA_CHUNK_OFFSET_Z) / MEGA_CHUNK_SIZE
     );
   }
 
@@ -187,10 +187,25 @@ public class MegaChunk implements FunkyChunk {
 
   @Override
   public boolean areCoordinatesContained(int x, int z) {
-    return x >= getMinX()
-        && x <= getMaxX()
+    return MegaChunk.fromCoordinates(Optional.empty(), x, z).equals(this);
+  }
 
-        && z >= getMinZ()
-        && z <= getMaxZ();
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    MegaChunk megaChunk = (MegaChunk) o;
+    return x == megaChunk.x &&
+        z == megaChunk.z &&
+        Objects.equals(world, megaChunk.world);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(world, x, z);
   }
 }
