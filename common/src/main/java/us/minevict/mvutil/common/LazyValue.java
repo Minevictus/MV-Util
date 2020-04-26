@@ -41,6 +41,15 @@ public final class LazyValue<T> {
   }
 
   /**
+   * Checks whether the value is initialised yet.
+   *
+   * @return Whether an initialised value is stored.
+   */
+  public boolean isInitialised() {
+    return value.isPresent();
+  }
+
+  /**
    * Gets the value this holds.
    * <p>
    * If no value is present, one is constructed using the previously supplied constructor.
@@ -59,5 +68,14 @@ public final class LazyValue<T> {
     }
 
     return value.get();
+  }
+
+  /**
+   * Gets the value this holds if it is present.
+   *
+   * @return The value of type {@link T} this holds.
+   */
+  public Optional<T> getIfInitialised() {
+    return value;
   }
 }
