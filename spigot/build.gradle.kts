@@ -17,6 +17,7 @@ dependencies {
         exclude("org.bukkit")
     }
     api("me.tom.sparse:ChatMenuAPI:1.1.1")
+    api("io.papermc:paperlib:1.0.2")
 }
 
 tasks.withType<ShadowJar> {
@@ -39,7 +40,8 @@ tasks.withType<ShadowJar> {
         "org.slf4j",
         "com.zaxxer",
         "de.themoep.inventorygui",
-        "me.tom.sparse.spigot.chat"
+        "me.tom.sparse.spigot.chat",
+        "io.papermc.lib"
     )
     mergeServiceFiles()
 }
