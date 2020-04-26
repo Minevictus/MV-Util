@@ -167,3 +167,9 @@ subprojects {
         }
     }
 }
+
+// Holy SHIT IntelliJ, I do not care about some agreement for Java 14, we're not using it!
+configure<JavaPluginConvention> {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = sourceCompatibility
+}
