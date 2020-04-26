@@ -2,8 +2,12 @@ package us.minevict.mvutil.spigot;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.PaperCommandManager;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
 import us.minevict.mvutil.common.LazyValue;
 
@@ -15,6 +19,7 @@ import us.minevict.mvutil.common.LazyValue;
 @SuppressWarnings("RedundantThrows") // They exist to show what is allowed to be thrown.
 public abstract class MvPlugin extends JavaPlugin {
   private final LazyValue<PaperCommandManager> acf = new LazyValue<>(this::constructAcf);
+  private final List<BukkitTask> tasks = new ArrayList<>();
   private PluginErrorState errorState = null;
 
   @Override
@@ -87,6 +92,7 @@ public abstract class MvPlugin extends JavaPlugin {
       return;
     }
 
+    tasks.forEach(BukkitTask::cancel);
     HandlerList.unregisterAll(this);
     acf.getIfInitialised().ifPresent(PaperCommandManager::unregisterCommands);
 
@@ -158,6 +164,15 @@ public abstract class MvPlugin extends JavaPlugin {
     for (var command : commands) {
       acf.registerCommand(command, force);
     }
+  }
+
+  /**
+   * Add the given tasks to a cancelling routine upon disable.
+   *
+   * @param tasks The tasks to cancel.
+   */
+  public final void tasks(@NotNull BukkitTask... tasks) {
+    this.tasks.addAll(Arrays.asList(tasks));
   }
 
   private enum PluginErrorState {
