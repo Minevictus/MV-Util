@@ -2,9 +2,13 @@ package us.minevict.mvutil.spigot;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.PaperCommandManager;
+import co.aikar.taskchain.BukkitTaskChainFactory;
+import co.aikar.taskchain.TaskChain;
+import co.aikar.taskchain.TaskChainFactory;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
@@ -18,6 +22,7 @@ import us.minevict.mvutil.common.LazyValue;
  */
 @SuppressWarnings("RedundantThrows") // They exist to show what is allowed to be thrown.
 public abstract class MvPlugin extends JavaPlugin {
+  private final TaskChainFactory taskChainFactory = BukkitTaskChainFactory.create(this);
   private final LazyValue<PaperCommandManager> acf = new LazyValue<>(this::constructAcf);
   private final List<BukkitTask> tasks = new ArrayList<>();
   private PluginErrorState errorState = null;
@@ -36,6 +41,10 @@ public abstract class MvPlugin extends JavaPlugin {
       ex.printStackTrace();
       getLogger().warning("Disabling plugin...");
       setEnabled(false);
+    }
+
+    if (!isEnabled()) {
+      shutdownSafely(true);
     }
   }
 
@@ -71,6 +80,10 @@ public abstract class MvPlugin extends JavaPlugin {
       getLogger().warning("Disabling plugin...");
       setEnabled(false);
     }
+
+    if (!isEnabled()) {
+      shutdownSafely(true);
+    }
   }
 
   /**
@@ -92,9 +105,7 @@ public abstract class MvPlugin extends JavaPlugin {
       return;
     }
 
-    tasks.forEach(BukkitTask::cancel);
-    HandlerList.unregisterAll(this);
-    acf.getIfInitialised().ifPresent(PaperCommandManager::unregisterCommands);
+    shutdownSafely(false);
 
     try {
       disable();
@@ -102,16 +113,34 @@ public abstract class MvPlugin extends JavaPlugin {
       getLogger().severe("Encountered exception upon disabling:");
       ex.printStackTrace();
     }
+
+    taskChainFactory.shutdown(5, TimeUnit.SECONDS);
   }
 
   /**
    * Called upon disabling the plugin. This is not called if {@link #load()} or {@link #enable()}
    * erred in some way.
+   * <p>
+   * <ul>
+   * <li>ACF will have no more commands by this stage.</li>
+   * <li>The plugin has no more registered listeners by this stage.</li>
+   * <li>The plugin has all its tasks cancelled by this stage.</li>
+   * <li>The task chain factory will shut down after this has been called.</li>
+   * </ul>
    *
    * @throws Exception Any error encountered upon disabling.
    */
   protected void disable()
       throws Exception {
+  }
+
+  private void shutdownSafely(boolean doChain) {
+    if (doChain) {
+      taskChainFactory.shutdown(5, TimeUnit.SECONDS);
+    }
+    tasks.forEach(BukkitTask::cancel);
+    HandlerList.unregisterAll(this);
+    acf.getIfInitialised().ifPresent(PaperCommandManager::unregisterCommands);
   }
 
   /**
@@ -173,6 +202,25 @@ public abstract class MvPlugin extends JavaPlugin {
    */
   public final void tasks(@NotNull BukkitTask... tasks) {
     this.tasks.addAll(Arrays.asList(tasks));
+  }
+
+  /**
+   * Creates a new task chain for this plugin.
+   *
+   * @return A newly constructed task chain.
+   */
+  public <T> TaskChain<T> newTaskChain() {
+    return taskChainFactory.newChain();
+  }
+
+  /**
+   * Creates a new task chain for this plugin.
+   *
+   * @param name The shared name for this chain.
+   * @return A newly constructed task chain.
+   */
+  public <T> TaskChain<T> newTaskChain(@NotNull String name) {
+    return taskChainFactory.newSharedChain(name);
   }
 
   private enum PluginErrorState {
