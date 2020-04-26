@@ -5,6 +5,7 @@ import co.aikar.commands.PaperCommandManager;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Logger;
 import me.tom.sparse.spigot.chat.menu.ChatMenuAPI;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -43,6 +44,13 @@ public class MinevictusUtilsSpigot
         .getInt("megachunk-offset-x", MegaChunkSizes.MEGA_CHUNK_OFFSET_X);
     MegaChunkSizes.MEGA_CHUNK_OFFSET_Z = getConfig()
         .getInt("megachunk-offset-z", MegaChunkSizes.MEGA_CHUNK_OFFSET_Z);
+
+    if (getConfig().getBoolean("megachunk-random-offset-x")) {
+      MegaChunkSizes.MEGA_CHUNK_OFFSET_X += ThreadLocalRandom.current().nextInt();
+    }
+    if (getConfig().getBoolean("megachunk-random-offset-z")) {
+      MegaChunkSizes.MEGA_CHUNK_OFFSET_Z += ThreadLocalRandom.current().nextInt();
+    }
 
     ChatMenuAPI.init(this);
   }

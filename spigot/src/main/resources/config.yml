@@ -1,20 +1,32 @@
-# This defines the size of a standard megachunk.
-# The unit is chunks; a megachunk will be this value*16 blocks wide and long.
+# This defines the size of a standard mega-chunk.
+# The unit is chunks; a mega-chunk will be this value*16 blocks wide and long.
 #
 # Default: 8
 # Definition range: [1, ->>
 megachunk-size: 8
 
-# This defines the offset of the X coordinate for megachunks.
-# The unit is chunks; a megachunk will be shifted this value chunks along the X axis.
+# This defines the offset of the X coordinate for mega-chunks.
+# The unit is chunks; a mega-chunk will be shifted this value chunks along the X axis.
 #
 # Default: 0
 # Definition range: Z
 megachunk-offset-x: 0
 
-# This defines the offset of the Z coordinate for megachunks.
-# The unit is chunks; a megachunk will be shifted this value chunks along the Z axis.
+# This defines the offset of the Z coordinate for mega-chunks.
+# The unit is chunks; a mega-chunk will be shifted this value chunks along the Z axis.
 #
 # Default: 0
 # Definition range: Z
 megachunk-offset-z: 0
+
+# This defines whether the X coordinate for mega-chunks should have a random extra offset.
+# The extra offset is determined at plugin enable.
+#
+# Default: true
+megachunk-random-offset-x: true
+
+# This defines whether the Z coordinate for mega-chunks should have a random extra offset.
+# The extra offset is determined at plugin enable.
+#
+# Default: true
+megachunk-random-offset-z: true
