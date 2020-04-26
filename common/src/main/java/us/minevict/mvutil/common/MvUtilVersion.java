@@ -12,7 +12,7 @@ import java.util.Objects;
  * @since 0.2.2
  */
 public final class MvUtilVersion implements Comparable<MvUtilVersion> {
-  private static final MvUtilVersion currentVersion = new MvUtilVersion(3, 5, 0);
+  private static final MvUtilVersion currentVersion = new MvUtilVersion(3, 5, 1);
 
   /**
    * Gets the current version of MV-Util.
