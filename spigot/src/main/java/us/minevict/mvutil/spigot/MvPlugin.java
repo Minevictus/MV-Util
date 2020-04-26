@@ -2,6 +2,7 @@ package us.minevict.mvutil.spigot;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.PaperCommandManager;
+import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import us.minevict.mvutil.common.LazyValue;
@@ -86,6 +87,7 @@ public abstract class MvPlugin extends JavaPlugin {
       return;
     }
 
+    HandlerList.unregisterAll(this);
     acf.getIfInitialised().ifPresent(PaperCommandManager::unregisterCommands);
 
     try {
