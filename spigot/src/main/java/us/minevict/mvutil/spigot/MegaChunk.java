@@ -9,6 +9,7 @@ import org.jetbrains.annotations.Nullable;
  * @deprecated Use {@link us.minevict.mvutil.spigot.funkychunk.MegaChunk} instead.
  * @see us.minevict.mvutil.spigot.funkychunk.MegaChunk
  */
+// @since 0.1.0 or something, don't care, this is going out
 // TODO - Version 4.0.0: Remove this.
 @Deprecated
 public final class MegaChunk extends us.minevict.mvutil.spigot.funkychunk.MegaChunk {

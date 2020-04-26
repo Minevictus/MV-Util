@@ -14,6 +14,8 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * This defines a mega-chunk potentially within a world.
+ *
+ * @since 0.2.4
  */
 public class MegaChunk implements FunkyChunk {
   @Nullable
