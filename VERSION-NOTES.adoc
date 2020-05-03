@@ -3,7 +3,8 @@
 These are notes to check when bumping version note.
 
 The highest versions come at the top, lowest at the bottom, so `v1` comes under
-`v2`, and so forth. The `v` should be lowercase.
+`v2`, and so forth.
+The `v` should be lowercase.
 
 == v4.0.0
 

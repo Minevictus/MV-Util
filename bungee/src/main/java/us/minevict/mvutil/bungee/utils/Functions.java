@@ -22,15 +22,12 @@ public final class Functions {
    * Copy a resource from the plugin's classpath to the destination.
    *
    * @param plugin The {@link Plugin} to copy for.
-   * @param name The name of the file in the classpath; this is a path such as
-   * <code>configs/test.yml</code>.
+   * @param name   The name of the file in the classpath; this is a path such as
+   *               <code>configs/test.yml</code>.
    * @return Whether the copying was successful.
-   * @throws IOException Thrown if an error happens while copying the resource and failsafe is
-   * false.
-   * @throws IllegalStateException Thrown if there is a directory at the destination regardless of
-   * failsafe.
-   * @throws IllegalArgumentException Thrown if there is no resource under the name given and
-   * failsafe is false.
+   * @throws IOException              Thrown if an error happens while copying the resource and failsafe is false.
+   * @throws IllegalStateException    Thrown if there is a directory at the destination regardless of failsafe.
+   * @throws IllegalArgumentException Thrown if there is no resource under the name given and failsafe is false.
    * @see #copyResource(Plugin, String, File, boolean, boolean)
    */
   public static boolean copyResource(
@@ -43,17 +40,14 @@ public final class Functions {
   /**
    * Copy a resource from the plugin's classpath to the destination.
    *
-   * @param plugin The {@link Plugin} to copy for.
-   * @param name The name of the file in the classpath; this is a path such as
-   * <code>configs/test.yml</code>.
+   * @param plugin      The {@link Plugin} to copy for.
+   * @param name        The name of the file in the classpath; this is a path such as
+   *                    <code>configs/test.yml</code>.
    * @param destination The destination {@link File}.
    * @return Whether the copying was successful.
-   * @throws IOException Thrown if an error happens while copying the resource and failsafe is
-   * false.
-   * @throws IllegalStateException Thrown if there is a directory at the destination regardless of
-   * failsafe.
-   * @throws IllegalArgumentException Thrown if there is no resource under the name given and
-   * failsafe is false.
+   * @throws IOException              Thrown if an error happens while copying the resource and failsafe is false.
+   * @throws IllegalStateException    Thrown if there is a directory at the destination regardless of failsafe.
+   * @throws IllegalArgumentException Thrown if there is no resource under the name given and failsafe is false.
    * @see #copyResource(Plugin, String, File, boolean, boolean)
    */
   public static boolean copyResource(
@@ -67,18 +61,15 @@ public final class Functions {
   /**
    * Copy a resource from the plugin's classpath to the destination.
    *
-   * @param plugin The {@link Plugin} to copy for.
-   * @param name The name of the file in the classpath; this is a path such as
-   * <code>configs/test.yml</code>.
+   * @param plugin      The {@link Plugin} to copy for.
+   * @param name        The name of the file in the classpath; this is a path such as
+   *                    <code>configs/test.yml</code>.
    * @param destination The destination {@link File}.
-   * @param overwrite Whether to overwrite the destination if it already exists as a file.
+   * @param overwrite   Whether to overwrite the destination if it already exists as a file.
    * @return Whether the copying was successful.
-   * @throws IOException Thrown if an error happens while copying the resource and failsafe is
-   * false.
-   * @throws IllegalStateException Thrown if there is a directory at the destination regardless of
-   * failsafe.
-   * @throws IllegalArgumentException Thrown if there is no resource under the name given and
-   * failsafe is false.
+   * @throws IOException              Thrown if an error happens while copying the resource and failsafe is false.
+   * @throws IllegalStateException    Thrown if there is a directory at the destination regardless of failsafe.
+   * @throws IllegalArgumentException Thrown if there is no resource under the name given and failsafe is false.
    * @see #copyResource(Plugin, String, File, boolean, boolean)
    */
   public static boolean copyResource(
@@ -93,19 +84,16 @@ public final class Functions {
   /**
    * Copy a resource from the plugin's classpath to the destination.
    *
-   * @param plugin The {@link Plugin} to copy for.
-   * @param name The name of the file in the classpath; this is a path such as
-   * <code>configs/test.yml</code>.
+   * @param plugin      The {@link Plugin} to copy for.
+   * @param name        The name of the file in the classpath; this is a path such as
+   *                    <code>configs/test.yml</code>.
    * @param destination The destination {@link File}.
-   * @param overwrite Whether to overwrite the destination if it already exists as a file.
-   * @param failSafe Whether to return false if anything goes wrong during the copy.
+   * @param overwrite   Whether to overwrite the destination if it already exists as a file.
+   * @param failSafe    Whether to return false if anything goes wrong during the copy.
    * @return Whether the copying was successful.
-   * @throws IOException Thrown if an error happens while copying the resource and failsafe is
-   * false.
-   * @throws IllegalStateException Thrown if there is a directory at the destination regardless of
-   * failsafe.
-   * @throws IllegalArgumentException Thrown if there is no resource under the name given and
-   * failsafe is false.
+   * @throws IOException              Thrown if an error happens while copying the resource and failsafe is false.
+   * @throws IllegalStateException    Thrown if there is a directory at the destination regardless of failsafe.
+   * @throws IllegalArgumentException Thrown if there is no resource under the name given and failsafe is false.
    */
   @SuppressWarnings("ResultOfMethodCallIgnored")
   public static boolean copyResource(

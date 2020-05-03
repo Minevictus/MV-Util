@@ -12,8 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import us.minevict.mvutil.spigot.hidden.CloseDatabaseListener;
 
 /**
- * Utilities ported over from Aikar's Bukkit IDB to manage DB creation for Bukkit on a simpler
- * manner.
+ * Utilities ported over from Aikar's Bukkit IDB to manage DB creation for Bukkit on a simpler manner.
  *
  * @since 0.3.1
  */
@@ -23,13 +22,12 @@ public class DatabaseUtils {
   }
 
   /**
-   * {@link PooledDatabaseOptions} builder with the recommended options dialed in for a given {@link
-   * Plugin}.
+   * {@link PooledDatabaseOptions} builder with the recommended options dialed in for a given {@link Plugin}.
    *
-   * @param plugin {@link Plugin} reference to extract preferences from.
-   * @param user SQL user.
-   * @param pass SQL password.
-   * @param db SQL database.
+   * @param plugin      {@link Plugin} reference to extract preferences from.
+   * @param user        SQL user.
+   * @param pass        SQL password.
+   * @param db          SQL database.
    * @param hostAndPort Host and port for the pool.
    * @return {@link PooledDatabaseOptions} built around the {@link Plugin}.
    */
@@ -59,14 +57,13 @@ public class DatabaseUtils {
   }
 
   /**
-   * Create an IDB {@link Database} instance to make SQL queries with the plugin as a base. This
-   * method will not set the global {@link DB} to this by default and will close it when {@link
-   * PluginDisableEvent} is fired.
+   * Create an IDB {@link Database} instance to make SQL queries with the plugin as a base. This method will not set the
+   * global {@link DB} to this by default and will close it when {@link PluginDisableEvent} is fired.
    *
-   * @param plugin {@link Plugin} to register listeners and get settings from.
-   * @param user SQL user.
-   * @param pass SQL password.
-   * @param db SQL database.
+   * @param plugin      {@link Plugin} to register listeners and get settings from.
+   * @param user        SQL user.
+   * @param pass        SQL password.
+   * @param db          SQL database.
    * @param hostAndPort Host and port for the pool.
    * @return {@link Database} built around the {@link Plugin}.
    */
@@ -86,13 +83,12 @@ public class DatabaseUtils {
   }
 
   /**
-   * Create an IDB {@link Database} instance to make SQL queries with the plugin as a base. This
-   * method will not set the global {@link DB} to this by default and will close it when {@link
-   * PluginDisableEvent} is fired.
+   * Create an IDB {@link Database} instance to make SQL queries with the plugin as a base. This method will not set the
+   * global {@link DB} to this by default and will close it when {@link PluginDisableEvent} is fired.
    *
-   * @param plugin {@link Plugin} to register listeners and get settings from.
-   * @param options {@link PooledDatabaseOptions} in case you don't want to use {@link
-   * #getRecommendedOptions(Plugin, String, String, String, String)}
+   * @param plugin  {@link Plugin} to register listeners and get settings from.
+   * @param options {@link PooledDatabaseOptions} in case you don't want to use {@link #getRecommendedOptions(Plugin,
+   *                String, String, String, String)}
    * @return {@link Database} using {@link Plugin} to register listeners.
    */
   public static Database createHikariDatabase(@NotNull Plugin plugin, @NotNull PooledDatabaseOptions options) {
@@ -100,13 +96,12 @@ public class DatabaseUtils {
   }
 
   /**
-   * Create an IDB {@link Database} instance to make SQL queries with the plugin as a base. This is
-   * the basic builder upon which you can decide if you don't want this database to be used
-   * globally.
+   * Create an IDB {@link Database} instance to make SQL queries with the plugin as a base. This is the basic builder
+   * upon which you can decide if you don't want this database to be used globally.
    *
-   * @param plugin {@link Plugin} to register listeners and get settings from.
-   * @param options {@link PooledDatabaseOptions} in case you don't want to use {@link
-   * #getRecommendedOptions(Plugin, String, String, String, String)}
+   * @param plugin    {@link Plugin} to register listeners and get settings from.
+   * @param options   {@link PooledDatabaseOptions} in case you don't want to use {@link #getRecommendedOptions(Plugin,
+   *                  String, String, String, String)}
    * @param setGlobal Whether you want this database to be used globally through {@link DB}.
    * @return {@link Database} using {@link Plugin} and your desired options.
    */

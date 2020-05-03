@@ -12,8 +12,8 @@ import us.minevict.mvutil.spigot.utils.PluginUtils;
 /**
  * Applies a {@link net.md_5.bungee.api.chat.HoverEvent HoverEvent} for an item stack using MV-NMS.
  * <p>
- * This requires MV-NMS (checks {@link PluginUtils#isMvNmsPresent()}) to do anything. If the version
- * is unsupported, nothing is changed. The retention given to {@link #join} is ignored.
+ * This requires MV-NMS (checks {@link PluginUtils#isMvNmsPresent()}) to do anything. If the version is unsupported,
+ * nothing is changed. The retention given to {@link #join} is ignored.
  *
  * @since 0.3.5
  */

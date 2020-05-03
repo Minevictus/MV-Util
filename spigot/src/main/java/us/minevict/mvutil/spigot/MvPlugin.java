@@ -234,7 +234,7 @@ public abstract class MvPlugin extends JavaPlugin {
    * Creates a new task chain for this plugin.
    *
    * @param name The shared name for this chain.
-   * @param <T> The type of the chain.
+   * @param <T>  The type of the chain.
    * @return A newly constructed task chain.
    */
   public <T> TaskChain<T> newTaskChain(@NotNull String name) {
@@ -244,7 +244,7 @@ public abstract class MvPlugin extends JavaPlugin {
   /**
    * Set up the tables for these cooldowns.
    *
-   * @param database The database to set up the tables within.
+   * @param database  The database to set up the tables within.
    * @param cooldowns The cooldowns to setup tables for.
    * @since 3.6.0
    */

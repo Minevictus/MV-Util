@@ -33,10 +33,13 @@ import us.minevict.mvutil.spigot.permissions.annotations.Permissions;
  * @since 0.1.0
  */
 public class PermissionsManager implements Listener {
-  @NotNull private static final MethodHandles.Lookup PUBLIC_LOOKUP = MethodHandles.publicLookup();
+  @NotNull
+  private static final MethodHandles.Lookup PUBLIC_LOOKUP = MethodHandles.publicLookup();
 
-  @NotNull private final MinevictusUtilsSpigot main;
-  @NotNull private final Map<Plugin, PermissionIndex> permissionIndices = new HashMap<>();
+  @NotNull
+  private final MinevictusUtilsSpigot main;
+  @NotNull
+  private final Map<Plugin, PermissionIndex> permissionIndices = new HashMap<>();
 
   public PermissionsManager(@NotNull final MinevictusUtilsSpigot main) {
     this.main = main;

@@ -267,7 +267,7 @@ public abstract class MvPlugin extends Plugin {
   /**
    * Set up the tables for these cooldowns.
    *
-   * @param database The database to set up the tables within.
+   * @param database  The database to set up the tables within.
    * @param cooldowns The cooldowns to setup tables for.
    * @since 3.6.0
    */

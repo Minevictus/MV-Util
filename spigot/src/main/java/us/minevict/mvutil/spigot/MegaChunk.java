@@ -6,8 +6,8 @@ import org.jetbrains.annotations.Nullable;
 /**
  * This defines a mega-chunk potentially within a world.
  *
- * @deprecated Use {@link us.minevict.mvutil.spigot.funkychunk.MegaChunk} instead.
  * @see us.minevict.mvutil.spigot.funkychunk.MegaChunk
+ * @deprecated Use {@link us.minevict.mvutil.spigot.funkychunk.MegaChunk} instead.
  */
 // @since 0.1.0 or something, don't care, this is going out
 // TODO - Version 4.0.0: Remove this.

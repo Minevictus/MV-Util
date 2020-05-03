@@ -36,8 +36,8 @@ public interface AcfCooldowns {
   /**
    * Set up the table for this cooldown.
    * <p>
-   * There must be a column called <code>player</code> with the type <code>char(36)</code>.
-   * There must be a column called <code>lastExecuted</code> with the type <code>long</code>.
+   * There must be a column called <code>player</code> with the type <code>char(36)</code>. There must be a column
+   * called <code>lastExecuted</code> with the type <code>long</code>.
    * </p>
    *
    * @param database The database to use for the data.

@@ -17,20 +17,7 @@ public final class CloseDatabaseListener implements Listener {
   @NotNull
   private final Map<Plugin, Database> databases = new HashMap<>();
 
-  private CloseDatabaseListener() {}
-
-  @EventHandler(priority = EventPriority.MONITOR)
-  public void onPluginDisable(PluginDisableEvent event) {
-    var database = databases.remove(event.getPlugin());
-    if (database != null) {
-      event.getPlugin().getLogger().info("MV-Util closing database for plugin.");
-      database.close();
-    }
-  }
-
-  @NotNull
-  public Map<Plugin, Database> getDatabases() {
-    return databases;
+  private CloseDatabaseListener() {
   }
 
   @NotNull
@@ -44,5 +31,19 @@ public final class CloseDatabaseListener implements Listener {
     }
 
     return INSTANCE;
+  }
+
+  @EventHandler(priority = EventPriority.MONITOR)
+  public void onPluginDisable(PluginDisableEvent event) {
+    var database = databases.remove(event.getPlugin());
+    if (database != null) {
+      event.getPlugin().getLogger().info("MV-Util closing database for plugin.");
+      database.close();
+    }
+  }
+
+  @NotNull
+  public Map<Plugin, Database> getDatabases() {
+    return databases;
   }
 }
