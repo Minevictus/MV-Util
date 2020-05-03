@@ -11,7 +11,11 @@ import net.md_5.bungee.api.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import us.minevict.mvutil.bungee.utils.Functions;
 import us.minevict.mvutil.common.MinevictusUtilsPlatform;
+import us.minevict.mvutil.common.utils.SetupPlatformless;
 
+/**
+ * @since 0.1.0
+ */
 public class MinevictusUtilsBungee
     extends Plugin
     implements MinevictusUtilsPlatform {
@@ -33,6 +37,11 @@ public class MinevictusUtilsBungee
   @NotNull
   public static MinevictusUtilsBungee getInstance() {
     return instance;
+  }
+
+  @Override
+  public void onLoad() {
+    SetupPlatformless.setup(this);
   }
 
   @Override

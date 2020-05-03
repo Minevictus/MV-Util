@@ -13,11 +13,15 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import us.minevict.mvutil.common.MinevictusUtilsPlatform;
+import us.minevict.mvutil.common.utils.SetupPlatformless;
 import us.minevict.mvutil.spigot.hidden.CloseDatabaseListener;
 import us.minevict.mvutil.spigot.hidden.MegaChunkSizes;
 import us.minevict.mvutil.spigot.permissions.PermissionsManager;
 import us.minevict.mvutil.spigot.utils.Functions;
 
+/**
+ * @since 0.1.0
+ */
 public class MinevictusUtilsSpigot
     extends JavaPlugin
     implements MinevictusUtilsPlatform {
@@ -28,6 +32,11 @@ public class MinevictusUtilsSpigot
     super();
 
     this.permissionsManager = new PermissionsManager(this);
+  }
+
+  @Override
+  public void onLoad() {
+    SetupPlatformless.setup(this);
   }
 
   @Override
