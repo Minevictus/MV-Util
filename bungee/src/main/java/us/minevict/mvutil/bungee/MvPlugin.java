@@ -122,6 +122,7 @@ public abstract class MvPlugin extends Plugin {
    * <li>ACF will have no more commands by this stage.</li>
    * <li>The plugin has no more registered listeners by this stage.</li>
    * </ul>
+   * </p>
    *
    * @throws Exception Any error encountered upon disabling.
    */
@@ -266,6 +267,8 @@ public abstract class MvPlugin extends Plugin {
   /**
    * Set up the tables for these cooldowns.
    *
+   * @param database The database to set up the tables within.
+   * @param cooldowns The cooldowns to setup tables for.
    * @since 3.6.0
    */
   public void setupCooldowns(@NotNull Database database, @NotNull AcfCooldowns[] cooldowns) {

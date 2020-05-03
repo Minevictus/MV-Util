@@ -204,6 +204,7 @@ public class GuiUtils {
    * @param pageRows The max amount of rows allowed in a single page. This is capped to 5 at most
    * and 1 at least.
    * @param growing Whether the rows should grow per the amount of items.
+   * @param pageBar The format of the paging bar.
    * @return The calculated rows.
    * @see #calculatePagingRows(int, int, boolean, boolean, boolean, String)
    * @since 0.3.5
