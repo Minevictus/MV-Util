@@ -1,16 +1,21 @@
 package us.minevict.mvutil.common.text;
 
-import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.chat.*;
-import net.md_5.bungee.api.chat.ComponentBuilder.FormatRetention;
-import net.md_5.bungee.api.chat.HoverEvent.Action;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.ComponentBuilder.FormatRetention;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.HoverEvent.Action;
+import net.md_5.bungee.api.chat.TextComponent;
+import org.apache.commons.lang.time.DurationFormatUtils;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * A wrapper for {@link ComponentBuilder} to have even easier building of text.
@@ -1139,6 +1144,61 @@ public final class ComponentBuilderV2 {
 
     builder.append(BigDecimal.valueOf(number).setScale(decimals, roundingMode).toString());
     return this;
+  }
+
+  /**
+   * Add a formatted duration using words.
+   *
+   * @param duration The duration to append.
+   * @param unit     The unit the duration is in.
+   * @return This {@link ComponentBuilderV2} for chaining.
+   * @since 3.6.0
+   */
+  @NotNull
+  public ComponentBuilderV2 duration(long duration, @NotNull TimeUnit unit) {
+    return duration(duration, unit, true, true);
+  }
+
+
+  /**
+   * Add a formatted duration using words.
+   *
+   * @param duration                    The duration to append.
+   * @param unit                        The unit the duration is in.
+   * @param suppressLeadingZeroElements Whether to ignore zero elements in units larger than the first unit with a value
+   *                                    over 0.
+   * @return This {@link ComponentBuilderV2} for chaining.
+   * @since 3.6.0
+   */
+  @NotNull
+  public ComponentBuilderV2 duration(long duration, @NotNull TimeUnit unit, boolean suppressLeadingZeroElements) {
+    return duration(duration, unit, suppressLeadingZeroElements, true);
+  }
+
+  /**
+   * Add a formatted duration using words.
+   *
+   * @param duration                     The duration to append.
+   * @param unit                         The unit the duration is in.
+   * @param suppressLeadingZeroElements  Whether to ignore zero elements in units larger than the first unit with a
+   *                                     value over 0.
+   * @param suppressTrailingZeroElements Whether to ignore zero elements in units smaller than the first unit with a
+   *                                     value over 0.
+   * @return This {@link ComponentBuilderV2} for chaining.
+   * @since 3.6.0
+   */
+  @NotNull
+  public ComponentBuilderV2 duration(
+      long duration,
+      @NotNull TimeUnit unit,
+      boolean suppressLeadingZeroElements,
+      boolean suppressTrailingZeroElements
+  ) {
+    return append(DurationFormatUtils.formatDurationWords(
+        unit.toMillis(duration),
+        suppressLeadingZeroElements,
+        suppressTrailingZeroElements
+    ));
   }
 
   /**
