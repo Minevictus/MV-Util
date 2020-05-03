@@ -2,6 +2,7 @@ package us.minevict.mvutil.bungee;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.BungeeCommandManager;
+import co.aikar.idb.Database;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,6 +14,7 @@ import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 import us.minevict.mvutil.common.LazyValue;
+import us.minevict.mvutil.common.acf.AcfCooldowns;
 
 /**
  * The base plugin for Spigot plugins using MV-Util.
@@ -114,8 +116,7 @@ public abstract class MvPlugin extends Plugin {
   }
 
   /**
-   * Called upon disabling the plugin. This is not called if {@link #load()} or {@link #enable()}
-   * erred in some way.
+   * Called upon disabling the plugin. This is not called if {@link #load()} or {@link #enable()} erred in some way.
    * <p>
    * <ul>
    * <li>ACF will have no more commands by this stage.</li>
@@ -151,8 +152,7 @@ public abstract class MvPlugin extends Plugin {
   /**
    * Gets a {@link BungeeCommandManager} linked to this plugin.
    * <p>
-   * This has already been {@link MinevictusUtilsBungee#prepareAcf prepared} and is only constructed
-   * once gotten.
+   * This has already been {@link MinevictusUtilsBungee#prepareAcf prepared} and is only constructed once gotten.
    *
    * @return A newly constructed or cached {@link BungeeCommandManager} for this plugin.
    */
@@ -260,6 +260,21 @@ public abstract class MvPlugin extends Plugin {
           .save(configuration, new File(getDataFolder(), "config.yml"));
     } catch (IOException ex) {
       throw new RuntimeException("Unable to save configuration file", ex);
+    }
+  }
+
+  /**
+   * Set up the tables for these cooldowns.
+   *
+   * @since 3.6.0
+   */
+  public void setupCooldowns(@NotNull Database database, @NotNull AcfCooldowns[] cooldowns) {
+    for (var cooldown : cooldowns) {
+      cooldown.setupTable(database).exceptionally(ex -> {
+        getLogger().warning("Exception when setting up cooldown");
+        ex.printStackTrace();
+        return null;
+      });
     }
   }
 

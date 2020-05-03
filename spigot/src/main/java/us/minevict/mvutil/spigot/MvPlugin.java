@@ -2,6 +2,7 @@ package us.minevict.mvutil.spigot;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.PaperCommandManager;
+import co.aikar.idb.Database;
 import co.aikar.taskchain.BukkitTaskChainFactory;
 import co.aikar.taskchain.TaskChain;
 import co.aikar.taskchain.TaskChainFactory;
@@ -15,6 +16,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
 import us.minevict.mvutil.common.LazyValue;
+import us.minevict.mvutil.common.acf.AcfCooldowns;
 
 /**
  * The base plugin for Spigot plugins using MV-Util.
@@ -234,6 +236,21 @@ public abstract class MvPlugin extends JavaPlugin {
    */
   public <T> TaskChain<T> newTaskChain(@NotNull String name) {
     return taskChainFactory.newSharedChain(name);
+  }
+
+  /**
+   * Set up the tables for these cooldowns.
+   *
+   * @since 3.6.0
+   */
+  public void setupCooldowns(@NotNull Database database, @NotNull AcfCooldowns[] cooldowns) {
+    for (var cooldown : cooldowns) {
+      cooldown.setupTable(database).exceptionally(ex -> {
+        getLogger().warning("Exception when setting up cooldown");
+        ex.printStackTrace();
+        return null;
+      });
+    }
   }
 
   private enum PluginErrorState {
