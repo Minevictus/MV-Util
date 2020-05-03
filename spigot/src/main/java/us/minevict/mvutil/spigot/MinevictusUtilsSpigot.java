@@ -1,5 +1,9 @@
 package us.minevict.mvutil.spigot;
 
+import co.aikar.commands.BukkitCommandExecutionContext;
+import co.aikar.commands.BukkitCommandIssuer;
+import co.aikar.commands.CommandExecutionContext;
+import co.aikar.commands.CommandIssuer;
 import co.aikar.commands.MessageType;
 import co.aikar.commands.PaperCommandManager;
 import java.io.File;
@@ -134,6 +138,9 @@ public class MinevictusUtilsSpigot
           + commandManager.getPlugin().getDescription().getName());
       ex.printStackTrace();
     }
+
+    commandManager.getCommandContexts().registerContext(CommandIssuer.class, CommandExecutionContext::getIssuer);
+    commandManager.getCommandContexts().registerContext(BukkitCommandIssuer.class, BukkitCommandExecutionContext::getIssuer);
 
     return commandManager;
   }

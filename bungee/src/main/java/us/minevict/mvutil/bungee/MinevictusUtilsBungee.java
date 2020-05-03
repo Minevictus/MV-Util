@@ -1,6 +1,10 @@
 package us.minevict.mvutil.bungee;
 
+import co.aikar.commands.BungeeCommandExecutionContext;
+import co.aikar.commands.BungeeCommandIssuer;
 import co.aikar.commands.BungeeCommandManager;
+import co.aikar.commands.CommandExecutionContext;
+import co.aikar.commands.CommandIssuer;
 import co.aikar.commands.MessageType;
 import java.io.File;
 import java.io.IOException;
@@ -94,6 +98,9 @@ public class MinevictusUtilsBungee
           + commandManager.getPlugin().getDescription().getName());
       ex.printStackTrace();
     }
+
+    commandManager.getCommandContexts().registerContext(CommandIssuer.class, CommandExecutionContext::getIssuer);
+    commandManager.getCommandContexts().registerContext(BungeeCommandIssuer.class, BungeeCommandExecutionContext::getIssuer);
 
     return commandManager;
   }
