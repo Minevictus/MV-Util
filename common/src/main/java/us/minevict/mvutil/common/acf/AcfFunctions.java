@@ -83,7 +83,7 @@ public class AcfFunctions {
       return false;
     }
     long now = System.currentTimeMillis();
-    long expiry = now + duration;
+    long expiry = lastExecuted + duration;
 
     if (expiry <= now || resetIfNotExpired) {
       setLastExecuted.accept(issuer, System.currentTimeMillis());
