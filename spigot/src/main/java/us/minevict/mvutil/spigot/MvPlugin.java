@@ -32,8 +32,6 @@ public abstract class MvPlugin extends JavaPlugin {
 
   @Override
   public final void onLoad() {
-    taskChainFactory = BukkitTaskChainFactory.create(this);
-
     try {
       if (!load()) {
         errorState = PluginErrorState.LOAD;
@@ -48,8 +46,8 @@ public abstract class MvPlugin extends JavaPlugin {
       setEnabled(false);
     }
 
-    if (!isEnabled()) {
-      shutdownSafely(true);
+    if (errorState != null) {
+      shutdownSafely(false);
     }
   }
 
@@ -71,6 +69,8 @@ public abstract class MvPlugin extends JavaPlugin {
     if (errorState != null) {
       return;
     }
+
+    taskChainFactory = BukkitTaskChainFactory.create(this);
 
     try {
       if (!enable()) {
