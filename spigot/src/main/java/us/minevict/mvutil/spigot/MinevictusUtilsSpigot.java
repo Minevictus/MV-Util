@@ -61,7 +61,9 @@ public class MinevictusUtilsSpigot
       MegaChunkSizes.MEGA_CHUNK_OFFSET_Z += ThreadLocalRandom.current().nextInt();
     }
 
-    ChatMenuAPI.init(this);
+    if (getServer().getPluginManager().isPluginEnabled("ProtocolLib")) {
+      ChatMenuAPI.init(this);
+    }
   }
 
   @Override
