@@ -48,8 +48,8 @@ public interface AcfCooldowns {
       var tableName = getCooldownTableName();
       try {
         database.executeUpdate("CREATE TABLE IF NOT EXISTS " + tableName + " ("
-            + "player char(36) not null,"
-            + "lastExecuted long not null default 0,"
+            + "player CHAR(36) not null,"
+            + "lastExecuted BIGINT not null default 0,"
             + "primary key(player)"
             + ")");
       } catch (SQLException ex) {
