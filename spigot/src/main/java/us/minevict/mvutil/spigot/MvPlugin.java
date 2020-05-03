@@ -25,13 +25,15 @@ import us.minevict.mvutil.common.acf.AcfCooldowns;
  */
 @SuppressWarnings("RedundantThrows") // They exist to show what is allowed to be thrown.
 public abstract class MvPlugin extends JavaPlugin {
-  private final TaskChainFactory taskChainFactory = BukkitTaskChainFactory.create(this);
   private final LazyValue<PaperCommandManager> acf = new LazyValue<>(this::constructAcf);
   private final List<BukkitTask> tasks = new ArrayList<>();
   private PluginErrorState errorState = null;
+  private TaskChainFactory taskChainFactory = null;
 
   @Override
   public final void onLoad() {
+    taskChainFactory = BukkitTaskChainFactory.create(this);
+
     try {
       if (!load()) {
         errorState = PluginErrorState.LOAD;
@@ -121,8 +123,7 @@ public abstract class MvPlugin extends JavaPlugin {
   }
 
   /**
-   * Called upon disabling the plugin. This is not called if {@link #load()} or {@link #enable()}
-   * erred in some way.
+   * Called upon disabling the plugin. This is not called if {@link #load()} or {@link #enable()} erred in some way.
    * <p>
    * <ul>
    * <li>ACF will have no more commands by this stage.</li>
@@ -164,8 +165,7 @@ public abstract class MvPlugin extends JavaPlugin {
   /**
    * Gets a {@link PaperCommandManager} linked to this plugin.
    * <p>
-   * This has already been {@link MinevictusUtilsSpigot#prepareAcf prepared} and is only constructed
-   * once gotten.
+   * This has already been {@link MinevictusUtilsSpigot#prepareAcf prepared} and is only constructed once gotten.
    *
    * @return A newly constructed or cached {@link PaperCommandManager} for this plugin.
    */
