@@ -7,8 +7,10 @@ plugins {
 dependencies {
     compileOnly("io.github.waterfallmc:waterfall-api:1.15-SNAPSHOT")
     api(project(":common"))
+    implementation(project(":bungee-impl-hidden-details"))
 
     api("co.aikar:acf-bungee:${rootProject.ext["acfVer"]}")
+    api("commons-lang:commons-lang:2.6") // Spigot has this, Bungee doesn't
 }
 
 tasks.withType<ShadowJar> {
@@ -28,7 +30,8 @@ tasks.withType<ShadowJar> {
         "io.netty",
         "io.lettuce",
         "org.slf4j",
-        "com.zaxxer"
+        "com.zaxxer",
+        "org.apache.commons.lang"
     )
     mergeServiceFiles()
 }
