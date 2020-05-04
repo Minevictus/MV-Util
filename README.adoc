@@ -1,4 +1,4 @@
-= MV-Util
+= MV-Util 
 
 A utility plugin for both Spigot and BungeeCord for Minevictus.
 
@@ -46,7 +46,9 @@ repositories {
 
 == Spigot
 
-Current version: `0.2.3`.
+Current version:
+
+image:https://img.shields.io/github/release/Minevictus/MV-Util.svg[Releases, link=https://github.com/Minevictus/MV-Util/releases/]
 
 [source,xml]
 ----
@@ -85,7 +87,9 @@ bukkit {
 
 == BungeeCord
 
-Current version: `0.1.0`.
+Current version: 
+
+image:https://img.shields.io/github/release/Minevictus/MV-Util.svg[Release, link=https://github.com/Minevictus/MV-Util/releases/]
 
 [source,xml]
 ----
