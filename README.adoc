@@ -48,7 +48,7 @@ repositories {
 
 Current version:
 
-image:https://img.shields.io/github/release/Minevictus/MV-Util.svg
+image:https://img.shields.io/github/release/Minevictus/MV-Util.svg[Releases, link=https://github.com/Minevictus/MV-Util/releases/]
 
 [source,xml]
 ----
@@ -87,9 +87,9 @@ bukkit {
 
 == BungeeCord
 
-Current version:
+Current version: 
 
-image:https://img.shields.io/github/release/Minevictus/MV-Util.svg[link=https://github.com/Minevictus/MV-Util/releases/)
+image:https://img.shields.io/github/release/Minevictus/MV-Util.svg[Release, link=https://github.com/Minevictus/MV-Util/releases/]
 
 [source,xml]
 ----
