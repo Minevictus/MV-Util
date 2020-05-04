@@ -48,7 +48,7 @@ repositories {
 
 Current version:
 
-image:https://img.shields.io/github/release/Minevictus/MV-Util.svg[Latest Release, link=https://github.com/Minevictus/MV-Util/releases/)
+image:https://img.shields.io/github/release/Minevictus/MV-Util.svg
 
 [source,xml]
 ----
@@ -89,7 +89,7 @@ bukkit {
 
 Current version:
 
-image:https://img.shields.io/github/release/Minevictus/MV-Util.svg[Latest Release, link=https://github.com/Minevictus/MV-Util/releases/)
+image:https://img.shields.io/github/release/Minevictus/MV-Util.svg[link=https://github.com/Minevictus/MV-Util/releases/)
 
 [source,xml]
 ----
