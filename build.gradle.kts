@@ -27,7 +27,6 @@ ext["acfVer"] = "0.5.0-SNAPSHOT"
 
 allprojects {
     group = "us.minevict.mvutil"
-    // Please remember to set this in MvUtilVersion.
     version = "3.7.0"
 }
 
@@ -164,6 +163,14 @@ subprojects {
                     password = proxiPassword
                 }
             }
+        }
+    }
+
+    tasks.withType<Jar> {
+        manifest {
+            attributes(
+                "Implementation-Version" to project.version.toString()
+            )
         }
     }
 }

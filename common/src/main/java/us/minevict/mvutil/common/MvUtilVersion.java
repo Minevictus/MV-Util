@@ -12,7 +12,21 @@ import java.util.Objects;
  * @since 0.2.2
  */
 public final class MvUtilVersion implements Comparable<MvUtilVersion> {
-  private static final MvUtilVersion currentVersion = new MvUtilVersion(3, 7, 0);
+  private static final MvUtilVersion currentVersion = readManifestVersion();
+
+  private static MvUtilVersion readManifestVersion() {
+    String[] version = MvUtilVersion.class.getPackage().getImplementationVersion()
+        .trim()
+        .split("[-_]", 2)[0]
+        .split("\\.");
+    String majorText = version[0].replaceAll("[^0-9]", "");
+    String minorText = version[1].replaceAll("[^0-9]", "");
+    String patchText = version[2].replaceAll("[^0-9]", "");
+    int major = Integer.parseInt(majorText);
+    int minor = Integer.parseInt(minorText);
+    int patch = Integer.parseInt(patchText);
+    return new MvUtilVersion(major, minor, patch);
+  }
 
   /**
    * Gets the current version of MV-Util.
