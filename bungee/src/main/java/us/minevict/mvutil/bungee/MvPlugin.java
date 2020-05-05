@@ -117,12 +117,11 @@ public abstract class MvPlugin extends Plugin {
 
   /**
    * Called upon disabling the plugin. This is not called if {@link #load()} or {@link #enable()} erred in some way.
-   * <p>
+   * <br>
    * <ul>
    * <li>ACF will have no more commands by this stage.</li>
    * <li>The plugin has no more registered listeners by this stage.</li>
    * </ul>
-   * </p>
    *
    * @throws Exception Any error encountered upon disabling.
    */
