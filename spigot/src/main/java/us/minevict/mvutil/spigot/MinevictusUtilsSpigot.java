@@ -2,10 +2,13 @@ package us.minevict.mvutil.spigot;
 
 import co.aikar.commands.MessageType;
 import co.aikar.commands.PaperCommandManager;
+import io.lettuce.core.RedisClient;
+import io.lettuce.core.RedisURI;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 import me.tom.sparse.spigot.chat.menu.ChatMenuAPI;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -27,6 +30,7 @@ public class MinevictusUtilsSpigot
     implements MinevictusUtilsPlatform {
   @NotNull
   private final PermissionsManager permissionsManager;
+  private RedisClient redisClient;
 
   public MinevictusUtilsSpigot() {
     super();
@@ -43,6 +47,11 @@ public class MinevictusUtilsSpigot
   public void onEnable() {
     saveDefaultConfig();
     getConfig().options().copyDefaults(true);
+
+    redisClient = RedisClient.create(RedisURI.builder()
+        .withHost(getConfig().getString("redis-hostname"))
+        .withPort(getConfig().getInt("redis-port"))
+        .build());
 
     getServer().getPluginManager().registerEvents(permissionsManager, this);
     getServer().getPluginManager().registerEvents(CloseDatabaseListener.getInstance(), this);
@@ -71,6 +80,7 @@ public class MinevictusUtilsSpigot
     ChatMenuAPI.disable();
 
     HandlerList.unregisterAll(this);
+    redisClient.shutdown(2, 5, TimeUnit.SECONDS);
   }
 
   @Override
@@ -136,5 +146,11 @@ public class MinevictusUtilsSpigot
     }
 
     return commandManager;
+  }
+
+  @Override
+  @NotNull
+  public RedisClient getRedis() {
+    return redisClient;
   }
 }

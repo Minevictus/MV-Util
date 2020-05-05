@@ -221,7 +221,6 @@ public abstract class MvPlugin extends Plugin {
     if (!configFile.isFile()) {
       try {
         Files.deleteIfExists(configFile.toPath());
-        configFile.createNewFile();
         try (var input = getResourceAsStream("config.yml")) {
           if (input != null) {
             Files.copy(input, configFile.toPath(), StandardCopyOption.REPLACE_EXISTING);

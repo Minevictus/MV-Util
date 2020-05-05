@@ -1,5 +1,6 @@
 package us.minevict.mvutil.common;
 
+import io.lettuce.core.RedisClient;
 import java.util.logging.Logger;
 import org.jetbrains.annotations.NotNull;
 
@@ -17,4 +18,13 @@ public interface MinevictusUtilsPlatform {
    */
   @NotNull
   Logger getPlatformLogger();
+
+  /**
+   * Get the global {@link RedisClient}.
+   *
+   * @return The {@link RedisClient} shared by all plugins depending on this.
+   * @since 3.7.0
+   */
+  @NotNull
+  RedisClient getRedis();
 }

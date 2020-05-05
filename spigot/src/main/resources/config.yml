@@ -30,3 +30,13 @@ megachunk-random-offset-x: true
 #
 # Default: true
 megachunk-random-offset-z: true
+
+# Redis hostname.
+#
+# Default: localhost
+redis-hostname: localhost
+
+# Redis port.
+#
+# Default: 6379
+redis-port: 6379

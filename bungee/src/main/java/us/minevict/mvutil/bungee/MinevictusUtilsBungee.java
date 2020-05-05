@@ -2,12 +2,20 @@ package us.minevict.mvutil.bungee;
 
 import co.aikar.commands.BungeeCommandManager;
 import co.aikar.commands.MessageType;
+import io.lettuce.core.RedisClient;
+import io.lettuce.core.RedisURI;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.plugin.Plugin;
+import net.md_5.bungee.config.Configuration;
+import net.md_5.bungee.config.ConfigurationProvider;
+import net.md_5.bungee.config.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
 import us.minevict.mvutil.bungee.utils.Functions;
 import us.minevict.mvutil.common.MinevictusUtilsPlatform;
@@ -22,6 +30,8 @@ public class MinevictusUtilsBungee
   @SuppressWarnings("NotNullFieldNotInitialized")
   @NotNull
   private static MinevictusUtilsBungee instance;
+  private RedisClient redisClient;
+  private Configuration configuration;
 
   public MinevictusUtilsBungee() {
     super();
@@ -45,9 +55,21 @@ public class MinevictusUtilsBungee
   }
 
   @Override
+  public void onEnable() {
+    readConfig();
+
+    redisClient = RedisClient.create(RedisURI.builder()
+        .withHost(configuration.getString("redis-hostname"))
+        .withPort(configuration.getInt("redis-port"))
+        .build());
+  }
+
+  @Override
   public void onDisable() {
     getProxy().getPluginManager().unregisterListeners(this);
     getProxy().getPluginManager().unregisterCommands(this);
+
+    redisClient.shutdown(2, 5, TimeUnit.SECONDS);
 
     //noinspection ConstantConditions
     instance = null;
@@ -96,5 +118,39 @@ public class MinevictusUtilsBungee
     }
 
     return commandManager;
+  }
+
+  private void readConfig() {
+    getDataFolder().mkdirs();
+    var configFile = new File(getDataFolder(), "config.yml");
+    if (!configFile.isFile()) {
+      try {
+        Files.deleteIfExists(configFile.toPath());
+        try (var input = getResourceAsStream("config.yml")) {
+          if (input != null) {
+            Files.copy(input, configFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+          } else {
+            // There was no default configuration to put there.
+            configuration = new Configuration();
+            return;
+          }
+        }
+      } catch (IOException ex) {
+        throw new RuntimeException("Unable to create configuration file", ex);
+      }
+    }
+    try {
+      configuration = ConfigurationProvider
+          .getProvider(YamlConfiguration.class)
+          .load(configFile);
+    } catch (IOException ex) {
+      throw new RuntimeException("Unable to load configuration file", ex);
+    }
+  }
+
+  @Override
+  @NotNull
+  public RedisClient getRedis() {
+    return redisClient;
   }
 }
