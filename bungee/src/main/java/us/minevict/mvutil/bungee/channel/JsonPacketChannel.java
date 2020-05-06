@@ -4,10 +4,11 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
+import net.md_5.bungee.api.connection.Server;
 import net.md_5.bungee.api.event.PluginMessageEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
+import net.md_5.bungee.event.EventHandler;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -87,25 +88,20 @@ public class JsonPacketChannel<P> implements PacketChannel<P>, Listener {
     this(plugin, packetType, channel, handler, false);
   }
 
+  @EventHandler
   public void onPluginMessageReceived(@NotNull PluginMessageEvent event) {
     var channel = event.getTag();
     if (!this.channel.equals(channel)) {
       // Not correct channel.
       return;
     }
-    var connection = event.getSender();
-    if (!(connection instanceof ProxiedPlayer)) {
-      // This was sent through a raw socket of some kind or the likes, nothing for us to worry about.
-      return;
-    }
-    var player = (ProxiedPlayer) connection;
     var message = event.getData();
     if (message.length == 0) {
       // No data, null packet received!
       if (!permitNulls) {
         throw new IllegalArgumentException("does not permit nulls but attempted null packet");
       }
-      handler.packetReceived(null, player, channel);
+      handler.packetReceived(null, event.getSender(), channel);
       return;
     }
 
@@ -120,19 +116,19 @@ public class JsonPacketChannel<P> implements PacketChannel<P>, Listener {
       return;
     }
 
-    handler.packetReceived(packet, player, channel);
+    handler.packetReceived(packet, event.getSender(), channel);
   }
 
   @Override
-  public boolean sendPacket(P packet) {
-    if (plugin.getProxy().getPlayers().isEmpty()) {
+  public boolean sendPacket(@NotNull Server server, P packet) {
+    if (server.getInfo().getPlayers().isEmpty()) {
       return false;
     }
     if (!permitNulls && packet == null) {
       throw new IllegalArgumentException("does not permit nulls but attempted null packet");
     }
 
-    var player = plugin.getProxy().getPlayers().iterator().next();
+    var player = server.getInfo().getPlayers().iterator().next();
     packet = handler.packetPreSend(packet, player);
     if (!permitNulls && packet == null) {
       throw new IllegalArgumentException("does not permit nulls but attempted null packet");

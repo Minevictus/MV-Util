@@ -1,6 +1,7 @@
 package us.minevict.mvutil.bungee.channel;
 
 import java.util.function.BiFunction;
+import net.md_5.bungee.api.connection.Connection;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import org.jetbrains.annotations.NotNull;
 
@@ -16,9 +17,10 @@ public interface PluginMessagePacketHandler<P> {
    * Handle a received packet.
    *
    * @param packet The packet received; may be null if {@link PacketChannel#permitsNulls()} is true.
+   * @param connection The connection the packet was received on. This is not a player.
    * @param channel The channel name of the {@link PacketChannel}.
    */
-  void packetReceived(P packet, @NotNull ProxiedPlayer player, @NotNull String channel);
+  void packetReceived(P packet, @NotNull Connection connection, @NotNull String channel);
 
   /**
    * Handle a packet before it is sent.
@@ -42,7 +44,7 @@ public interface PluginMessagePacketHandler<P> {
   static <P> PluginMessagePacketHandler<P> onlyPreSend(BiFunction<P, ProxiedPlayer, P> function) {
     return new PluginMessagePacketHandler<>() {
       @Override
-      public void packetReceived(P packet, @NotNull ProxiedPlayer player, @NotNull String channel) {
+      public void packetReceived(P packet, @NotNull Connection connection, @NotNull String channel) {
       }
 
       @Override

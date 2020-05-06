@@ -1,5 +1,7 @@
 package us.minevict.mvutil.bungee.channel;
 
+import net.md_5.bungee.api.connection.ProxiedPlayer;
+import net.md_5.bungee.api.connection.Server;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -13,9 +15,21 @@ public interface PacketChannel<P> {
    * Send a packet through the channel.
    *
    * @param packet The packet to send or null if {@link #permitsNulls()} is true.
+   * @param player The player whose server should receive this packet.
    * @return Whether a packet was successfully sent.
    */
-  boolean sendPacket(P packet);
+  default boolean sendPacket(@NotNull ProxiedPlayer player, P packet) {
+    return sendPacket(player.getServer(), packet);
+  }
+
+  /**
+   * Send a packet through the channel.
+   *
+   * @param packet The packet to send or null if {@link #permitsNulls()} is true.
+   * @param server The server to receive this packet.
+   * @return Whether a packet was successfully sent.
+   */
+  boolean sendPacket(@NotNull Server server, P packet);
 
   /**
    * Get the type of the packet this channel handles.
