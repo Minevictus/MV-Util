@@ -2,7 +2,7 @@ package us.minevict.mvutil.bungee.channel;
 
 import java.util.function.BiFunction;
 import net.md_5.bungee.api.connection.Connection;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
+import net.md_5.bungee.api.connection.Server;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -26,10 +26,10 @@ public interface PluginMessagePacketHandler<P> {
    * Handle a packet before it is sent.
    *
    * @param packet The packet to send; may be null if {@link PacketChannel#permitsNulls()} is true.
-   * @param player The player whose connection will be used for the packet transmission.
+   * @param server The server which should receive this packet.
    * @return The packet to send; may be null if {@link PacketChannel#permitsNulls()} is true.
    */
-  default P packetPreSend(P packet, @NotNull ProxiedPlayer player) {
+  default P packetPreSend(P packet, @NotNull Server server) {
     return packet;
   }
 
@@ -41,15 +41,15 @@ public interface PluginMessagePacketHandler<P> {
    * @param <P>      The type of packet to handle.
    * @return The packet handler.
    */
-  static <P> PluginMessagePacketHandler<P> onlyPreSend(BiFunction<P, ProxiedPlayer, P> function) {
+  static <P> PluginMessagePacketHandler<P> onlyPreSend(BiFunction<P, Server, P> function) {
     return new PluginMessagePacketHandler<>() {
       @Override
       public void packetReceived(P packet, @NotNull Connection connection, @NotNull String channel) {
       }
 
       @Override
-      public P packetPreSend(P packet, @NotNull ProxiedPlayer player) {
-        return function.apply(packet, player);
+      public P packetPreSend(P packet, @NotNull Server server) {
+        return function.apply(packet, server);
       }
     };
   }

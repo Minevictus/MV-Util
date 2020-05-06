@@ -128,8 +128,7 @@ public class JsonPacketChannel<P> implements PacketChannel<P>, Listener {
       throw new IllegalArgumentException("does not permit nulls but attempted null packet");
     }
 
-    var player = server.getInfo().getPlayers().iterator().next();
-    packet = handler.packetPreSend(packet, player);
+    packet = handler.packetPreSend(packet, server);
     if (!permitNulls && packet == null) {
       throw new IllegalArgumentException("does not permit nulls but attempted null packet");
     }
@@ -140,7 +139,7 @@ public class JsonPacketChannel<P> implements PacketChannel<P>, Listener {
       throw new IllegalArgumentException("max message size exceeded");
     }
 
-    player.sendData(this.channel, bytes);
+    server.sendData(this.channel, bytes);
     return true;
   }
 
