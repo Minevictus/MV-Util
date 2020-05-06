@@ -7,12 +7,15 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.List;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
+import us.minevict.mvutil.bungee.channel.PacketChannel;
 import us.minevict.mvutil.common.LazyValue;
 import us.minevict.mvutil.common.acf.AcfCooldowns;
 
@@ -24,6 +27,7 @@ import us.minevict.mvutil.common.acf.AcfCooldowns;
 @SuppressWarnings("RedundantThrows") // They exist to show what is allowed to be thrown.
 public abstract class MvPlugin extends Plugin {
   private final LazyValue<BungeeCommandManager> acf = new LazyValue<>(this::constructAcf);
+  private final List<PacketChannel<?>> channels = new ArrayList<>();
   private Configuration configuration = null;
   private PluginErrorState errorState = null;
   private boolean enabled = false;
@@ -132,6 +136,7 @@ public abstract class MvPlugin extends Plugin {
   private void shutdownSafely() {
     getProxy().getPluginManager().unregisterListeners(this);
     acf.getIfInitialised().ifPresent(BungeeCommandManager::unregisterCommands);
+    channels.forEach(PacketChannel::unregisterIncoming);
   }
 
   /**
@@ -277,6 +282,21 @@ public abstract class MvPlugin extends Plugin {
         return null;
       });
     }
+  }
+
+  /**
+   * Register a packet channel and handle its unregistering.
+   *
+   * @param channel The channel to register and handle.
+   * @param <P> The type of packet for the channel to handle.
+   * @param <C> The type of the channel.
+   * @return The channel given.
+   * @since 3.8.0
+   */
+  @NotNull
+  public <P, C extends PacketChannel<P>> C packetChannel(@NotNull C channel) {
+    channels.add(channel);
+    return channel;
   }
 
   private enum PluginErrorState {

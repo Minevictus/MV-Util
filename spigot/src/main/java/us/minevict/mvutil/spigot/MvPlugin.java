@@ -17,6 +17,7 @@ import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
 import us.minevict.mvutil.common.LazyValue;
 import us.minevict.mvutil.common.acf.AcfCooldowns;
+import us.minevict.mvutil.spigot.channel.PacketChannel;
 
 /**
  * The base plugin for Spigot plugins using MV-Util.
@@ -27,6 +28,7 @@ import us.minevict.mvutil.common.acf.AcfCooldowns;
 public abstract class MvPlugin extends JavaPlugin {
   private final LazyValue<PaperCommandManager> acf = new LazyValue<>(this::constructAcf);
   private final List<BukkitTask> tasks = new ArrayList<>();
+  private final List<PacketChannel<?>> channels = new ArrayList<>();
   private PluginErrorState errorState = null;
   private TaskChainFactory taskChainFactory = null;
 
@@ -145,6 +147,7 @@ public abstract class MvPlugin extends JavaPlugin {
     tasks.forEach(BukkitTask::cancel);
     HandlerList.unregisterAll(this);
     acf.getIfInitialised().ifPresent(PaperCommandManager::unregisterCommands);
+    channels.forEach(PacketChannel::unregisterIncoming);
   }
 
   /**
@@ -255,6 +258,21 @@ public abstract class MvPlugin extends JavaPlugin {
         return null;
       });
     }
+  }
+
+  /**
+   * Register a packet channel and handle its unregistering.
+   *
+   * @param channel The channel to register and handle.
+   * @param <P> The type of packet for the channel to handle.
+   * @param <C> The type of the channel.
+   * @return The channel given.
+   * @since 3.8.0
+   */
+  @NotNull
+  public <P, C extends PacketChannel<P>> C packetChannel(@NotNull C channel) {
+    channels.add(channel);
+    return channel;
   }
 
   private enum PluginErrorState {
