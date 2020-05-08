@@ -1,7 +1,7 @@
 package us.minevict.mvutil.spigot.permissions;
 
+import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
-import java.lang.invoke.VarHandle;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -110,27 +110,33 @@ public class PermissionsManager implements Listener {
         continue;
       }
 
-      VarHandle varHandle;
+      MethodHandle methodHandle;
       try {
         if (Modifier.isStatic(field.getModifiers())) {
-          varHandle = PUBLIC_LOOKUP.findStaticVarHandle(type, field.getName(), field.getType());
+          methodHandle = PUBLIC_LOOKUP.findStaticGetter(type, field.getName(), field.getType());
         } else {
-          varHandle = PUBLIC_LOOKUP.findVarHandle(type, field.getName(), field.getType());
+          methodHandle = PUBLIC_LOOKUP.findGetter(type, field.getName(), field.getType());
         }
       } catch (NoSuchFieldException e) {
         throw new IllegalStateException("a field cannot exist and not exist at the same time", e);
       } catch (IllegalAccessException e) {
         throw new IllegalArgumentException("the given index cannot have jigsaw rules to hinder access", e);
       }
-      if (!varHandle.varType().isAssignableFrom(String.class)) {
-        continue;
-      }
 
       var permissionDefault = getFieldDefault(field, indexDefault);
       var description = getFieldDescription(field);
       var children = getFieldChildren(field);
 
-      var permissionName = (String) varHandle.get(Modifier.isStatic(field.getModifiers()) ? index : null);
+      String permissionName;
+      try {
+        permissionName = (String) (Modifier.isStatic(field.getModifiers())
+            ? methodHandle.invoke()
+            : methodHandle.invoke(index));
+      } catch (Throwable throwable) {
+        main.getLogger().warning("Weird exception thrown on getter!");
+        throwable.printStackTrace();
+        continue; // Is this even possible?
+      }
 
       var permission = new Permission(permissionName, permissionDefault);
       if (description != null) {
