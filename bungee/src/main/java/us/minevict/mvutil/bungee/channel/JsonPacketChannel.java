@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.Objects;
+import net.md_5.bungee.api.ProxyServer;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.connection.Server;
 import net.md_5.bungee.api.event.PluginMessageEvent;
 import net.md_5.bungee.api.plugin.Listener;
@@ -120,10 +122,17 @@ public class JsonPacketChannel<P> implements PacketChannel<P>, Listener {
   }
 
   @Override
-  public boolean sendPacket(@NotNull Server server, P packet) {
-    if (server.getInfo().getPlayers().isEmpty()) {
+  public boolean sendPacket(P packet) {
+    if (ProxyServer.getInstance().getPlayers().isEmpty()) {
       return false;
     }
+
+    var player = ProxyServer.getInstance().getPlayers().iterator().next();
+    return sendPacket(player.getServer(), packet);
+  }
+
+  @Override
+  public boolean sendPacket(@NotNull Server server, P packet) {
     if (!permitNulls && packet == null) {
       throw new IllegalArgumentException("does not permit nulls but attempted null packet");
     }
@@ -141,6 +150,10 @@ public class JsonPacketChannel<P> implements PacketChannel<P>, Listener {
 
     server.sendData(this.channel, bytes);
     return true;
+  }
+
+  public boolean sendPacket(@NotNull ProxiedPlayer player, P packet) {
+    return sendPacket(player.getServer(), packet);
   }
 
   @NotNull

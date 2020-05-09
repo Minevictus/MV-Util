@@ -24,6 +24,12 @@ public class MegaChunk implements FunkyChunk {
   private final int x;
   private final int z;
 
+  protected MegaChunk(@Nullable World world, int x, int z) {
+    this.world = world;
+    this.x = x;
+    this.z = z;
+  }
+
   /**
    * Constructs a new {@link MegaChunk} from a single {@link Location}.
    *
@@ -93,12 +99,6 @@ public class MegaChunk implements FunkyChunk {
         (x / 16 + MEGA_CHUNK_OFFSET_X) / MEGA_CHUNK_SIZE,
         (z / 16 + MEGA_CHUNK_OFFSET_Z) / MEGA_CHUNK_SIZE
     );
-  }
-
-  protected MegaChunk(@Nullable World world, int x, int z) {
-    this.world = world;
-    this.x = x;
-    this.z = z;
   }
 
   /**

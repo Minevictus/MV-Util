@@ -1,4 +1,4 @@
-package us.minevict.mvutil.spigot.utils;
+package us.minevict.mvutil.bungee.utils;
 
 import co.aikar.idb.DB;
 import co.aikar.idb.Database;
@@ -6,15 +6,13 @@ import co.aikar.idb.DatabaseOptions;
 import co.aikar.idb.HikariPooledDatabase;
 import co.aikar.idb.PooledDatabaseOptions;
 import java.util.Objects;
-import org.bukkit.event.server.PluginDisableEvent;
-import org.bukkit.plugin.Plugin;
+import net.md_5.bungee.api.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
-import us.minevict.mvutil.spigot.hidden.CloseDatabaseListener;
 
 /**
- * Utilities ported over from Aikar's Bukkit IDB to manage DB creation for Bukkit in a simpler manner.
+ * Utilities ported over from Aikar's Bukkit IDB to manage DB creation for Bungee in a simpler manner.
  *
- * @since 0.3.1
+ * @since 4.0.0
  */
 public class DatabaseUtils {
   private DatabaseUtils() throws IllegalAccessException {
@@ -58,7 +56,7 @@ public class DatabaseUtils {
 
   /**
    * Create an IDB {@link Database} instance to make SQL queries with the plugin as a base. This method will not set the
-   * global {@link DB} to this by default and will close it when {@link PluginDisableEvent} is fired.
+   * global {@link DB} to this by default.
    *
    * @param plugin      {@link Plugin} to register listeners and get settings from.
    * @param user        SQL user.
@@ -84,7 +82,7 @@ public class DatabaseUtils {
 
   /**
    * Create an IDB {@link Database} instance to make SQL queries with the plugin as a base. This method will not set the
-   * global {@link DB} to this by default and will close it when {@link PluginDisableEvent} is fired.
+   * global {@link DB} to this by default.
    *
    * @param plugin  {@link Plugin} to register listeners and get settings from.
    * @param options {@link PooledDatabaseOptions} in case you don't want to use {@link #getRecommendedOptions(Plugin,
@@ -117,8 +115,6 @@ public class DatabaseUtils {
     if (setGlobal) {
       DB.setGlobalDatabase(db);
     }
-
-    CloseDatabaseListener.getInstance().getDatabases().put(plugin, db);
     return db;
   }
 }

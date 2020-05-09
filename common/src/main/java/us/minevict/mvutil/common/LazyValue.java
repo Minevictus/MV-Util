@@ -12,11 +12,10 @@ import org.jetbrains.annotations.NotNull;
  */
 public final class LazyValue<T> {
   private final Object lock = new Object();
-
-  @SuppressWarnings("OptionalUsedAsFieldOrParameterType") // Support null values
-  private Optional<T> value = Optional.empty();
   @NotNull
   private final Supplier<T> constructor;
+  @SuppressWarnings("OptionalUsedAsFieldOrParameterType") // Support null values
+  private Optional<T> value = Optional.empty();
 
   /**
    * Constructs a new lazily constructed value using the supplied constructor.

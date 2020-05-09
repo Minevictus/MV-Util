@@ -8,17 +8,12 @@ import org.jetbrains.annotations.NotNull;
  * @since 0.2.0
  */
 public class GuiUtils {
-  private GuiUtils() throws IllegalAccessException {
-    throw new IllegalAccessException(getClass().getSimpleName() + " cannot be instantiated.");
-  }
-
   /**
    * All the characters rows may contain.
    * <p>
    * There are in total 54 characters, fitting a chunk of 9 characters at a time.
    */
   public static final String GUI_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqr";
-
   /**
    * The default value for how many rows should be allowed at maximum for non-paging interfaces.
    * <p>
@@ -27,7 +22,6 @@ public class GuiUtils {
    * @since 0.3.5
    */
   public static final int DEFAULT_NONPAGING_INVENTORY_ROWS = 6;
-
   /**
    * The default value for how many rows should be allowed at maximum for paging interfaces.
    * <p>
@@ -36,14 +30,12 @@ public class GuiUtils {
    * @since 0.3.5
    */
   public static final int DEFAULT_PAGING_INVENTORY_ROWS = 6;
-
   /**
    * The default value for whether the rows should grow per amount of items.
    *
    * @since 0.3.5
    */
   public static final boolean DEFAULT_GROWING = true;
-
   /**
    * The default value for whether we should attempt to fit any overflowing items in the 6th row instead of using a
    * paging bar.
@@ -53,14 +45,12 @@ public class GuiUtils {
    * @since 0.3.5
    */
   public static final boolean DEFAULT_ATTEMPT_FIT = true;
-
   /**
    * The default value for whether {@link #GUI_CHARACTERS} should be ignored and we should only use spaces instead.
    *
    * @since 0.3.5
    */
   public static final boolean DEFAULT_EMPTY_CHARACTERS = false;
-
   /**
    * The default value for what how the page bar should look like.
    * <p>
@@ -72,6 +62,10 @@ public class GuiUtils {
    * @since 0.3.5
    */
   public static final String DEFAULT_PAGE_BAR = "<   ~   >";
+
+  private GuiUtils() throws IllegalAccessException {
+    throw new IllegalAccessException(getClass().getSimpleName() + " cannot be instantiated.");
+  }
 
   /**
    * Calculates how many rows a specific amount of items may need.

@@ -1,18 +1,62 @@
 package us.minevict.mvutil.common;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Objects;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A version for MV-Util.
  * <p>
  * This is usually used to make sure a feature is part of the version on the server.
+ * </p>
  *
  * @since 0.2.2
  */
 public final class MvUtilVersion implements Comparable<MvUtilVersion> {
   private static final MvUtilVersion currentVersion = readManifestVersion();
+  /**
+   * The major version number.
+   */
+  private final int major;
+  /**
+   * The minor version number.
+   */
+  private final int minor;
+  /**
+   * The patch version number.
+   */
+  private final int patch;
+
+  /**
+   * Constructs a new version.
+   *
+   * @param major The major version number.
+   * @param minor The minor version number.
+   * @param patch The patch version number.
+   */
+  public MvUtilVersion(int major, int minor, int patch) {
+    this.major = major;
+    this.minor = minor;
+    this.patch = patch;
+  }
+
+  /**
+   * Constructs a new version.
+   *
+   * @param major The major version number.
+   * @param minor The minor version number.
+   */
+  public MvUtilVersion(int major, int minor) {
+    this(major, minor, 0);
+  }
+
+  /**
+   * Constructs a new version.
+   *
+   * @param major The major version number.
+   */
+  public MvUtilVersion(int major) {
+    this(major, 0);
+  }
 
   private static MvUtilVersion readManifestVersion() {
     String[] version = MvUtilVersion.class.getPackage().getImplementationVersion()
@@ -81,53 +125,6 @@ public final class MvUtilVersion implements Comparable<MvUtilVersion> {
    */
   public static void requireVersion(int major) {
     requireVersion(new MvUtilVersion(major));
-  }
-
-  /**
-   * The major version number.
-   */
-  private final int major;
-
-  /**
-   * The minor version number.
-   */
-  private final int minor;
-
-  /**
-   * The patch version number.
-   */
-  private final int patch;
-
-  /**
-   * Constructs a new version.
-   *
-   * @param major The major version number.
-   * @param minor The minor version number.
-   * @param patch The patch version number.
-   */
-  public MvUtilVersion(int major, int minor, int patch) {
-    this.major = major;
-    this.minor = minor;
-    this.patch = patch;
-  }
-
-  /**
-   * Constructs a new version.
-   *
-   * @param major The major version number.
-   * @param minor The minor version number.
-   */
-  public MvUtilVersion(int major, int minor) {
-    this(major, minor, 0);
-  }
-
-  /**
-   * Constructs a new version.
-   *
-   * @param major The major version number.
-   */
-  public MvUtilVersion(int major) {
-    this(major, 0);
   }
 
   /**

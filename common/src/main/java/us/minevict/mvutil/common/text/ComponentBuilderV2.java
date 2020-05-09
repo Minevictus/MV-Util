@@ -42,6 +42,25 @@ public final class ComponentBuilderV2 {
   }
 
   /**
+   * Create a new {@link ComponentBuilderV2} using a given piece of text as the base text.
+   *
+   * @param base The base text to use for this builder.
+   */
+  public ComponentBuilderV2(@Nullable final String base) {
+    this(new ComponentBuilder(String.valueOf(base)));
+  }
+
+  /**
+   * Create a new {@link ComponentBuilderV2} using the given existing {@link BaseComponent components}.
+   *
+   * @param components The existing {@link BaseComponent}s.
+   */
+  public ComponentBuilderV2(@NotNull final BaseComponent... components) {
+    this(new ComponentBuilder());
+    append(components);
+  }
+
+  /**
    * Create a new {@link ComponentBuilderV2} using the given existing {@link ComponentBuilder}.
    *
    * @param builder The existing {@link ComponentBuilder}.
@@ -56,30 +75,11 @@ public final class ComponentBuilderV2 {
    * Create a new {@link ComponentBuilderV2} using a given piece of text as the base text.
    *
    * @param base The base text to use for this builder.
-   */
-  public ComponentBuilderV2(@Nullable final String base) {
-    this(new ComponentBuilder(String.valueOf(base)));
-  }
-
-  /**
-   * Create a new {@link ComponentBuilderV2} using a given piece of text as the base text.
-   *
-   * @param base The base text to use for this builder.
    * @return The constructed {@link ComponentBuilderV2}.
    */
   @NotNull
   public static ComponentBuilderV2 of(@Nullable final String base) {
     return new ComponentBuilderV2(base);
-  }
-
-  /**
-   * Create a new {@link ComponentBuilderV2} using the given existing {@link BaseComponent components}.
-   *
-   * @param components The existing {@link BaseComponent}s.
-   */
-  public ComponentBuilderV2(@NotNull final BaseComponent... components) {
-    this(new ComponentBuilder());
-    append(components);
   }
 
   /**
