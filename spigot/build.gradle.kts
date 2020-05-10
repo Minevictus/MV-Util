@@ -1,5 +1,8 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import net.minecrell.pluginyml.bukkit.BukkitPluginDescription
+import java.net.http.HttpClient
+import java.net.http.HttpRequest
+import java.net.http.HttpResponse
 
 plugins {
     id("net.minecrell.plugin-yml.bukkit") version "0.3.0"
@@ -21,28 +24,14 @@ dependencies {
 }
 
 tasks.withType<ShadowJar> {
-    fun relocations(vararg pkgs: String) {
-        pkgs.forEach { relocate(it, "${rootProject.group}.dependencies.$it") }
-    }
-    relocations(
-        "co.aikar.commands",
-        "co.aikar.taskchain",
-        "co.aikar.util",
-        "co.aikar.locales",
-        "co.aikar.idb",
-        "net.jodah.expiringmap",
-        "org.intellij.lang.annotations",
-        "org.jetbrains.annotations",
-        "org.reactivestreams",
-        "reactor",
-        "io.netty",
-        "io.lettuce",
-        "org.slf4j",
-        "com.zaxxer",
-        "de.themoep.inventorygui",
-        "me.tom.sparse.spigot.chat",
-        "io.papermc.lib"
-    )
+    val body = HttpClient.newHttpClient().send(
+        HttpRequest.newBuilder()
+            .uri(uri("https://raw.githubusercontent.com/Minevictus/MV-Util/relocations/relocations.spigot.json"))
+            .build(),
+        HttpResponse.BodyHandlers.ofString()
+    ).body()
+    val json = groovy.json.JsonSlurper().parseText(body) as Map<String, String>
+    json.forEach { (k, v) -> relocate(k, v) }
     mergeServiceFiles()
 }
 
