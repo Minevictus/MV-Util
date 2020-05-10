@@ -14,5 +14,6 @@
     "com.zaxxer": "us.minevict.mvutil.dependencies.com.zaxxer",
     "de.themoep.inventorygui": "us.minevict.mvutil.dependencies.de.themoep.inventorygui",
     "me.tom.sparse.spigot.chat": "us.minevict.mvutil.dependencies.me.tom.sparse.spigot.chat",
-    "io.papermc.lib": "us.minevict.mvutil.dependencies.io.papermc.lib"
+    "io.papermc.lib": "us.minevict.mvutil.dependencies.io.papermc.lib",
+    "io.lettuce": "us.minevict.mvutil.dependencies.io.lettuce"
 }
