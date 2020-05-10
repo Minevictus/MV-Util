@@ -15,12 +15,11 @@ import us.minevict.mvutil.common.text.ComponentBuilderV2;
  * @since 3.6.0
  */
 public final class Platformless {
+  static BiConsumer<CommandIssuer, BaseComponent[]> messageSender = null;
+  static Function<Supplier, CompletableFuture> asyncRunner = null;
   private Platformless() throws IllegalAccessException {
     throw new IllegalAccessException(getClass().getSimpleName() + " cannot be instantiated.");
   }
-
-  static BiConsumer<CommandIssuer, BaseComponent[]> messageSender = null;
-  static Function<Supplier, CompletableFuture> asyncRunner = null;
 
   /**
    * Send a message to the {@link CommandIssuer} regardless of platform.

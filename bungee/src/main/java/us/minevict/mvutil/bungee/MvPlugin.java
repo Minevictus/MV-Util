@@ -15,25 +15,31 @@ import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
-import us.minevict.mvutil.bungee.channel.PacketChannel;
+import us.minevict.mvutil.common.IMvPlugin;
 import us.minevict.mvutil.common.LazyValue;
 import us.minevict.mvutil.common.acf.AcfCooldowns;
+import us.minevict.mvutil.common.channel.IPacketChannel;
 
 /**
  * The base plugin for Spigot plugins using MV-Util.
  *
  * @since 3.4.0
  */
-@SuppressWarnings("RedundantThrows") // They exist to show what is allowed to be thrown.
-public abstract class MvPlugin extends Plugin {
+public abstract class MvPlugin
+    extends Plugin
+    implements IMvPlugin<BungeeCommandManager, Listener, MinevictusUtilsBungee> {
   private final LazyValue<BungeeCommandManager> acf = new LazyValue<>(this::constructAcf);
-  private final List<PacketChannel<?>> channels = new ArrayList<>();
+  private final List<IPacketChannel<?, ?>> channels = new ArrayList<>();
   private Configuration configuration = null;
   private PluginErrorState errorState = null;
   private boolean enabled = false;
+  private String databaseName;
+  private final LazyValue<Database> database = new LazyValue<>(this::constructDatabase);
 
   @Override
   public final void onLoad() {
+    databaseName = getName().toLowerCase();
+
     try {
       if (!load()) {
         errorState = PluginErrorState.LOAD;
@@ -49,19 +55,6 @@ public abstract class MvPlugin extends Plugin {
     if (!isEnabled()) {
       shutdownSafely();
     }
-  }
-
-  /**
-   * Called upon loading the plugin.
-   * <p>
-   * Returns true if the plugin successfully loads, false otherwise.
-   *
-   * @return Whether the load was successful.
-   * @throws Exception Any error encountered upon loading.
-   */
-  protected boolean load()
-      throws Exception {
-    return true;
   }
 
   @Override
@@ -89,19 +82,6 @@ public abstract class MvPlugin extends Plugin {
     }
   }
 
-  /**
-   * Called upon enabling the plugin. This is not called if {@link #load()} erred in some way.
-   * <p>
-   * Returns true if the plugin successfully enables, false otherwise.
-   *
-   * @return Whether the enable was successful.
-   * @throws Exception Any error encountered upon enabling.
-   */
-  protected boolean enable()
-      throws Exception {
-    return true;
-  }
-
   @Override
   public final void onDisable() {
     if (errorState != null) {
@@ -119,24 +99,11 @@ public abstract class MvPlugin extends Plugin {
     }
   }
 
-  /**
-   * Called upon disabling the plugin. This is not called if {@link #load()} or {@link #enable()} erred in some way.
-   * <br>
-   * <ul>
-   * <li>ACF will have no more commands by this stage.</li>
-   * <li>The plugin has no more registered listeners by this stage.</li>
-   * </ul>
-   *
-   * @throws Exception Any error encountered upon disabling.
-   */
-  protected void disable()
-      throws Exception {
-  }
-
   private void shutdownSafely() {
     getProxy().getPluginManager().unregisterListeners(this);
     acf.getIfInitialised().ifPresent(BungeeCommandManager::unregisterCommands);
-    channels.forEach(PacketChannel::unregisterIncoming);
+    database.getIfInitialised().ifPresent(Database::close);
+    channels.forEach(IPacketChannel::unregisterIncoming);
   }
 
   /**
@@ -144,6 +111,7 @@ public abstract class MvPlugin extends Plugin {
    *
    * @return The {@link MinevictusUtilsBungee MV-Util} instance.
    */
+  @Override
   @NotNull
   public MinevictusUtilsBungee getMvUtil() {
     return MinevictusUtilsBungee.getInstance();
@@ -155,22 +123,48 @@ public abstract class MvPlugin extends Plugin {
   }
 
   /**
+   * {@inheritDoc}
+   */
+  @NotNull
+  private Database constructDatabase() {
+    return getMvUtil().prepareDatabase(this.databaseName, this);
+  }
+
+  /**
    * Gets a {@link BungeeCommandManager} linked to this plugin.
    * <p>
    * This has already been {@link MinevictusUtilsBungee#prepareAcf prepared} and is only constructed once gotten.
    *
    * @return A newly constructed or cached {@link BungeeCommandManager} for this plugin.
    */
+  @Override
   @NotNull
   public final BungeeCommandManager getAcf() {
     return acf.getValue();
   }
 
   /**
-   * Registers commands to this plugin's {@link BungeeCommandManager}.
-   *
-   * @param commands The commands to register.
+   * {@inheritDoc}
    */
+  @Override
+  @NotNull
+  public final Database getDatabase() {
+    return database.getValue();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  @NotNull
+  public String getDatabaseName() {
+    return databaseName;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
   public final void registerCommands(@NotNull BaseCommand... commands) {
     var acf = getAcf();
     for (var command : commands) {
@@ -179,15 +173,32 @@ public abstract class MvPlugin extends Plugin {
   }
 
   /**
-   * Register listeners for this plugin.
-   *
-   * @param listeners The listeners to register.
+   * {@inheritDoc}
    */
+  @Override
   public void listeners(@NotNull Listener... listeners) {
     var pluginManager = getProxy().getPluginManager();
     for (var listener : listeners) {
       pluginManager.registerListener(this, listener);
     }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  @NotNull
+  public String getVersion() {
+    return getDescription().getVersion();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  @NotNull
+  public String getName() {
+    return getDescription().getName();
   }
 
   /**
@@ -206,7 +217,7 @@ public abstract class MvPlugin extends Plugin {
    * @since 3.5.2
    */
   @NotNull
-  public Configuration getConfig() {
+  public final Configuration getConfig() {
     if (configuration == null) {
       reloadConfig();
     }
@@ -219,7 +230,7 @@ public abstract class MvPlugin extends Plugin {
    *
    * @since 3.5.2
    */
-  public void reloadConfig() {
+  public final void reloadConfig() {
     getDataFolder().mkdirs();
     var configFile = new File(getDataFolder(), "config.yml");
     if (!configFile.isFile()) {
@@ -252,7 +263,7 @@ public abstract class MvPlugin extends Plugin {
    *
    * @since 3.5.2
    */
-  public void saveConfig() {
+  public final void saveConfig() {
     if (configuration == null) {
       // Nothing to save.
       return;
@@ -268,12 +279,9 @@ public abstract class MvPlugin extends Plugin {
   }
 
   /**
-   * Set up the tables for these cooldowns.
-   *
-   * @param database  The database to set up the tables within.
-   * @param cooldowns The cooldowns to setup tables for.
-   * @since 3.6.0
+   * {@inheritDoc}
    */
+  @Override
   public void setupCooldowns(@NotNull Database database, @NotNull AcfCooldowns[] cooldowns) {
     for (var cooldown : cooldowns) {
       cooldown.setupTable(database).exceptionally(ex -> {
@@ -285,22 +293,12 @@ public abstract class MvPlugin extends Plugin {
   }
 
   /**
-   * Register a packet channel and handle its unregistering.
-   *
-   * @param channel The channel to register and handle.
-   * @param <P> The type of packet for the channel to handle.
-   * @param <C> The type of the channel.
-   * @return The channel given.
-   * @since 3.8.0
+   * {@inheritDoc}
    */
+  @Override
   @NotNull
-  public <P, C extends PacketChannel<P>> C packetChannel(@NotNull C channel) {
+  public final <P, C extends IPacketChannel<P, ?>> C packetChannel(@NotNull C channel) {
     channels.add(channel);
     return channel;
-  }
-
-  private enum PluginErrorState {
-    LOAD,
-    ENABLE,
   }
 }

@@ -2,6 +2,8 @@ package us.minevict.mvutil.bungee;
 
 import co.aikar.commands.BungeeCommandManager;
 import co.aikar.commands.MessageType;
+import co.aikar.idb.Database;
+import co.aikar.idb.PooledDatabaseOptions;
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.RedisURI;
 import java.io.File;
@@ -9,6 +11,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 import net.md_5.bungee.api.ChatColor;
@@ -17,6 +20,7 @@ import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
 import org.jetbrains.annotations.NotNull;
+import us.minevict.mvutil.bungee.utils.DatabaseUtils;
 import us.minevict.mvutil.bungee.utils.Functions;
 import us.minevict.mvutil.common.MinevictusUtilsPlatform;
 import us.minevict.mvutil.common.utils.SetupPlatformless;
@@ -26,7 +30,7 @@ import us.minevict.mvutil.common.utils.SetupPlatformless;
  */
 public class MinevictusUtilsBungee
     extends Plugin
-    implements MinevictusUtilsPlatform {
+    implements MinevictusUtilsPlatform<Plugin, BungeeCommandManager> {
   @SuppressWarnings("NotNullFieldNotInitialized")
   @NotNull
   private static MinevictusUtilsBungee instance;
@@ -88,6 +92,7 @@ public class MinevictusUtilsBungee
    * @return The command managed for use in chaining or the likes.
    * @since 3.3.0
    */
+  @Override
   @NotNull
   public BungeeCommandManager prepareAcf(@NotNull BungeeCommandManager commandManager) {
     // Why the FUCK is MessageType not an enum??
@@ -118,6 +123,24 @@ public class MinevictusUtilsBungee
     }
 
     return commandManager;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  @NotNull
+  public Database prepareDatabase(@NotNull String databaseName, @NotNull Plugin plugin) {
+    Objects.requireNonNull(plugin, "plugin cannot be null");
+
+    PooledDatabaseOptions options = DatabaseUtils.getRecommendedOptions(
+        plugin,
+        Objects.requireNonNull(configuration.getString("sql-username"), "user cannot be null"),
+        Objects.requireNonNull(configuration.getString("sql-password"), "password cannot be null"),
+        Objects.requireNonNull(databaseName, "database cannot be null"),
+        Objects.requireNonNull(configuration.getString("sql-host-and-port"), "host and port cannot be null")
+    );
+    return DatabaseUtils.createHikariDatabase(plugin, options, false);
   }
 
   private void readConfig() {

@@ -20,10 +20,6 @@ import us.minevict.mvutil.common.utils.Platformless;
  * @since 0.1.0
  */
 public class AcfFunctions {
-  private AcfFunctions() throws IllegalAccessException {
-    throw new IllegalAccessException(getClass().getSimpleName() + " cannot be instantiated.");
-  }
-
   /**
    * The default cooldown error message.
    *
@@ -40,6 +36,10 @@ public class AcfFunctions {
             .red(".")
             .create();
       };
+
+  private AcfFunctions() throws IllegalAccessException {
+    throw new IllegalAccessException(getClass().getSimpleName() + " cannot be instantiated.");
+  }
 
   /**
    * Enables the help feature in the given {@link CommandManager}.

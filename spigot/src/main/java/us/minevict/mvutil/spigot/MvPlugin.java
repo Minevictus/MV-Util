@@ -15,9 +15,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
+import us.minevict.mvutil.common.IMvPlugin;
 import us.minevict.mvutil.common.LazyValue;
 import us.minevict.mvutil.common.acf.AcfCooldowns;
-import us.minevict.mvutil.spigot.channel.PacketChannel;
+import us.minevict.mvutil.common.channel.IPacketChannel;
 
 /**
  * The base plugin for Spigot plugins using MV-Util.
@@ -25,15 +26,21 @@ import us.minevict.mvutil.spigot.channel.PacketChannel;
  * @since 3.4.0
  */
 @SuppressWarnings("RedundantThrows") // They exist to show what is allowed to be thrown.
-public abstract class MvPlugin extends JavaPlugin {
+public abstract class MvPlugin
+    extends JavaPlugin
+    implements IMvPlugin<PaperCommandManager, Listener, MinevictusUtilsSpigot> {
   private final LazyValue<PaperCommandManager> acf = new LazyValue<>(this::constructAcf);
   private final List<BukkitTask> tasks = new ArrayList<>();
-  private final List<PacketChannel<?>> channels = new ArrayList<>();
+  private final List<IPacketChannel<?, ?>> channels = new ArrayList<>();
   private PluginErrorState errorState = null;
   private TaskChainFactory taskChainFactory = null;
+  private String databaseName;
+  private final LazyValue<Database> database = new LazyValue<>(this::constructDatabase);
 
   @Override
   public final void onLoad() {
+    databaseName = getName().toLowerCase();
+
     try {
       if (!load()) {
         errorState = PluginErrorState.LOAD;
@@ -51,19 +58,6 @@ public abstract class MvPlugin extends JavaPlugin {
     if (errorState != null) {
       shutdownSafely(false);
     }
-  }
-
-  /**
-   * Called upon loading the plugin.
-   * <p>
-   * Returns true if the plugin successfully loads, false otherwise.
-   *
-   * @return Whether the load was successful.
-   * @throws Exception Any error encountered upon loading.
-   */
-  protected boolean load()
-      throws Exception {
-    return true;
   }
 
   @Override
@@ -93,19 +87,6 @@ public abstract class MvPlugin extends JavaPlugin {
     }
   }
 
-  /**
-   * Called upon enabling the plugin. This is not called if {@link #load()} erred in some way.
-   * <p>
-   * Returns true if the plugin successfully enables, false otherwise.
-   *
-   * @return Whether the enable was successful.
-   * @throws Exception Any error encountered upon enabling.
-   */
-  protected boolean enable()
-      throws Exception {
-    return true;
-  }
-
   @Override
   public final void onDisable() {
     if (errorState != null) {
@@ -124,22 +105,6 @@ public abstract class MvPlugin extends JavaPlugin {
     taskChainFactory.shutdown(5, TimeUnit.SECONDS);
   }
 
-  /**
-   * Called upon disabling the plugin. This is not called if {@link #load()} or {@link #enable()} erred in some way.
-   * <br>
-   * <ul>
-   * <li>ACF will have no more commands by this stage.</li>
-   * <li>The plugin has no more registered listeners by this stage.</li>
-   * <li>The plugin has all its tasks cancelled by this stage.</li>
-   * <li>The task chain factory will shut down after this has been called.</li>
-   * </ul>
-   *
-   * @throws Exception Any error encountered upon disabling.
-   */
-  protected void disable()
-      throws Exception {
-  }
-
   private void shutdownSafely(boolean doChain) {
     if (doChain) {
       taskChainFactory.shutdown(5, TimeUnit.SECONDS);
@@ -147,14 +112,13 @@ public abstract class MvPlugin extends JavaPlugin {
     tasks.forEach(BukkitTask::cancel);
     HandlerList.unregisterAll(this);
     acf.getIfInitialised().ifPresent(PaperCommandManager::unregisterCommands);
-    channels.forEach(PacketChannel::unregisterIncoming);
+    channels.forEach(IPacketChannel::unregisterIncoming);
   }
 
   /**
-   * Gets the {@link MinevictusUtilsSpigot MV-Util} instance.
-   *
-   * @return The {@link MinevictusUtilsSpigot MV-Util} instance.
+   * {@inheritDoc}
    */
+  @Override
   @NotNull
   public MinevictusUtilsSpigot getMvUtil() {
     return MinevictusUtilsSpigot.getInstance();
@@ -165,6 +129,11 @@ public abstract class MvPlugin extends JavaPlugin {
     return getMvUtil().prepareAcf(new PaperCommandManager(this));
   }
 
+  @NotNull
+  private Database constructDatabase() {
+    return getMvUtil().prepareDatabase(this.databaseName, this);
+  }
+
   /**
    * Gets a {@link PaperCommandManager} linked to this plugin.
    * <p>
@@ -172,9 +141,28 @@ public abstract class MvPlugin extends JavaPlugin {
    *
    * @return A newly constructed or cached {@link PaperCommandManager} for this plugin.
    */
+  @Override
   @NotNull
   public final PaperCommandManager getAcf() {
     return acf.getValue();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  @NotNull
+  public Database getDatabase() {
+    return database.getValue();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  @NotNull
+  public String getDatabaseName() {
+    return databaseName;
   }
 
   /**
@@ -184,6 +172,7 @@ public abstract class MvPlugin extends JavaPlugin {
    *
    * @param commands The commands to register.
    */
+  @Override
   public final void registerCommands(@NotNull BaseCommand... commands) {
     registerCommands(true, commands);
   }
@@ -202,15 +191,23 @@ public abstract class MvPlugin extends JavaPlugin {
   }
 
   /**
-   * Register listeners for this plugin.
-   *
-   * @param listeners The listeners to register.
+   * {@inheritDoc}
    */
+  @Override
   public void listeners(@NotNull Listener... listeners) {
     var pluginManager = getServer().getPluginManager();
     for (var listener : listeners) {
       pluginManager.registerEvents(listener, this);
     }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  @NotNull
+  public String getVersion() {
+    return getDescription().getVersion();
   }
 
   /**
@@ -261,22 +258,12 @@ public abstract class MvPlugin extends JavaPlugin {
   }
 
   /**
-   * Register a packet channel and handle its unregistering.
-   *
-   * @param channel The channel to register and handle.
-   * @param <P> The type of packet for the channel to handle.
-   * @param <C> The type of the channel.
-   * @return The channel given.
-   * @since 3.8.0
+   * {@inheritDoc}
    */
+  @Override
   @NotNull
-  public <P, C extends PacketChannel<P>> C packetChannel(@NotNull C channel) {
+  public <P, C extends IPacketChannel<P, ?>> C packetChannel(@NotNull C channel) {
     channels.add(channel);
     return channel;
-  }
-
-  private enum PluginErrorState {
-    LOAD,
-    ENABLE,
   }
 }

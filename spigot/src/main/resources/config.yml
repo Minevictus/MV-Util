@@ -40,3 +40,18 @@ redis-hostname: localhost
 #
 # Default: 6379
 redis-port: 6379
+
+# The username for SQL.
+#
+# Default: admin
+sql-username: admin
+
+# The password for SQL.
+#
+# Default: admin
+sql-password: admin
+
+# The host and port for SQL.
+#
+# Default: 'localhost:3306'
+sql-host-and-port: 'localhost:3306'

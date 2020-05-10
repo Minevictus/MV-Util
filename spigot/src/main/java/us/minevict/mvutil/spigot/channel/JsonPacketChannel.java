@@ -120,11 +120,16 @@ public class JsonPacketChannel<P> implements PacketChannel<P>, PluginMessageList
     if (plugin.getServer().getOnlinePlayers().isEmpty()) {
       return false;
     }
+    var player = plugin.getServer().getOnlinePlayers().iterator().next();
+    return sendPacket(player, packet);
+  }
+
+  @Override
+  public boolean sendPacket(@NotNull Player player, P packet) {
     if (!permitNulls && packet == null) {
       throw new IllegalArgumentException("does not permit nulls but attempted null packet");
     }
 
-    var player = plugin.getServer().getOnlinePlayers().iterator().next();
     packet = handler.packetPreSend(packet, player);
     if (!permitNulls && packet == null) {
       throw new IllegalArgumentException("does not permit nulls but attempted null packet");

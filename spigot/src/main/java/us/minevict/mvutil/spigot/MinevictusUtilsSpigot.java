@@ -2,17 +2,21 @@ package us.minevict.mvutil.spigot;
 
 import co.aikar.commands.MessageType;
 import co.aikar.commands.PaperCommandManager;
+import co.aikar.idb.Database;
+import co.aikar.idb.PooledDatabaseOptions;
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.RedisURI;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 import me.tom.sparse.spigot.chat.menu.ChatMenuAPI;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.event.HandlerList;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import us.minevict.mvutil.common.MinevictusUtilsPlatform;
@@ -20,6 +24,7 @@ import us.minevict.mvutil.common.utils.SetupPlatformless;
 import us.minevict.mvutil.spigot.hidden.CloseDatabaseListener;
 import us.minevict.mvutil.spigot.hidden.MegaChunkSizes;
 import us.minevict.mvutil.spigot.permissions.PermissionsManager;
+import us.minevict.mvutil.spigot.utils.DatabaseUtils;
 import us.minevict.mvutil.spigot.utils.Functions;
 
 /**
@@ -27,7 +32,7 @@ import us.minevict.mvutil.spigot.utils.Functions;
  */
 public class MinevictusUtilsSpigot
     extends JavaPlugin
-    implements MinevictusUtilsPlatform {
+    implements MinevictusUtilsPlatform<Plugin, PaperCommandManager> {
   @NotNull
   private final PermissionsManager permissionsManager;
   private RedisClient redisClient;
@@ -36,6 +41,16 @@ public class MinevictusUtilsSpigot
     super();
 
     this.permissionsManager = new PermissionsManager(this);
+  }
+
+  /**
+   * Gets the current instance of this plugin.
+   *
+   * @return current instance of this plugin.
+   */
+  @NotNull
+  public static MinevictusUtilsSpigot getInstance() {
+    return getPlugin(MinevictusUtilsSpigot.class);
   }
 
   @Override
@@ -90,16 +105,6 @@ public class MinevictusUtilsSpigot
   }
 
   /**
-   * Gets the current instance of this plugin.
-   *
-   * @return current instance of this plugin.
-   */
-  @NotNull
-  public static MinevictusUtilsSpigot getInstance() {
-    return getPlugin(MinevictusUtilsSpigot.class);
-  }
-
-  /**
    * Gets the permissions manager for managing a dependent's permissions.
    *
    * @return {@link PermissionsManager} for this instance.
@@ -116,6 +121,7 @@ public class MinevictusUtilsSpigot
    * @return The command managed for use in chaining or the likes.
    * @since 3.3.0
    */
+  @Override
   @NotNull
   public PaperCommandManager prepareAcf(@NotNull PaperCommandManager commandManager) {
     // Why the FUCK is MessageType not an enum??
@@ -146,6 +152,25 @@ public class MinevictusUtilsSpigot
     }
 
     return commandManager;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  @NotNull
+  public Database prepareDatabase(@NotNull String databaseName, @NotNull Plugin plugin) {
+    Objects.requireNonNull(plugin, "plugin cannot be null");
+
+    var config = getConfig();
+    PooledDatabaseOptions options = DatabaseUtils.getRecommendedOptions(
+        plugin,
+        Objects.requireNonNull(config.getString("sql-username"), "user cannot be null"),
+        Objects.requireNonNull(config.getString("sql-password"), "password cannot be null"),
+        Objects.requireNonNull(databaseName, "database cannot be null"),
+        Objects.requireNonNull(config.getString("sql-host-and-port"), "host and port cannot be null")
+    );
+    return DatabaseUtils.createHikariDatabase(plugin, options, false);
   }
 
   @Override
