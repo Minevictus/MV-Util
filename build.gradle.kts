@@ -27,7 +27,7 @@ ext["acfVer"] = "0.5.0-SNAPSHOT"
 
 allprojects {
     group = "us.minevict.mvutil"
-    version = "4.0.0"
+    version = "4.1.0"
 }
 
 subprojects {
@@ -146,10 +146,8 @@ subprojects {
 
     publishing {
         publications {
-            create<MavenPublication>("shadow") {
-                project.shadow.component(this)
-                artifact(project.tasks.getByName("javadocJar"))
-                artifact(project.tasks.getByName("sourcesJar"))
+            create<MavenPublication>("maven") {
+                from(project.components["java"])
             }
         }
         repositories {
