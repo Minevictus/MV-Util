@@ -98,7 +98,6 @@ public interface IMvPlugin<
    * Set the name of the database the plugin will connect to if necessary.
    *
    * @param databaseName The new database name.
-   * @return Database name.
    */
   @NotNull
   void setDatabaseName(String databaseName);
