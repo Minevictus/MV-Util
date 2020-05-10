@@ -165,6 +165,14 @@ public abstract class MvPlugin
    * {@inheritDoc}
    */
   @Override
+  public void setDatabaseName(String databaseName) {
+    this.databaseName = databaseName;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
   public final void registerCommands(@NotNull BaseCommand... commands) {
     var acf = getAcf();
     for (var command : commands) {

@@ -99,7 +99,6 @@ public interface IMvPlugin<
    *
    * @param databaseName The new database name.
    */
-  @NotNull
   void setDatabaseName(String databaseName);
 
   /**

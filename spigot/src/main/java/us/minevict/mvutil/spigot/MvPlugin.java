@@ -166,6 +166,14 @@ public abstract class MvPlugin
   }
 
   /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void setDatabaseName(String databaseName) {
+    this.databaseName = databaseName;
+  }
+
+  /**
    * Registers commands to this plugin's {@link PaperCommandManager}.
    * <p>
    * This overwrites other commands in the same names by default.
