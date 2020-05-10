@@ -1,0 +1,16 @@
+{
+    "co.aikar.util": "us.minevict.mvutil.dependencies.co.aikar.util",
+    "co.aikar.commands": "us.minevict.mvutil.dependencies.co.aikar.commands",
+    "co.aikar.locales": "us.minevict.mvutil.dependencies.co.aikar.locales",
+    "co.aikar.idb": "us.minevict.mvutil.dependencies.co.aikar.idb",
+    "org.apache.commons.lang": "us.minevict.mvutil.dependencies.org.apache.commons.lang",
+    "com.zaxxer": "us.minevict.mvutil.dependencies.com.zaxxer",
+    "io.lettuce": "us.minevict.mvutil.dependencies.io.lettuce",
+    "io.netty": "us.minevict.mvutil.dependencies.io.netty",
+    "reactor": "us.minevict.mvutil.dependencies.reactor",
+    "org.slf4j": "us.minevict.mvutil.dependencies.org.slf4j",
+    "net.jodah.expiringmap": "us.minevict.mvutil.dependencies.net.jodah.expiringmap",
+    "org.jetbrains.annotations": "us.minevict.mvutil.dependencies.org.jetbrains.annotations",
+    "org.intellij.lang.annotations": "us.minevict.mvutil.dependencies.org.intellij.lang.annotations",
+    "org.reactivestreams": "us.minevict.mvutil.dependencies.org.reactivestreams"
+}
