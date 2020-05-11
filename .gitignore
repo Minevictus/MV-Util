@@ -2,3 +2,5 @@
 .gradle/
 build/
 *.iml
+/*.properties
+!gradle.properties

@@ -9,10 +9,11 @@ plugins {
 }
 
 dependencies {
+    compileOnly(kotlin("stdlib-jdk8"))
+
     compileOnly("com.destroystokyo.paper:paper-api:1.15-R0.1-SNAPSHOT")
     compileOnly("com.proximyst:mv-nms:0.+")
     api(project(":common"))
-    implementation(project(":spigot-impl-hidden-details"))
 
     api("co.aikar:taskchain-bukkit:3.7.2")
     api("co.aikar:acf-paper:${rootProject.ext["acfVer"]}")
@@ -21,6 +22,7 @@ dependencies {
     }
     api("me.tom.sparse:ChatMenuAPI:1.1.1")
     api("io.papermc:paperlib:1.0.2")
+    api("com.okkero.skedule:skedule:1.2.6")
 }
 
 tasks.withType<ShadowJar> {
