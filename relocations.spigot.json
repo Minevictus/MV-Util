@@ -17,5 +17,6 @@
     "io.papermc.lib": "us.minevict.mvutil.dependencies.io.papermc.lib",
     "io.lettuce": "us.minevict.mvutil.dependencies.io.lettuce",
     "kotlin": "us.minevict.mvutil.dependencies.kotlin",
-    "org.jetbrains.kotlin": "us.minevict.mvutil.dependencies.org.jetbrains.kotlin"
+    "org.jetbrains.kotlin": "us.minevict.mvutil.dependencies.org.jetbrains.kotlin",
+    "com.okkero.skedule": "us.minevict.mvutil.dependencies.com.okkero.skedule"
 }
