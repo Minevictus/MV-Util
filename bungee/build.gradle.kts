@@ -8,9 +8,9 @@ plugins {
 }
 
 dependencies {
-    compileOnly("io.github.waterfallmc:waterfall-api:1.15-SNAPSHOT")
     api(project(":common"))
-    implementation(project(":bungee-impl-hidden-details"))
+    compileOnly(kotlin("stdlib-jdk8"))
+    compileOnly("io.github.waterfallmc:waterfall-api:1.15-SNAPSHOT")
 
     api("co.aikar:acf-bungee:${rootProject.ext["acfVer"]}")
     api("commons-lang:commons-lang:2.6") // Spigot has this, Bungee doesn't

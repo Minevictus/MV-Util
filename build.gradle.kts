@@ -1,5 +1,8 @@
 import com.github.jengelman.gradle.plugins.shadow.ShadowPlugin
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import org.jetbrains.dokka.gradle.DokkaPlugin
+import org.jetbrains.dokka.gradle.DokkaTask
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.util.*
 
 plugins {
@@ -7,6 +10,8 @@ plugins {
     `java-library`
     id("com.github.johnrengelman.shadow") version "5.2.0"
     `maven-publish`
+    kotlin("jvm") version "1.3.72"
+    id("org.jetbrains.dokka") version "0.10.1"
 }
 
 run {
@@ -27,7 +32,17 @@ ext["acfVer"] = "0.5.0-SNAPSHOT"
 
 allprojects {
     group = "us.minevict.mvutil"
-    version = "4.1.0"
+    version = "5.0.0"
+}
+
+repositories {
+    maven {
+        name = "kotlin-dev"
+        url = uri("https://dl.bintray.com/kotlin/kotlin-dev/")
+    }
+
+    jcenter()
+    mavenCentral()
 }
 
 subprojects {
@@ -36,6 +51,9 @@ subprojects {
         plugin<JavaLibraryPlugin>()
         plugin<ShadowPlugin>()
         plugin<MavenPublishPlugin>()
+//        plugin("org.jetbrains.kotlin.multiplatform") // Why. Can. I. Not. Do. This. Via. Class. Referencing.
+        plugin("org.jetbrains.kotlin.jvm")
+        plugin<DokkaPlugin>()
     }
 
     repositories {
@@ -99,6 +117,15 @@ subprojects {
         }
 
         maven {
+            name = "okkero"
+            url = uri("http://nexus.okkero.com/repository/maven-releases")
+
+            content {
+                includeGroup("com.okkero.skedule")
+            }
+        }
+
+        maven {
             name = "proxi-nexus"
             url = uri("https://nexus.proximyst.com/repository/maven-public/")
         }
@@ -112,8 +139,17 @@ subprojects {
         mavenCentral()
     }
 
-    dependencies {
-        compileOnly("org.jetbrains:annotations:19.0.0")
+    val dokka by tasks.getting(DokkaTask::class) {
+        outputDirectory = "$buildDir/dokka"
+        outputFormat = "html"
+    }
+
+    val dokkaJar by tasks.creating(Jar::class) {
+        group = JavaBasePlugin.DOCUMENTATION_GROUP
+        description = "Assembles Kotlin docs with Dokka"
+        archiveClassifier.set("javadoc")
+        dependsOn(dokka)
+        from("$buildDir/dokka")
     }
 
     configure<JavaPluginConvention> {
@@ -121,13 +157,11 @@ subprojects {
         targetCompatibility = sourceCompatibility
     }
 
-    java {
-        withJavadocJar()
-        withSourcesJar()
-    }
-
-    tasks.withType<JavaCompile> {
-        options.compilerArgs.add("-parameters")
+    tasks.withType<KotlinCompile> {
+        kotlinOptions {
+            jvmTarget = "11"
+            javaParameters = true
+        }
     }
 
     tasks.withType<ShadowJar> {
@@ -147,7 +181,8 @@ subprojects {
     publishing {
         publications {
             create<MavenPublication>("maven") {
-                from(project.components["java"])
+                from(components["java"])
+                artifact(dokkaJar)
             }
         }
         repositories {
