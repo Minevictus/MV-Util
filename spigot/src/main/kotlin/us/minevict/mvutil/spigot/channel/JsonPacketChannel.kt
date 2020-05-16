@@ -1,12 +1,12 @@
 package us.minevict.mvutil.spigot.channel
 
-import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.plugin.Plugin
 import org.bukkit.plugin.messaging.Messenger
 import org.bukkit.plugin.messaging.PluginMessageListener
+import us.minevict.mvutil.common.ext.simpleGson
 
 /**
  * A [PacketChannel] which transmits its packets through serializing as JSON.
@@ -38,7 +38,7 @@ class JsonPacketChannel<P>(
         val string = String(message, Charsets.UTF_8)
         var packet: P? = null
         try {
-            packet = GSON.fromJson(string, packetType)
+            packet = simpleGson.fromJson(string, packetType)
         } catch (ex: JsonSyntaxException) {
             plugin.logger.warning("Received malformed packet on plugin messaging channel: $channel")
             plugin.logger.warning("Received packet: $packet")
@@ -67,7 +67,7 @@ class JsonPacketChannel<P>(
         if (!permitNulls && handledPacket == null) throw IllegalArgumentException("does not permit nulls but attempted null packet")
 
         val bytes = if (handledPacket == null) byteArrayOf()
-        else GSON.toJson(handledPacket).toByteArray()
+        else simpleGson.toJson(handledPacket).toByteArray()
 
         // TODO(Proximyst): Support arbitrary message sizes
         if (bytes.size > Messenger.MAX_MESSAGE_SIZE) {
@@ -80,12 +80,5 @@ class JsonPacketChannel<P>(
 
     override fun unregisterIncoming() {
         plugin.server.messenger.unregisterIncomingPluginChannel(plugin, channel, this)
-    }
-
-    companion object {
-        /**
-         * The strict, minimal Gson instance to use for all JSON channels.
-         */
-        private val GSON = Gson()
     }
 }

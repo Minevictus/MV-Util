@@ -8,6 +8,7 @@ import net.md_5.bungee.api.event.PluginMessageEvent
 import net.md_5.bungee.api.plugin.Listener
 import net.md_5.bungee.api.plugin.Plugin
 import net.md_5.bungee.event.EventHandler
+import us.minevict.mvutil.common.ext.simpleGson
 
 /**
  * A [PacketChannel] which transmits its packets through serializing as JSON.
@@ -24,6 +25,7 @@ class JsonPacketChannel<P>(
 ) : PacketChannel<P>, Listener {
     init {
         plugin.proxy.registerChannel(channel)
+        plugin.proxy.pluginManager.registerListener(plugin, this)
     }
 
     @EventHandler
@@ -41,7 +43,7 @@ class JsonPacketChannel<P>(
         val string = String(message, Charsets.UTF_8)
         var packet: P? = null
         try {
-            packet = GSON.fromJson(string, packetType)
+            packet = simpleGson.fromJson(string, packetType)
         } catch (ex: JsonSyntaxException) {
             plugin.logger.warning("Received malformed packet on plugin messaging channel: $channel")
             plugin.logger.warning("Received packet: $packet")
@@ -70,7 +72,7 @@ class JsonPacketChannel<P>(
         if (!permitNulls && handledPacket == null) throw IllegalArgumentException("does not permit nulls but attempted null packet")
 
         val bytes = if (handledPacket == null) byteArrayOf()
-        else GSON.toJson(handledPacket).toByteArray()
+        else simpleGson.toJson(handledPacket).toByteArray()
 
         // TODO(Proximyst): Support arbitrary message sizes
         if (bytes.size > MAX_MESSAGE_SIZE) {
@@ -90,10 +92,5 @@ class JsonPacketChannel<P>(
          * The maximum message size of a transmitted packet in bytes.
          */
         const val MAX_MESSAGE_SIZE = 32766
-
-        /**
-         * The strict, minimal Gson instance to use for all JSON channels.
-         */
-        private val GSON = Gson()
     }
 }

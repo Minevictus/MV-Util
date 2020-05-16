@@ -54,14 +54,12 @@ abstract class MvPlugin : Plugin(),
             if (!load()) {
                 errorState = IMvPlugin.PluginErrorState.LOAD
                 logger.warning("Disabling plugin...")
-                isEnabled = false
             }
         } catch (ex: Exception) {
             errorState = IMvPlugin.PluginErrorState.LOAD
             logger.severe("Encountered exception upon loading:")
             ex.printStackTrace()
             logger.warning("Disabling plugin...")
-            isEnabled = false
         }
 
         if (errorState != null) {
@@ -76,14 +74,14 @@ abstract class MvPlugin : Plugin(),
             if (!enable()) {
                 errorState = IMvPlugin.PluginErrorState.ENABLE
                 logger.warning("Disabling plugin...")
-                isEnabled = false
+            } else {
+                isEnabled = true
             }
         } catch (ex: Exception) {
             errorState = IMvPlugin.PluginErrorState.ENABLE
             logger.severe("Encountered exception upon enabling:")
             ex.printStackTrace()
             logger.warning("Disabling plugin...")
-            isEnabled = false
         }
 
         if (!isEnabled) {
@@ -105,6 +103,7 @@ abstract class MvPlugin : Plugin(),
     }
 
     private fun shutdownSafely() {
+        isEnabled = false
         proxy.pluginManager.unregisterListeners(this)
         if (acfDelegate.isInitialized())
             acf.unregisterCommands()
