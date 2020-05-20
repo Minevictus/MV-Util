@@ -118,7 +118,7 @@ subprojects {
 
         maven {
             name = "okkero"
-            url = uri("http://nexus.okkero.com/repository/maven-releases")
+            url = uri("https://nexus.okkero.com/repository/maven-releases/")
 
             content {
                 includeGroup("com.okkero.skedule")
