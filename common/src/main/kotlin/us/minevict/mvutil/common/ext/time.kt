@@ -3,7 +3,7 @@ package us.minevict.mvutil.common.ext
 import java.time.Duration
 import java.util.concurrent.TimeUnit
 
-private val timePattern = Regex("\\d+\\s*(mo|ms|µs|ns|[smhdwy])\\s*", RegexOption.IGNORE_CASE)
+private val timePattern = Regex("(\\d+)\\s*(mo|ms|µs|ns|[smhdwy])\\s*", RegexOption.IGNORE_CASE)
 
 /**
  * Parse a [Duration] from a [String].
