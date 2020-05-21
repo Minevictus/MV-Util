@@ -152,6 +152,11 @@ subprojects {
         from("$buildDir/dokka")
     }
 
+    val sourcesJar by tasks.registering(Jar::class) {
+        archiveClassifier.set("sources")
+        from(sourceSets.main.get().allSource)
+    }
+
     configure<JavaPluginConvention> {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = sourceCompatibility
@@ -183,6 +188,7 @@ subprojects {
             create<MavenPublication>("maven") {
                 from(components["java"])
                 artifact(dokkaJar)
+                artifact(sourcesJar.get())
             }
         }
         repositories {
