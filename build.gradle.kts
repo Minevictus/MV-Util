@@ -1,5 +1,6 @@
 import com.github.jengelman.gradle.plugins.shadow.ShadowPlugin
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import nl.javadude.gradle.plugins.license.LicensePlugin
 import org.jetbrains.dokka.gradle.DokkaPlugin
 import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -12,6 +13,7 @@ plugins {
     `maven-publish`
     kotlin("jvm") version "1.3.72"
     id("org.jetbrains.dokka") version "0.10.1"
+    id("com.github.hierynomus.license") version "0.15.0"
 }
 
 run {
@@ -54,6 +56,7 @@ subprojects {
 //        plugin("org.jetbrains.kotlin.multiplatform") // Why. Can. I. Not. Do. This. Via. Class. Referencing.
         plugin("org.jetbrains.kotlin.jvm")
         plugin<DokkaPlugin>()
+        plugin<LicensePlugin>()
     }
 
     repositories {
@@ -211,6 +214,13 @@ subprojects {
                 "Implementation-Version" to project.version.toString()
             )
         }
+    }
+
+    license {
+        header = rootProject.file("LICENCE-HEADER")
+        ext["year"] = Calendar.getInstance().get(Calendar.YEAR)
+        ext["name"] = "Mariell Hoversholm, Nahuel Dolores"
+        include("**/*.kt")
     }
 }
 
