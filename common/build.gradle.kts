@@ -10,4 +10,5 @@ dependencies {
 
     compileOnly("net.md-5:bungeecord-chat:1.15-SNAPSHOT")
     compileOnly("commons-lang:commons-lang:2.6") // Spigot has this, Bungee doesn't
+    compileOnly("com.google.code.gson:gson:2.8.0") // Spigot has this, Bungee doesn't
 }

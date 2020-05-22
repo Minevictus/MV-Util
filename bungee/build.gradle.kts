@@ -14,6 +14,7 @@ dependencies {
 
     api("co.aikar:acf-bungee:${rootProject.ext["acfVer"]}")
     api("commons-lang:commons-lang:2.6") // Spigot has this, Bungee doesn't
+    api("com.google.code.gson:gson:2.8.0") // Spigot has this, Bungee doesn't
 }
 
 tasks.withType<ShadowJar> {
