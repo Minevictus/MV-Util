@@ -14,5 +14,6 @@
     "org.intellij.lang.annotations": "us.minevict.mvutil.dependencies.org.intellij.lang.annotations",
     "org.reactivestreams": "us.minevict.mvutil.dependencies.org.reactivestreams",
     "kotlin": "us.minevict.mvutil.dependencies.kotlin",
-    "org.jetbrains.kotlin": "us.minevict.mvutil.dependencies.org.jetbrains.kotlin"
+    "org.jetbrains.kotlin": "us.minevict.mvutil.dependencies.org.jetbrains.kotlin",
+    "com.google.gson": "us.minevict.mvutil.dependencies.com.google.gson"
 }
