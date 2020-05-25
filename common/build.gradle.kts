@@ -5,8 +5,10 @@ dependencies {
         exclude("com.h2project") // H2 is unnecessary as we run SQL & Redis
     }
     api("io.lettuce:lettuce-core:5.2.2.RELEASE")
+    api("com.moandjiezana.toml:toml4j:0.7.4")
 
     api(kotlin("stdlib-jdk8"))
+    api(kotlin("reflect"))
 
     compileOnly("net.md-5:bungeecord-chat:1.15-SNAPSHOT")
     compileOnly("commons-lang:commons-lang:2.6") // Spigot has this, Bungee doesn't

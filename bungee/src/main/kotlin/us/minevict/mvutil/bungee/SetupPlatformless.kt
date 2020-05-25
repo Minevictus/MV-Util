@@ -19,6 +19,8 @@ package us.minevict.mvutil.bungee
 
 import co.aikar.commands.BungeeCommandIssuer
 import net.md_5.bungee.api.ProxyServer
+import net.md_5.bungee.api.plugin.Plugin
+import us.minevict.mvutil.bungee.ext.copyResource
 import us.minevict.mvutil.common.utils.Platformless
 import java.util.concurrent.CompletableFuture
 
@@ -42,6 +44,10 @@ internal object SetupPlatformless {
                 }
             }
             future
+        }
+        Platformless.exportJarResource = b@{ plug, name, file ->
+            if (plug is Plugin) plug.copyResource(name, file)
+            else false
         }
     }
 }

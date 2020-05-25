@@ -19,13 +19,19 @@ package us.minevict.mvutil.bungee
 
 import co.aikar.commands.BaseCommand
 import co.aikar.commands.BungeeCommandManager
+import com.google.common.reflect.TypeToken
 import net.md_5.bungee.api.plugin.Listener
 import net.md_5.bungee.api.plugin.Plugin
 import net.md_5.bungee.config.Configuration
 import us.minevict.mvutil.bungee.ext.readBungeeConfig
 import us.minevict.mvutil.common.IMvPlugin
 import us.minevict.mvutil.common.channel.IPacketChannel
+import us.minevict.mvutil.common.config.TomlConfiguration
+import us.minevict.mvutil.common.config.TomlDelegatedConfigurationValue
+import us.minevict.mvutil.common.ext.typeToken
+import java.io.File
 import java.util.logging.Logger
+import kotlin.reflect.KClass
 
 /**
  * The base plugin for Bungee plugins using MV-Util.
@@ -36,6 +42,12 @@ abstract class MvPlugin : Plugin(),
     IMvPlugin<BungeeCommandManager, Listener, MinevictusUtilsBungee> {
     override val platformLogger: Logger
         get() = logger
+
+    private val tomlConfigDelegate: TomlConfiguration<MvPlugin> by lazy {
+        TomlConfiguration(this, File(dataFolder, "config.toml"), "config.toml")
+    }
+    override val tomlConfig: TomlConfiguration<*>
+        get() = tomlConfigDelegate
 
     private val acfDelegate = lazy {
         mvUtil.prepareAcf(BungeeCommandManager(this))
@@ -149,6 +161,8 @@ abstract class MvPlugin : Plugin(),
      *
      * @return The current configuration.
      */
+    @Suppress("DEPRECATION")
+    @Deprecated("Use the TOML configuration instead")
     fun getConfig(): Configuration {
         if (configuration == null) reloadConfig()
         return configuration!!
@@ -157,7 +171,45 @@ abstract class MvPlugin : Plugin(),
     /**
      * Loads the configuration from file.
      */
+    @Deprecated("Use the TOML configuration instead")
     fun reloadConfig() {
         configuration = readBungeeConfig()
     }
+
+    /**
+     * Delegate the config value requested with type [R] to the name or the property name with an optional default.
+     *
+     * @return The config value delegate.
+     * @since 5.2.0
+     */
+    @Suppress("DEPRECATION")
+    inline fun <reified R : Any> config(
+        name: String? = null,
+        noinline default: () -> R? = { null }
+    ) = __config_internal_getter(name, typeToken<R>(), R::class, default)
+
+    /**
+     * @since 5.2.0
+     */
+    @Suppress("UnstableApiUsage", "DeprecatedCallableAddReplaceWith")
+    @Deprecated("This is an internal API.")
+    private fun <R : Any> config(
+        name: String?,
+        typeToken: TypeToken<out R>,
+        type: KClass<out R>,
+        default: () -> R?
+    ) = TomlDelegatedConfigurationValue(name, typeToken, type, default)
+
+    /**
+     * @since 5.2.0
+     */
+    @Suppress("FunctionName", "DEPRECATION", "DeprecatedCallableAddReplaceWith", "UnstableApiUsage")
+    @PublishedApi
+    @Deprecated("This is an internal API.")
+    internal fun <R : Any> __config_internal_getter(
+        name: String?,
+        typeToken: TypeToken<out R>,
+        type: KClass<out R>,
+        default: () -> R?
+    ) = config(name, typeToken, type, default)
 }

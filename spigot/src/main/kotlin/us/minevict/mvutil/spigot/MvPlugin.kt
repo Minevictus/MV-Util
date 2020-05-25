@@ -21,15 +21,21 @@ import co.aikar.commands.BaseCommand
 import co.aikar.commands.PaperCommandManager
 import co.aikar.taskchain.BukkitTaskChainFactory
 import co.aikar.taskchain.TaskChainFactory
+import com.google.common.reflect.TypeToken
 import org.bukkit.event.HandlerList
 import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scheduler.BukkitTask
 import us.minevict.mvutil.common.IMvPlugin
 import us.minevict.mvutil.common.channel.IPacketChannel
+import us.minevict.mvutil.common.config.TomlConfiguration
+import us.minevict.mvutil.common.config.TomlDelegatedConfigurationValue
+import us.minevict.mvutil.common.ext.typeToken
 import us.minevict.mvutil.spigot.permissions.PermissionsDSL
+import java.io.File
 import java.util.concurrent.TimeUnit
 import java.util.logging.Logger
+import kotlin.reflect.KClass
 
 /**
  * The base plugin for Spigot plugins using MV-Util.
@@ -40,6 +46,12 @@ abstract class MvPlugin : JavaPlugin(),
     IMvPlugin<PaperCommandManager, Listener, MinevictusUtilsSpigot> {
     override val platformLogger: Logger
         get() = logger
+
+    private val tomlConfigDelegate: TomlConfiguration<MvPlugin> by lazy {
+        TomlConfiguration(this, File(dataFolder, "config.toml"), "config.toml")
+    }
+    override val tomlConfig: TomlConfiguration<*>
+        get() = tomlConfigDelegate
 
     private val acfDelegate = lazy {
         mvUtil.prepareAcf(PaperCommandManager(this))
@@ -168,4 +180,41 @@ abstract class MvPlugin : JavaPlugin(),
     fun permissions(block: PermissionsDSL.() -> Unit) {
         PermissionsDSL().also(block)
     }
+
+    /**
+     * Delegate the config value requested with type [R] to the name or the property name with an optional default.
+     *
+     * @return The config value delegate.
+     * @since 5.2.0
+     */
+    @Suppress("DEPRECATION")
+    inline fun <reified R : Any> config(
+        name: String? = null,
+        noinline default: () -> R? = { null }
+    ) = __config_internal_getter(name, typeToken<R>(), R::class, default)
+
+    /**
+     * @since 5.2.0
+     */
+    @Suppress("UnstableApiUsage", "DeprecatedCallableAddReplaceWith")
+    @Deprecated("This is an internal API.")
+    private fun <R : Any> config(
+        name: String?,
+        typeToken: TypeToken<out R>,
+        type: KClass<out R>,
+        default: () -> R?
+    ) = TomlDelegatedConfigurationValue(name, typeToken, type, default)
+
+    /**
+     * @since 5.2.0
+     */
+    @Suppress("FunctionName", "DEPRECATION", "DeprecatedCallableAddReplaceWith", "UnstableApiUsage")
+    @PublishedApi
+    @Deprecated("This is an internal API.")
+    internal fun <R : Any> __config_internal_getter(
+        name: String?,
+        typeToken: TypeToken<out R>,
+        type: KClass<out R>,
+        default: () -> R?
+    ) = config(name, typeToken, type, default)
 }

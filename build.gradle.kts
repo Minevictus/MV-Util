@@ -34,7 +34,7 @@ ext["acfVer"] = "0.5.0-SNAPSHOT"
 
 allprojects {
     group = "us.minevict.mvutil"
-    version = "5.1.0"
+    version = "5.2.0"
 }
 
 repositories {

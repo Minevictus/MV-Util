@@ -18,9 +18,11 @@
 package us.minevict.mvutil.spigot.internal
 
 import co.aikar.commands.BukkitCommandIssuer
+import org.bukkit.plugin.Plugin
 import org.bukkit.scheduler.BukkitRunnable
 import us.minevict.mvutil.common.utils.Platformless
 import us.minevict.mvutil.spigot.MinevictusUtilsSpigot
+import us.minevict.mvutil.spigot.ext.copyResource
 import java.util.concurrent.CompletableFuture
 
 /**
@@ -45,6 +47,10 @@ internal object SetupPlatformless {
                 }
             }.runTaskAsynchronously(plugin)
             future
+        }
+        Platformless.exportJarResource = b@{ plug, name, file ->
+            if (plug is Plugin) plug.copyResource(name, file)
+            else false
         }
     }
 }

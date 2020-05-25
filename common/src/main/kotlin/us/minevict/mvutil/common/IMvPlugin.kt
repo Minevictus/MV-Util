@@ -22,6 +22,7 @@ import co.aikar.commands.CommandManager
 import co.aikar.idb.Database
 import us.minevict.mvutil.common.acf.AcfCooldowns
 import us.minevict.mvutil.common.channel.IPacketChannel
+import us.minevict.mvutil.common.config.TomlConfiguration
 import java.util.logging.Logger
 
 /**
@@ -35,6 +36,13 @@ interface IMvPlugin<
         L : Any,
         PF : MinevictusUtilsPlatform<*, CM>
         > {
+    /**
+     * A [TomlConfiguration] specifically created for this plugin.
+     *
+     * @since 5.2.0
+     */
+    val tomlConfig: TomlConfiguration<*>
+
     /**
      * Called upon loading the plugin.
      *

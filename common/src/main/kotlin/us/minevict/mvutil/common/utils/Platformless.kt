@@ -19,11 +19,14 @@ package us.minevict.mvutil.common.utils
 
 import co.aikar.commands.CommandIssuer
 import net.md_5.bungee.api.chat.BaseComponent
+import us.minevict.mvutil.common.IMvPlugin
+import java.io.File
 import java.util.concurrent.CompletableFuture
 
 object Platformless {
     lateinit var messageSender: (CommandIssuer, Array<BaseComponent>) -> Unit
     lateinit var asyncRunner: ((() -> Any?)) -> CompletableFuture<*>
+    lateinit var exportJarResource: (IMvPlugin<*, *, *>, String, File) -> Boolean
 
     /**
      * Send a message to the [CommandIssuer] regardless of platform.
@@ -44,4 +47,16 @@ object Platformless {
     @Suppress("UNCHECKED_CAST")
     fun <T> runAsync(block: () -> T): CompletableFuture<T> =
         asyncRunner(block) as CompletableFuture<T>
+
+    /**
+     * Export the given jar resource from the plugin to the file given.
+     *
+     * @param plugin The plugin whose jar contains the file.
+     * @param name The name of the file in the plugin jar.
+     * @param destination The destination for the file.
+     *
+     * @since 5.2.0
+     */
+    fun exportResource(plugin: IMvPlugin<*, *, *>, name: String, destination: File): Boolean =
+        exportJarResource(plugin, name, destination)
 }
