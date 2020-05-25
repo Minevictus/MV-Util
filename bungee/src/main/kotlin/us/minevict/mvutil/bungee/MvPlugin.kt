@@ -77,7 +77,7 @@ abstract class MvPlugin : Plugin(),
         get() = description.version
 
     final override fun onLoad() {
-        databaseName = pluginName.toLowerCase()
+        databaseName = pluginName.toLowerCase().replace('-', '_')
 
         try {
             if (!load()) {
