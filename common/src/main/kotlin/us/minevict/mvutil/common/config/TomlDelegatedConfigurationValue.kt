@@ -68,7 +68,7 @@ class TomlDelegatedConfigurationValue(
                 Float::class -> thisRef.tomlConfig.toml.getFloat(name)
                 Date::class -> thisRef.tomlConfig.toml.getDate(name)
                 Boolean::class -> thisRef.tomlConfig.toml.getBoolean(name)
-                else -> thisRef.tomlConfig.toml.to(type)
+                else -> thisRef.tomlConfig.toml.getTable(name)?.to(type)
             }
         }.getOrNull()
 
