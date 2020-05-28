@@ -30,6 +30,7 @@ import us.minevict.mvutil.common.config.TomlConfiguration
 import us.minevict.mvutil.common.config.TomlDelegatedConfigurationValue
 import us.minevict.mvutil.common.ext.typeToken
 import java.io.File
+import java.io.InputStream
 import java.util.logging.Logger
 import kotlin.reflect.KClass
 
@@ -175,6 +176,8 @@ abstract class MvPlugin : Plugin(),
     fun reloadConfig() {
         configuration = readBungeeConfig()
     }
+
+    override fun getPluginResourceAsInputStream(resourceName: String): InputStream? = getResourceAsStream(resourceName)
 
     /**
      * Delegate the config value requested with type [R] to the name or the property name with an optional default.

@@ -48,7 +48,7 @@ class TomlConfiguration<P: IMvPlugin<*, *, *>>(
         val defaults = Toml()
         if (classPathName != null) {
             // There is a default configuration in the classpath, or so we hope.
-            plugin.javaClass.getResourceAsStream("/$classPathName")?.use {
+            plugin.getPluginResourceAsInputStream(classPathName)?.use {
                 defaults.read(it)
             }
             if (!file.isFile) {

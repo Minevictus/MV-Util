@@ -33,6 +33,7 @@ import us.minevict.mvutil.common.config.TomlDelegatedConfigurationValue
 import us.minevict.mvutil.common.ext.typeToken
 import us.minevict.mvutil.spigot.permissions.PermissionsDSL
 import java.io.File
+import java.io.InputStream
 import java.util.concurrent.TimeUnit
 import java.util.logging.Logger
 import kotlin.reflect.KClass
@@ -180,6 +181,8 @@ abstract class MvPlugin : JavaPlugin(),
     fun permissions(block: PermissionsDSL.() -> Unit) {
         PermissionsDSL().also(block)
     }
+
+    override fun getPluginResourceAsInputStream(resourceName: String): InputStream? = getResource(resourceName)
 
     /**
      * Delegate the config value requested with type [R] to the name or the property name with an optional default.

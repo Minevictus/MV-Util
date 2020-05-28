@@ -23,6 +23,7 @@ import co.aikar.idb.Database
 import us.minevict.mvutil.common.acf.AcfCooldowns
 import us.minevict.mvutil.common.channel.IPacketChannel
 import us.minevict.mvutil.common.config.TomlConfiguration
+import java.io.InputStream
 import java.util.logging.Logger
 
 /**
@@ -168,6 +169,15 @@ interface IMvPlugin<
      * @return The current version of the plugin.
      */
     val version: String
+
+    /**
+     * Get a resource from a plugin jar as an [InputStream] if it exists.
+     *
+     * @param resourceName The name of the resource in the jar. This is relative to the root of the jar.
+     * @return The resource if found, or `null` otherwise.
+     * @since 5.2.1
+     */
+    fun getPluginResourceAsInputStream(resourceName: String): InputStream?
 
     enum class PluginErrorState {
         LOAD,
