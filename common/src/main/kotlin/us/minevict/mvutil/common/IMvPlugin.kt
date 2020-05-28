@@ -175,7 +175,7 @@ interface IMvPlugin<
      *
      * @param resourceName The name of the resource in the jar. This is relative to the root of the jar.
      * @return The resource if found, or `null` otherwise.
-     * @since 5.2.1
+     * @since 5.2.2
      */
     fun getPluginResourceAsInputStream(resourceName: String): InputStream?
 
