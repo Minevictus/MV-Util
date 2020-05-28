@@ -45,21 +45,21 @@ class TomlConfiguration<P: IMvPlugin<*, *, *>>(
 
     fun reload() {
         // Read resources
-        val defaults = Toml()
+        var constructedToml = Toml()
         if (classPathName != null) {
             // There is a default configuration in the classpath, or so we hope.
             plugin.getPluginResourceAsInputStream(classPathName)?.use {
-                defaults.read(it)
+                constructedToml.read(it)
             }
             if (!file.isFile) {
                 file.parentFile.mkdirs()
                 Platformless.exportResource(plugin, classPathName, file)
             }
         }
-        toml = TomlKt(defaults)
         if (file.isFile) {
-            toml.read(file)
+            constructedToml = Toml(constructedToml).read(file)
         }
+        this.toml = TomlKt(constructedToml)
     }
 
     fun write() {
