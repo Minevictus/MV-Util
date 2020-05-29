@@ -1,4 +1,6 @@
-= MV-Util 
+= MV-Util
+
+image::https://drone.proximyst.com/api/badges/Minevictus/MV-Util/status.svg[link="https://drone.proximyst.com/Minevictus/MV-Util"]
 
 A utility plugin for both Spigot and BungeeCord for Minevictus.
 
