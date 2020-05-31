@@ -110,7 +110,7 @@ class MinevictusUtilsSpigot : JavaPlugin(), MinevictusUtilsPlatform<Plugin, Pape
                 ?: throw IllegalArgumentException("user cannot be null"),
             config.getString("sql-password")
                 ?: throw IllegalArgumentException("password cannot be null"),
-            databaseName,
+            (config.getString("sql-db-prefix") ?: "") + databaseName,
             config.getString("sql-host-and-port")
                 ?: throw IllegalArgumentException("host and port cannot be null")
         ).also {

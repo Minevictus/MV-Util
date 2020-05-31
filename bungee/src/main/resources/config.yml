@@ -8,6 +8,12 @@ redis-hostname: localhost
 # Default: 6379
 redis-port: 6379
 
+# The prefix for the SQL databases.
+# Note that this CANNOT include hyphens but CAN include underscores.
+#
+# Default: ''
+sql-db-prefix: ''
+
 # The username for SQL.
 #
 # Default: admin

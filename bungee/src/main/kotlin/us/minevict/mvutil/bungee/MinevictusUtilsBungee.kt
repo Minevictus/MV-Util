@@ -96,7 +96,7 @@ class MinevictusUtilsBungee : Plugin(), MinevictusUtilsPlatform<Plugin, BungeeCo
                 ?: throw IllegalArgumentException("user cannot be null"),
             configuration.getString("sql-password")
                 ?: throw IllegalArgumentException("password cannot be null"),
-            databaseName,
+            (configuration.getString("sql-db-prefix") ?: "") + databaseName,
             configuration.getString("sql-host-and-port")
                 ?: throw IllegalArgumentException("host and port cannot be null")
         )
