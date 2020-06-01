@@ -71,6 +71,9 @@ data class TomlKt(internal val toml: Toml) {
     fun getTable(key: String, default: Toml): TomlKt = getTable(key) ?: default.let(::TomlKt)
     fun getTable(key: String, default: () -> TomlKt): TomlKt = getTable(key) ?: default()
 
+    fun getTables(key: String): List<TomlKt>? = toml.getTables(key)?.map(::TomlKt)?.toList()
+    fun getTables(key: String, default: List<TomlKt>): List<TomlKt> = getTables(key) ?: default
+
     fun toMap(): Map<String, Any?> = toml.toMap()
 
     operator fun set(key: String, value: Any?) {
