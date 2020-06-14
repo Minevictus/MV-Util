@@ -75,7 +75,7 @@ object GuiUtils {
         if (!onlyEmptyCharacters && items < requiredRows * 9) rows[rows.size - 1] = rows.last()
             .substring(0 until abs(items - (requiredRows * 9)))
         if (!onlyEmptyCharacters && items < requiredRows * 9) {
-            val excess = abs(items - (requiredRows * 9))
+            val excess = abs(items - (requiredRows * 9)) + 1
             rows[rows.size - 1] = rows.last().substring(0 until 9 - excess) + " ".repeat(excess)
         }
 
