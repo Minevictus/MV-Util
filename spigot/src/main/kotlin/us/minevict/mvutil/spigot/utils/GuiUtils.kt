@@ -57,12 +57,7 @@ object GuiUtils {
      * @param onlyEmptyCharacters Use only spaces instead of [GUI_CHARACTERS].
      * @return The calculated rows.
      */
-    fun calculateRows(
-        items: Int,
-        inventoryRows: Int = 6,
-        growing: Boolean = true,
-        onlyEmptyCharacters: Boolean = false
-    ): Array<String> {
+    fun calculateRows(items: Int, inventoryRows: Int = 6, growing: Boolean = true, onlyEmptyCharacters: Boolean = false): Array<String> {
         val maximumPageRows = min(max(1, inventoryRows), 6)
         val requiredRows = if (growing) {
             if (items > maximumPageRows * 9) maximumPageRows
@@ -72,10 +67,8 @@ object GuiUtils {
         val characters = if (onlyEmptyCharacters) " ".repeat(45)
         else GUI_CHARACTERS
         val rows = characters.chunked(9).take(requiredRows).toTypedArray()
-        if (!onlyEmptyCharacters && items < requiredRows * 9) rows[rows.size - 1] = rows.last()
-            .substring(0 until abs(items - (requiredRows * 9)))
         if (!onlyEmptyCharacters && items < requiredRows * 9) {
-            val excess = abs(items - (requiredRows * 9)) + 1
+            val excess = abs(items - (requiredRows * 9))
             rows[rows.size - 1] = rows.last().substring(0 until 9 - excess) + " ".repeat(excess)
         }
 
