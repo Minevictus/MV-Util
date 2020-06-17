@@ -5,7 +5,9 @@ dependencies {
         exclude("com.h2project") // H2 is unnecessary as we run SQL & Redis
     }
     api("redis.clients:jedis:3.2.0")
-    api("com.moandjiezana.toml:toml4j:0.7.4")
+    api("com.moandjiezana.toml:toml4j:0.7.4") {
+        exclude("com.google.code.gson")
+    }
 
     api(kotlin("stdlib-jdk8"))
     api(kotlin("reflect"))
