@@ -1,22 +1,20 @@
 {
     "co.aikar.commands": "us.minevict.mvutil.dependencies.co.aikar.commands",
-    "co.aikar.taskchain": "us.minevict.mvutil.dependencies.co.aikar.taskchain",
     "co.aikar.idb": "us.minevict.mvutil.dependencies.co.aikar.idb",
     "co.aikar.locales": "us.minevict.mvutil.dependencies.co.aikar.locales",
     "co.aikar.util": "us.minevict.mvutil.dependencies.co.aikar.util",
     "net.jodah.expiringmap": "us.minevict.mvutil.dependencies.net.jodah.expiringmap",
     "org.intellij.lang.annotations": "us.minevict.mvutil.dependencies.org.intellij.lang.annotations",
     "org.jetbrains.annotations": "us.minevict.mvutil.dependencies.org.jetbrains.annotations",
-    "org.reactivestreams": "us.minevict.mvutil.dependencies.org.reactivestreams",
-    "reactor": "us.minevict.mvutil.dependencies.reactor",
-    "io.netty": "us.minevict.mvutil.dependencies.io.netty",
     "org.slf4j": "us.minevict.mvutil.dependencies.org.slf4j",
     "com.zaxxer": "us.minevict.mvutil.dependencies.com.zaxxer",
     "de.themoep.inventorygui": "us.minevict.mvutil.dependencies.de.themoep.inventorygui",
     "me.tom.sparse.spigot.chat": "us.minevict.mvutil.dependencies.me.tom.sparse.spigot.chat",
     "io.papermc.lib": "us.minevict.mvutil.dependencies.io.papermc.lib",
-    "io.lettuce": "us.minevict.mvutil.dependencies.io.lettuce",
     "kotlin": "us.minevict.mvutil.dependencies.kotlin",
     "org.jetbrains.kotlin": "us.minevict.mvutil.dependencies.org.jetbrains.kotlin",
-    "com.okkero.skedule": "us.minevict.mvutil.dependencies.com.okkero.skedule"
+    "com.okkero.skedule": "us.minevict.mvutil.dependencies.com.okkero.skedule",
+    "redis.clients.jedis": "us.minevict.mvutil.dependencies.redis.clients.jedis",
+    "com.moandjiezana.toml": "us.minevict.mvutil.dependencies.com.moandjiezana.toml",
+    "org.apache.commons.pool2": "us.minevict.mvutil.dependencies.org.apache.commons.pool2"
 }
