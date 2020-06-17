@@ -19,8 +19,6 @@ package us.minevict.mvutil.spigot
 
 import co.aikar.commands.BaseCommand
 import co.aikar.commands.PaperCommandManager
-import co.aikar.taskchain.BukkitTaskChainFactory
-import co.aikar.taskchain.TaskChainFactory
 import com.google.common.reflect.TypeToken
 import org.bukkit.event.HandlerList
 import org.bukkit.event.Listener
@@ -34,7 +32,6 @@ import us.minevict.mvutil.common.ext.typeToken
 import us.minevict.mvutil.spigot.permissions.PermissionsDSL
 import java.io.File
 import java.io.InputStream
-import java.util.concurrent.TimeUnit
 import java.util.logging.Logger
 import kotlin.reflect.KClass
 
@@ -72,7 +69,6 @@ abstract class MvPlugin : JavaPlugin(),
     private val tasks = mutableListOf<BukkitTask>()
     private val channels = mutableListOf<IPacketChannel<*, *>>()
     private var errorState: IMvPlugin.PluginErrorState? = null
-    private lateinit var taskChainFactory: TaskChainFactory
 
     override val pluginName: String
         get() = description.name
@@ -98,14 +94,12 @@ abstract class MvPlugin : JavaPlugin(),
         }
 
         if (errorState != null) {
-            shutdownSafely(false)
+            shutdownSafely()
         }
     }
 
     final override fun onEnable() {
         if (errorState != null) return
-
-        taskChainFactory = BukkitTaskChainFactory.create(this)
 
         try {
             if (!enable()) {
@@ -122,14 +116,14 @@ abstract class MvPlugin : JavaPlugin(),
         }
 
         if (!isEnabled) {
-            shutdownSafely(true)
+            shutdownSafely()
         }
     }
 
     final override fun onDisable() {
         if (errorState != null) return
 
-        shutdownSafely(false)
+        shutdownSafely()
 
         try {
             disable()
@@ -138,12 +132,9 @@ abstract class MvPlugin : JavaPlugin(),
             ex.printStackTrace()
         }
 
-        taskChainFactory.shutdown(5, TimeUnit.SECONDS)
     }
 
-    private fun shutdownSafely(doChain: Boolean) {
-        if (doChain)
-            taskChainFactory.shutdown(5, TimeUnit.SECONDS)
+    private fun shutdownSafely() {
         tasks.forEach(BukkitTask::cancel)
         HandlerList.unregisterAll(this)
         if (acfDelegate.isInitialized())
