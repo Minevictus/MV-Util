@@ -19,7 +19,7 @@ package us.minevict.mvutil.common
 
 import co.aikar.commands.CommandManager
 import co.aikar.idb.Database
-import io.lettuce.core.RedisClient
+import redis.clients.jedis.JedisPool
 import java.util.logging.Logger
 
 /**
@@ -40,12 +40,12 @@ interface MinevictusUtilsPlatform<PL : Any, CM : CommandManager<*, *, *, *, *, *
     val platformLogger: Logger
 
     /**
-     * Get the global [RedisClient].
+     * Get the global [JedisPool].
      *
-     * @return The [RedisClient] shared by all plugins depending on this.
-     * @since 3.7.0
+     * @return The [JedisPool] shared by all plugins depending on this.
+     * @since 6.0.0
      */
-    val redis: RedisClient
+    val redis: JedisPool
 
     /**
      * Prepare the ACF command manager instance before it is used by plugins.

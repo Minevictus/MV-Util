@@ -4,7 +4,7 @@ dependencies {
     api("com.zaxxer:HikariCP:2.4.1") {
         exclude("com.h2project") // H2 is unnecessary as we run SQL & Redis
     }
-    api("io.lettuce:lettuce-core:5.3.1.RELEASE")
+    api("redis.clients:jedis:3.2.0")
     api("com.moandjiezana.toml:toml4j:0.7.4")
 
     api(kotlin("stdlib-jdk8"))

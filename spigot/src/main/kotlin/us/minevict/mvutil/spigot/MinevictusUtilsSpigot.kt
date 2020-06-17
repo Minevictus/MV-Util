@@ -20,12 +20,11 @@ package us.minevict.mvutil.spigot
 import co.aikar.commands.MessageType
 import co.aikar.commands.PaperCommandManager
 import co.aikar.idb.Database
-import io.lettuce.core.RedisClient
-import io.lettuce.core.RedisURI
 import me.tom.sparse.spigot.chat.menu.ChatMenuAPI
 import org.bukkit.event.HandlerList
 import org.bukkit.plugin.Plugin
 import org.bukkit.plugin.java.JavaPlugin
+import redis.clients.jedis.JedisPool
 import us.minevict.mvutil.common.MinevictusUtilsPlatform
 import us.minevict.mvutil.spigot.ext.BukkitChatColor
 import us.minevict.mvutil.spigot.ext.copyResource
@@ -43,7 +42,7 @@ import java.util.logging.Logger
  * @since 5.0.0
  */
 class MinevictusUtilsSpigot : JavaPlugin(), MinevictusUtilsPlatform<Plugin, PaperCommandManager> {
-    override lateinit var redis: RedisClient
+    override lateinit var redis: JedisPool
         private set
     override val platformLogger: Logger
         get() = logger
@@ -56,11 +55,9 @@ class MinevictusUtilsSpigot : JavaPlugin(), MinevictusUtilsPlatform<Plugin, Pape
         saveDefaultConfig()
         config.options().copyDefaults(true)
 
-        redis = RedisClient.create(
-            RedisURI.builder()
-                .withHost(config.getString("redis-hostname"))
-                .withPort(config.getInt("redis-port"))
-                .build()
+        redis = JedisPool(
+            config.getString("redis-hostname"),
+            config.getInt("redis-port")
         )
 
         server.pluginManager.registerEvents(CloseDatabaseListener, this)
@@ -82,7 +79,7 @@ class MinevictusUtilsSpigot : JavaPlugin(), MinevictusUtilsPlatform<Plugin, Pape
         ChatMenuAPI.disable()
 
         HandlerList.unregisterAll(this)
-        redis.shutdown(2, 5, TimeUnit.SECONDS)
+        redis.close()
     }
 
     override fun prepareAcf(commandManager: PaperCommandManager): PaperCommandManager {

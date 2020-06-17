@@ -20,10 +20,9 @@ package us.minevict.mvutil.bungee
 import co.aikar.commands.BungeeCommandManager
 import co.aikar.commands.MessageType
 import co.aikar.idb.Database
-import io.lettuce.core.RedisClient
-import io.lettuce.core.RedisURI
 import net.md_5.bungee.api.plugin.Plugin
 import net.md_5.bungee.config.Configuration
+import redis.clients.jedis.JedisPool
 import us.minevict.mvutil.bungee.ext.copyResource
 import us.minevict.mvutil.bungee.ext.createHikariDatabase
 import us.minevict.mvutil.bungee.ext.readBungeeConfig
@@ -31,7 +30,6 @@ import us.minevict.mvutil.common.MinevictusUtilsPlatform
 import us.minevict.mvutil.common.ext.BungeeChatColor
 import java.io.File
 import java.util.*
-import java.util.concurrent.TimeUnit
 import java.util.logging.Logger
 
 /**
@@ -45,7 +43,7 @@ class MinevictusUtilsBungee : Plugin(), MinevictusUtilsPlatform<Plugin, BungeeCo
     override val platformLogger: Logger
         get() = logger
 
-    override lateinit var redis: RedisClient
+    override lateinit var redis: JedisPool
         private set
     private lateinit var configuration: Configuration
 
@@ -56,11 +54,9 @@ class MinevictusUtilsBungee : Plugin(), MinevictusUtilsPlatform<Plugin, BungeeCo
     override fun onEnable() {
         configuration = readBungeeConfig()
 
-        redis = RedisClient.create(
-            RedisURI.builder()
-                .withHost(configuration.getString("redis-hostname"))
-                .withPort(configuration.getInt("redis-port"))
-                .build()
+        redis = JedisPool(
+            configuration.getString("redis-hostname"),
+            configuration.getInt("redis-port")
         )
     }
 
@@ -68,7 +64,7 @@ class MinevictusUtilsBungee : Plugin(), MinevictusUtilsPlatform<Plugin, BungeeCo
         proxy.pluginManager.unregisterCommands(this)
         proxy.pluginManager.unregisterListeners(this)
 
-        redis.shutdown(2, 5, TimeUnit.SECONDS)
+        redis.close()
     }
 
     override fun prepareAcf(commandManager: BungeeCommandManager): BungeeCommandManager {
