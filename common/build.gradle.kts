@@ -8,6 +8,9 @@ dependencies {
     api("com.moandjiezana.toml:toml4j:0.7.4") {
         exclude("com.google.code.gson")
     }
+    api("de.themoep:minedown:1.6.1-SNAPSHOT") {
+        isTransitive = false
+    }
 
     api(kotlin("stdlib-jdk8"))
     api(kotlin("reflect"))

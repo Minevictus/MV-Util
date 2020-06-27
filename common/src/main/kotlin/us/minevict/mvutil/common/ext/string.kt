@@ -19,7 +19,9 @@
 
 package us.minevict.mvutil.common.ext
 
+import de.themoep.minedown.MineDown
 import net.md_5.bungee.api.ChatColor
+import net.md_5.bungee.api.chat.BaseComponent
 
 /**
  * Apply the colour codes to this string using [char] as the colour character.
@@ -58,3 +60,18 @@ inline fun String.stripColour(): String =
  */
 inline fun String.stripColor(): String =
     ChatColor.stripColor(this)
+
+/**
+ * Parse the string using MineDown and output components.
+ *
+ * @param placeholders Placeholders to replace in the MineDown text. These are surrounded by `%`s.
+ * @return Parsed MineDown text.
+ * @since 6.1.0
+ */
+fun String.minedown(vararg placeholders: Pair<String, Any?>): Array<BaseComponent> =
+    MineDown.parse(
+        this,
+        *placeholders.mapTo(mutableListOf()) { listOf(it.first, it.second.toString()) }
+            .flatten()
+            .toTypedArray()
+    )
