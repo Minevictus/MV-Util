@@ -14,5 +14,6 @@
     "com.google.gson": "us.minevict.mvutil.dependencies.com.google.gson",
     "org.apache.commons.pool2": "us.minevict.mvutil.dependencies.org.apache.commons.pool2",
     "redis.clients.jedis": "us.minevict.mvutil.dependencies.redis.clients.jedis",
-    "com.moandjiezana.toml": "us.minevict.mvutil.dependencies.com.moandjiezana.toml"
+    "com.moandjiezana.toml": "us.minevict.mvutil.dependencies.com.moandjiezana.toml",
+    "de.themoep.minedown": "us.minevict.mvutil.dependencies.de.themoep.minedown"
 }

@@ -16,5 +16,6 @@
     "com.okkero.skedule": "us.minevict.mvutil.dependencies.com.okkero.skedule",
     "redis.clients.jedis": "us.minevict.mvutil.dependencies.redis.clients.jedis",
     "com.moandjiezana.toml": "us.minevict.mvutil.dependencies.com.moandjiezana.toml",
-    "org.apache.commons.pool2": "us.minevict.mvutil.dependencies.org.apache.commons.pool2"
+    "org.apache.commons.pool2": "us.minevict.mvutil.dependencies.org.apache.commons.pool2",
+    "de.themoep.minedown": "us.minevict.mvutil.dependencies.de.themoep.minedown"
 }
