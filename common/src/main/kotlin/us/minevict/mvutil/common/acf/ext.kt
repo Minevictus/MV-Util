@@ -1,3 +1,5 @@
+@file:Suppress("UNCHECKED_CAST")
+
 /**
  * MV-Util
  * Copyright (C) 2020 Mariell Hoversholm, Nahuel Dolores
@@ -69,15 +71,14 @@ fun CommandManager<*, *, *, *, *, *>.enableHelpFeature(): Unit =
  * @return Whether the player is currently on a cooldown.
  * @since 5.0.0
  */
-@Suppress("UNCHECKED_CAST")
 fun <Issuer : CommandIssuer> BaseCommand.cooldown(
     duration: Long,
     fetchLastExecuted: (Issuer) -> Long?,
     setLastExecuted: (Issuer, Long) -> Unit,
     resetIfNotExpired: Boolean = false,
+    issuer: Issuer = currentCommandIssuer as Issuer,
     errorMessage: ((Issuer, Long) -> Array<BaseComponent>?)? = DEFAULT_COOLDOWN_ERROR_MESSAGE
 ): Boolean {
-    val issuer = currentCommandIssuer as Issuer
     if (!issuer.isPlayer) {
         return false
     }
@@ -121,6 +122,7 @@ fun <Issuer : CommandIssuer> BaseCommand.cooldown(
 fun <Issuer : CommandIssuer> BaseCommand.cooldown(
     cooldownData: AcfCooldowns,
     database: Database,
+    issuer: Issuer,
     resetIfNotExpired: Boolean = false,
     errorMessage: ((Issuer, Long) -> Array<BaseComponent>?)? = DEFAULT_COOLDOWN_ERROR_MESSAGE
 ) = cooldown(
@@ -158,6 +160,7 @@ fun <Issuer : CommandIssuer> BaseCommand.cooldown(
         }
     },
     resetIfNotExpired,
+    issuer,
     errorMessage
 )
 
@@ -176,6 +179,7 @@ fun <Issuer : CommandIssuer> BaseCommand.cooldown(
 fun <Issuer : CommandIssuer> BaseCommand.cooldown(
     duration: Long,
     map: MutableMap<UUID, Long>,
+    issuer: Issuer = currentCommandIssuer as Issuer,
     resetIfNotExpired: Boolean = false,
     errorMessage: ((Issuer, Long) -> Array<BaseComponent>?)? = DEFAULT_COOLDOWN_ERROR_MESSAGE
 ): Boolean = cooldown(
@@ -183,5 +187,6 @@ fun <Issuer : CommandIssuer> BaseCommand.cooldown(
     { map[it.uniqueId] },
     { it, new -> map[it.uniqueId] = new },
     resetIfNotExpired,
+    issuer,
     errorMessage
 )
