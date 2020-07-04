@@ -126,7 +126,7 @@ fun <Issuer : CommandIssuer> BaseCommand.cooldown(
     resetIfNotExpired: Boolean = false,
     errorMessage: ((Issuer, Long) -> Array<BaseComponent>?)? = DEFAULT_COOLDOWN_ERROR_MESSAGE
 ) = cooldown(
-    cooldownData.getDuration(currentCommandIssuer),
+    cooldownData.getDuration(issuer),
     {
         try {
             database.getFirstRow(
