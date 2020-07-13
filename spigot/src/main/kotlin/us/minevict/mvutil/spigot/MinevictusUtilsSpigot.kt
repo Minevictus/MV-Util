@@ -30,12 +30,10 @@ import us.minevict.mvutil.spigot.ext.BukkitChatColor
 import us.minevict.mvutil.spigot.ext.copyResource
 import us.minevict.mvutil.spigot.ext.createHikariDatabase
 import us.minevict.mvutil.spigot.funkychunk.MegaChunk
-import us.minevict.mvutil.spigot.internal.CloseDatabaseListener
 import us.minevict.mvutil.spigot.internal.SetupPlatformless
 import java.io.File
 import java.util.*
 import java.util.concurrent.ThreadLocalRandom
-import java.util.concurrent.TimeUnit
 import java.util.logging.Logger
 
 /**
@@ -59,8 +57,6 @@ class MinevictusUtilsSpigot : JavaPlugin(), MinevictusUtilsPlatform<Plugin, Pape
             config.getString("redis-hostname"),
             config.getInt("redis-port")
         )
-
-        server.pluginManager.registerEvents(CloseDatabaseListener, this)
 
         MegaChunk.MEGA_CHUNK_SIZE = config.getInt("megachunk-size")
         MegaChunk.MEGA_CHUNK_OFFSET_X = config.getInt("megachunk-offset-x")
@@ -110,9 +106,7 @@ class MinevictusUtilsSpigot : JavaPlugin(), MinevictusUtilsPlatform<Plugin, Pape
             (config.getString("sql-db-prefix") ?: "") + databaseName,
             config.getString("sql-host-and-port")
                 ?: throw IllegalArgumentException("host and port cannot be null")
-        ).also {
-            CloseDatabaseListener.databases[plugin] = it
-        }
+        )
     }
 
     companion object {
