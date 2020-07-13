@@ -123,8 +123,6 @@ abstract class MvPlugin : JavaPlugin(),
     final override fun onDisable() {
         if (errorState != null) return
 
-        shutdownSafely()
-
         try {
             disable()
         } catch (ex: Exception) {
@@ -132,6 +130,7 @@ abstract class MvPlugin : JavaPlugin(),
             ex.printStackTrace()
         }
 
+        shutdownSafely()
     }
 
     private fun shutdownSafely() {

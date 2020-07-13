@@ -122,14 +122,14 @@ abstract class MvPlugin : Plugin(),
     final override fun onDisable() {
         if (errorState != null) return
 
-        shutdownSafely()
-
         try {
             disable()
         } catch (ex: Exception) {
             logger.severe("Encountered exception upon disabling:")
             ex.printStackTrace()
         }
+
+        shutdownSafely()
     }
 
     private fun shutdownSafely() {
