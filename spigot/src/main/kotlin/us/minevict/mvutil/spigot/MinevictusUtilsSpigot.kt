@@ -21,10 +21,12 @@ import co.aikar.commands.MessageType
 import co.aikar.commands.PaperCommandManager
 import co.aikar.idb.Database
 import me.tom.sparse.spigot.chat.menu.ChatMenuAPI
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig
 import org.bukkit.event.HandlerList
 import org.bukkit.plugin.Plugin
 import org.bukkit.plugin.java.JavaPlugin
 import redis.clients.jedis.JedisPool
+import redis.clients.jedis.Protocol
 import us.minevict.mvutil.common.MinevictusUtilsPlatform
 import us.minevict.mvutil.spigot.ext.BukkitChatColor
 import us.minevict.mvutil.spigot.ext.copyResource
@@ -54,8 +56,11 @@ class MinevictusUtilsSpigot : JavaPlugin(), MinevictusUtilsPlatform<Plugin, Pape
         config.options().copyDefaults(true)
 
         redis = JedisPool(
+            GenericObjectPoolConfig<Any>(),
             config.getString("redis-hostname"),
-            config.getInt("redis-port")
+            config.getInt("redis-port"),
+            Protocol.DEFAULT_TIMEOUT,
+            config.getString("redis-password")?.takeUnless(String::isBlank)
         )
 
         MegaChunk.MEGA_CHUNK_SIZE = config.getInt("megachunk-size")

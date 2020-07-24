@@ -22,7 +22,9 @@ import co.aikar.commands.MessageType
 import co.aikar.idb.Database
 import net.md_5.bungee.api.plugin.Plugin
 import net.md_5.bungee.config.Configuration
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig
 import redis.clients.jedis.JedisPool
+import redis.clients.jedis.Protocol
 import us.minevict.mvutil.bungee.ext.copyResource
 import us.minevict.mvutil.bungee.ext.createHikariDatabase
 import us.minevict.mvutil.bungee.ext.readBungeeConfig
@@ -55,8 +57,11 @@ class MinevictusUtilsBungee : Plugin(), MinevictusUtilsPlatform<Plugin, BungeeCo
         configuration = readBungeeConfig()
 
         redis = JedisPool(
+            GenericObjectPoolConfig<Any>(),
             configuration.getString("redis-hostname"),
-            configuration.getInt("redis-port")
+            configuration.getInt("redis-port"),
+            Protocol.DEFAULT_TIMEOUT,
+            configuration.getString("redis-password")?.takeUnless(String::isBlank)
         )
     }
 
