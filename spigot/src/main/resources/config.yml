@@ -36,6 +36,11 @@ megachunk-random-offset-z: true
 # Default: localhost
 redis-hostname: localhost
 
+# Redis password.
+#
+# Default: ''
+redis-password: ''
+
 # Redis port.
 #
 # Default: 6379
