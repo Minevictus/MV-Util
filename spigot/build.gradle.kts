@@ -2,6 +2,13 @@ import net.minecrell.pluginyml.bukkit.BukkitPluginDescription
 import us.minevict.mvutilgradleplugin.bukkit
 import us.minevict.mvutilgradleplugin.paperApi
 
+repositories {
+    maven {
+        name = "lunari-repo"
+        url = uri("https://repo.lunari.studio/repository/maven-public/")
+    }
+}
+
 dependencies {
     compileOnly(kotlin("stdlib-jdk8"))
 
@@ -13,9 +20,8 @@ dependencies {
     api("de.themoep:inventorygui:1.4.2-SNAPSHOT") {
         exclude("org.bukkit")
     }
-    api("me.tom.sparse:ChatMenuAPI:1.1.2")
     api("io.papermc:paperlib:1.0.6")
-    api("com.okkero.skedule:skedule:1.2.6")
+    api("me.ddevil:skedule:0.1.3")
 }
 
 bukkit {
