@@ -20,11 +20,11 @@ package us.minevict.mvutil.spigot
 import co.aikar.commands.MessageType
 import co.aikar.commands.PaperCommandManager
 import co.aikar.idb.Database
-import me.tom.sparse.spigot.chat.menu.ChatMenuAPI
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig
 import org.bukkit.event.HandlerList
 import org.bukkit.plugin.Plugin
 import org.bukkit.plugin.java.JavaPlugin
+import redis.clients.jedis.Jedis
 import redis.clients.jedis.JedisPool
 import redis.clients.jedis.Protocol
 import us.minevict.mvutil.common.MinevictusUtilsPlatform
@@ -56,7 +56,7 @@ class MinevictusUtilsSpigot : JavaPlugin(), MinevictusUtilsPlatform<Plugin, Pape
         config.options().copyDefaults(true)
 
         redis = JedisPool(
-            GenericObjectPoolConfig<Any>(),
+            GenericObjectPoolConfig<Jedis>(),
             config.getString("redis-hostname"),
             config.getInt("redis-port"),
             Protocol.DEFAULT_TIMEOUT,
@@ -71,14 +71,9 @@ class MinevictusUtilsSpigot : JavaPlugin(), MinevictusUtilsPlatform<Plugin, Pape
             MegaChunk.MEGA_CHUNK_OFFSET_X = ThreadLocalRandom.current().nextInt()
         if (config.getBoolean("megachunk-random-offset-z"))
             MegaChunk.MEGA_CHUNK_OFFSET_Z = ThreadLocalRandom.current().nextInt()
-
-        if (server.pluginManager.isPluginEnabled("ProtocolLib"))
-            ChatMenuAPI.init(this)
     }
 
     override fun onDisable() {
-        ChatMenuAPI.disable()
-
         HandlerList.unregisterAll(this)
         redis.close()
     }
@@ -121,6 +116,6 @@ class MinevictusUtilsSpigot : JavaPlugin(), MinevictusUtilsPlatform<Plugin, Pape
          * @return current instance of this plugin.
          */
         val instance: MinevictusUtilsSpigot
-            get() = JavaPlugin.getPlugin(MinevictusUtilsSpigot::class.java)
+            get() = getPlugin(MinevictusUtilsSpigot::class.java)
     }
 }

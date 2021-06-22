@@ -23,6 +23,7 @@ import co.aikar.idb.Database
 import net.md_5.bungee.api.plugin.Plugin
 import net.md_5.bungee.config.Configuration
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig
+import redis.clients.jedis.Jedis
 import redis.clients.jedis.JedisPool
 import redis.clients.jedis.Protocol
 import us.minevict.mvutil.bungee.ext.copyResource
@@ -57,7 +58,7 @@ class MinevictusUtilsBungee : Plugin(), MinevictusUtilsPlatform<Plugin, BungeeCo
         configuration = readBungeeConfig()
 
         redis = JedisPool(
-            GenericObjectPoolConfig<Any>(),
+            GenericObjectPoolConfig<Jedis>(),
             configuration.getString("redis-hostname"),
             configuration.getInt("redis-port"),
             Protocol.DEFAULT_TIMEOUT,
@@ -75,7 +76,7 @@ class MinevictusUtilsBungee : Plugin(), MinevictusUtilsPlatform<Plugin, BungeeCo
     override fun prepareAcf(commandManager: BungeeCommandManager): BungeeCommandManager {
         fun messageType(type: MessageType) {
             for (colour in BungeeChatColor.values()) {
-                commandManager.setFormat(type, colour.ordinal, colour)
+                commandManager.setFormat(type, colour.ordinal(), colour)
             }
         }
         messageType(MessageType.ERROR)

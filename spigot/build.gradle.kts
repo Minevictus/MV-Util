@@ -16,12 +16,16 @@ dependencies {
     compileOnly("com.proximyst:mv-nms:0.+")
     api(project(":common"))
 
-    api("co.aikar:acf-paper:${rootProject.ext["acfVer"]}")
+    api("co.aikar:acf-paper:${rootProject.ext["acfVer"]}") {
+        exclude("org.bukkit")
+    }
     api("de.themoep:inventorygui:1.4.2-SNAPSHOT") {
         exclude("org.bukkit")
     }
     api("io.papermc:paperlib:1.0.6")
-    api("me.ddevil:skedule:0.1.3")
+    api("me.ddevil:skedule:0.1.3") {
+        exclude("org.bukkit")
+    }
 }
 
 bukkit {

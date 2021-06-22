@@ -83,4 +83,6 @@ fun BungeeChatColor.bukkit(): BukkitChatColor = when (this) {
     BungeeChatColor.UNDERLINE -> BukkitChatColor.UNDERLINE
     BungeeChatColor.STRIKETHROUGH -> BukkitChatColor.STRIKETHROUGH
     BungeeChatColor.RESET -> BukkitChatColor.RESET
+
+    else -> BukkitChatColor.WHITE // Default to white
 }
