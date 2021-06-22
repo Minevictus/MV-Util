@@ -4,7 +4,7 @@ import us.minevict.mvutilgradleplugin.waterfallApi
 dependencies {
     api(project(":common"))
     compileOnly(kotlin("stdlib-jdk8"))
-    compileOnly(waterfallApi("1.15"))
+    compileOnly(waterfallApi("1.16.5"))
 
     api("co.aikar:acf-bungee:${rootProject.ext["acfVer"]}")
     api("commons-lang:commons-lang:2.6") // Spigot has this, Bungee doesn't
