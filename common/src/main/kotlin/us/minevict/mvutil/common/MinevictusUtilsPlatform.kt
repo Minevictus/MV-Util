@@ -59,9 +59,18 @@ interface MinevictusUtilsPlatform<PL : Any, CM : CommandManager<*, *, *, *, *, *
      * Prepare a [Database] for any given [PL].
      *
      * @param databaseName The name of the database you wish to use.
+     * @param username The username for the database you wish to connect to.
+     * @param password The password for the database you wish to connect to.
+     * @param hostAndPort The host and port for the database you wish to connect to.
      * @param plugin Plugin that requests the [Database].
      * @return A new [Database] to use.
      * @since 4.0.0
      */
-    fun prepareDatabase(databaseName: String, plugin: PL): Database
+    fun prepareDatabase(
+        databaseName: String,
+        username: String,
+        password: String,
+        hostAndPort: String,
+        plugin: PL
+    ): Database
 }

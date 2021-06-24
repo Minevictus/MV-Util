@@ -56,7 +56,7 @@ abstract class MvPlugin : Plugin(),
     override val acf by acfDelegate
 
     private val databaseDelegate = lazy {
-        mvUtil.prepareDatabase(databaseName, this)
+        mvUtil.prepareDatabase(databaseName, databaseUsername, databasePassword, databaseHostAndPort, this)
     }
     override val database by databaseDelegate
 
@@ -64,6 +64,9 @@ abstract class MvPlugin : Plugin(),
         get() = MinevictusUtilsBungee.instance
 
     override lateinit var databaseName: String
+    override lateinit var databaseUsername: String
+    override lateinit var databasePassword: String
+    override lateinit var databaseHostAndPort: String
 
     private var configuration: Configuration? = null
     private val channels = mutableListOf<IPacketChannel<*, *>>()
@@ -82,6 +85,9 @@ abstract class MvPlugin : Plugin(),
             "database-name",
             pluginName.toLowerCase().replace('-', '_')
         )
+        databaseUsername = tomlConfig.toml.getString("database-username", "") // empty string
+        databasePassword = tomlConfig.toml.getString("database-password", "") // empty string
+        databaseHostAndPort = tomlConfig.toml.getString("database-host-and-port", "") // empty string
 
         try {
             if (!load()) {

@@ -114,6 +114,27 @@ interface IMvPlugin<
     var databaseName: String
 
     /**
+     * The username for the database the plugin will connect to if necessary.
+     *
+     * @return Database username.
+     */
+    var databaseUsername: String
+
+    /**
+     * The password for the database the plugin will connect to if necessary.
+     *
+     * @return Database password.
+     */
+    var databasePassword: String
+
+    /**
+     * The host and port for the database the plugin will connect to if necessary.
+     *
+     * @return Database host and port.
+     */
+    var databaseHostAndPort: String
+
+    /**
      * Registers commands to this plugin's [CommandManager].
      *
      * This overwrites other commands in the same names by default.

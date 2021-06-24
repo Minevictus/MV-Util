@@ -97,15 +97,19 @@ class MinevictusUtilsSpigot : JavaPlugin(), MinevictusUtilsPlatform<Plugin, Pape
         return commandManager
     }
 
-    override fun prepareDatabase(databaseName: String, plugin: Plugin): Database {
+    override fun prepareDatabase(
+        databaseName: String,
+        username: String,
+        password: String,
+        hostAndPort: String,
+        plugin: Plugin
+    ): Database {
         return plugin.createHikariDatabase(
-            config.getString("sql-username")
-                ?: throw IllegalArgumentException("user cannot be null"),
-            config.getString("sql-password")
-                ?: throw IllegalArgumentException("password cannot be null"),
+            username.ifEmpty { (config.getString("sql-username") ?: throw IllegalArgumentException("user cannot be null")) },
+            password.ifEmpty { (config.getString("sql-password") ?: throw IllegalArgumentException("password cannot be null")) },
             (config.getString("sql-db-prefix") ?: "") + databaseName,
-            config.getString("sql-host-and-port")
-                ?: throw IllegalArgumentException("host and port cannot be null")
+            hostAndPort.ifEmpty { (config.getString("sql-host-and-port")
+                ?: throw IllegalArgumentException("host and port cannot be null")) }
         )
     }
 
