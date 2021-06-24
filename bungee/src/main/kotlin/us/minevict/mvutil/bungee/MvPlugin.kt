@@ -78,7 +78,10 @@ abstract class MvPlugin : Plugin(),
         get() = description.version
 
     final override fun onLoad() {
-        databaseName = pluginName.toLowerCase().replace('-', '_')
+        databaseName = tomlConfig.toml.getString(
+            "database-name",
+            pluginName.toLowerCase().replace('-', '_')
+        )
 
         try {
             if (!load()) {
