@@ -80,14 +80,6 @@ abstract class MvPlugin : JavaPlugin(),
         get() = description.version
 
     final override fun onLoad() {
-        databaseName = tomlConfig.toml.getString(
-            "database-name",
-            pluginName.toLowerCase().replace('-', '_')
-        )
-        databaseUsername = tomlConfig.toml.getString("database-username", "") // empty string
-        databasePassword = tomlConfig.toml.getString("database-password", "") // empty string
-        databaseHostAndPort = tomlConfig.toml.getString("database-host-and-port", "") // empty string
-
         try {
             if (!load()) {
                 errorState = IMvPlugin.PluginErrorState.LOAD
@@ -108,6 +100,14 @@ abstract class MvPlugin : JavaPlugin(),
     }
 
     final override fun onEnable() {
+        databaseName = tomlConfig.toml.getString(
+            "database-name",
+            pluginName.toLowerCase().replace('-', '_')
+        )
+        databaseUsername = tomlConfig.toml.getString("database-username", "") // empty string
+        databasePassword = tomlConfig.toml.getString("database-password", "") // empty string
+        databaseHostAndPort = tomlConfig.toml.getString("database-host-and-port", "") // empty string
+
         if (errorState != null) return
 
         try {
