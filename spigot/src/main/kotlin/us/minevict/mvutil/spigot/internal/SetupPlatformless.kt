@@ -48,8 +48,8 @@ internal object SetupPlatformless {
             }.runTaskAsynchronously(plugin)
             future
         }
-        Platformless.exportJarResource = b@{ plug, name, file ->
-            if (plug is Plugin) plug.copyResource(name, file)
+        Platformless.exportJarResource = b@{ plug, name, file, generate ->
+            if (plug is Plugin) plug.copyResource(name, file, failSafe = true, generate = generate)
             else false
         }
     }

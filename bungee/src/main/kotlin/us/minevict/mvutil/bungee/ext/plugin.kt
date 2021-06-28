@@ -32,7 +32,8 @@ import java.nio.file.StandardCopyOption
  * @param name Name of the file in the classpath; this is a path such as `configs/test.yml`.
  * @param destination The destination [File].
  * @param overwrite Whether to overwrite the destination if it already exists.
- * @param failSafe Whether to retunr false if anything goes wrong during the copy.
+ * @param failSafe Whether to return false if anything goes wrong during the copy.
+ * @param generate Whether to generate the config file if it does not exist.
  * @throws IOException Thrown if an error happens while copying the resource and failsafe is false.
  * @throws IllegalStateException Thrown if there is a directory at the destination regardless of failsafe.
  * @throws IllegalArgumentException Thrown if there is no resource under the name given and failsafe is false.
@@ -43,7 +44,8 @@ fun Plugin.copyResource(
     name: String,
     destination: File,
     overwrite: Boolean = false,
-    failSafe: Boolean = false
+    failSafe: Boolean = false,
+    generate: Boolean = false
 ): Boolean {
     destination.parentFile.mkdirs()
 
@@ -61,6 +63,7 @@ fun Plugin.copyResource(
                 StandardCopyOption.REPLACE_EXISTING
             )
         } ?: run {
+            if (generate) return File(destination, name).createNewFile()
             if (failSafe) return false
             throw IllegalArgumentException("no filename in classpath: $name")
         }
