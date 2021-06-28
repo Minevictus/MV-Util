@@ -127,3 +127,24 @@ bungee {
     depend = setOf("MV-Util")
 }
 ----
+
+== Configuration
+
+=== Database Configuration
+Plugins can inherit all the values required to connect to a SQL database
+by pulling the values from MV-Utils.
+
+They can, however, specify different values in their own TOML config files.
+These nodes are called:
+
+* database-name _(default: Mv-Util's prefix concat lowercase plugin name)_.
+** SQL database name we want to connect to.
+
+* database-username _(default: Mv-Util's SQL username)_.
+** SQL user with read/write access to the database.
+
+* database-password _(default: Mv-Util's SQL password)_.
+** Password for the user specified above.
+
+* database-host-and-port _(default: Mv-Util's SQL host and port)_
+** Host and port (a.k.a. address) of the SQL database.
