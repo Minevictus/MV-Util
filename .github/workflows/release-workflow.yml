@@ -35,6 +35,7 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew shadowJar --no-daemon
         env:
+          GITHUB_USERNAME: 'github'
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Release
         uses: softprops/action-gh-release@v1
