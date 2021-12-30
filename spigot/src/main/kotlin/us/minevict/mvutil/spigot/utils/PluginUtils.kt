@@ -17,7 +17,6 @@
  */
 package us.minevict.mvutil.spigot.utils
 
-import com.proximyst.mvnms.MvNms
 import org.bukkit.Bukkit
 
 /**
@@ -33,6 +32,6 @@ object PluginUtils {
      */
     fun isMvNmsPresent(): Boolean =
         Bukkit.getPluginManager().getPlugin("MV-NMS")?.let {
-            it.isEnabled && it is MvNms
+            it.isEnabled && it.name == "MV-NMS"
         } == true
 }

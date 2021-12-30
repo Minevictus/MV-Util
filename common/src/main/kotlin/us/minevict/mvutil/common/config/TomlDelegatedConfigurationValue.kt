@@ -52,7 +52,7 @@ class TomlDelegatedConfigurationValue(
         val new = buildString(property.name.length) {
             for (char in property.name) {
                 if (char.isUpperCase()) append('-')
-                append(char.toLowerCase())
+                append(char.lowercase())
             }
         }
         properName = new

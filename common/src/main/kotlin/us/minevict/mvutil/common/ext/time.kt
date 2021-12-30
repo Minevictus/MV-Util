@@ -18,6 +18,7 @@
 package us.minevict.mvutil.common.ext
 
 import java.time.Duration
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 private val timePattern = Regex("(\\d+)\\s*(mo|ms|µs|ns|[smhdwy])\\s*", RegexOption.IGNORE_CASE)
@@ -53,7 +54,7 @@ fun String.parseDuration(): Duration {
     for (result in matcher) {
         val amount = result.groups[1]!!.value.toLong()
 
-        when (result.groups[2]!!.value.toLowerCase()) {
+        when (result.groups[2]!!.value.lowercase()) {
             "ns" -> duration += Duration.ofNanos(amount)
             "µs" -> duration += Duration.ofNanos(TimeUnit.MICROSECONDS.toNanos(amount))
             "ms" -> duration += Duration.ofMillis(amount)

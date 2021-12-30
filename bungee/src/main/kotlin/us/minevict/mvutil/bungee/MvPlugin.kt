@@ -101,7 +101,7 @@ abstract class MvPlugin : Plugin(),
     final override fun onEnable() {
         databaseName = tomlConfig.toml.getString(
             "database-name",
-            pluginName.toLowerCase().replace('-', '_')
+            pluginName.lowercase().replace('-', '_')
         )
         databaseUsername = tomlConfig.toml.getString("database-username", "") // empty string
         databasePassword = tomlConfig.toml.getString("database-password", "") // empty string

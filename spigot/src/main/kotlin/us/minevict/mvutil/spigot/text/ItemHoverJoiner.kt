@@ -17,10 +17,8 @@
  */
 package us.minevict.mvutil.spigot.text
 
-import com.proximyst.mvnms.BukkitVersion
 import net.md_5.bungee.api.chat.ComponentBuilder
 import org.bukkit.inventory.ItemStack
-import us.minevict.mvutil.common.ext.hover
 import us.minevict.mvutil.spigot.utils.PluginUtils
 
 /**
@@ -31,6 +29,7 @@ import us.minevict.mvutil.spigot.utils.PluginUtils
  *
  * @since 5.0.0
  */
+@Deprecated("No longer supported")
 class ItemHoverJoiner(
     val item: ItemStack
 ) : ComponentBuilder.Joiner {
@@ -42,9 +41,9 @@ class ItemHoverJoiner(
             return componentBuilder
         }
 
-        BukkitVersion.getOptionalVersion()
-            .map(BukkitVersion::getNmsItems)
-            .ifPresent { componentBuilder.hover(it.hoverItem(item)) }
+//        BukkitVersion.getOptionalVersion()
+//            .map(BukkitVersion::getNmsItems)
+//            .ifPresent { componentBuilder.hover(it.hoverItem(item)) }
 
         return componentBuilder
     }
