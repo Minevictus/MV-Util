@@ -3,7 +3,7 @@ import us.minevict.mvutilgradleplugin.MvUtilPlugin
 import java.util.*
 
 plugins {
-    id("us.minevict.mvutil") version "0.3.10"
+    id("us.minevict.mvutil") version "0.3.13"
     id("com.github.hierynomus.license") version "0.15.0"
 }
 
