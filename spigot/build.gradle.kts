@@ -6,24 +6,6 @@ repositories {
         name = "papermc-repo"
         url = uri("https://papermc.io/repo/repository/maven-public/")
     }
-
-    maven {
-        name = "github"
-        url = uri("https://maven.pkg.github.com/Minevictus/Skedule")
-        credentials {
-            username = project.findProperty("username") as String? ?: System.getenv("GITHUB_USERNAME")
-            password = project.findProperty("password") as String? ?: System.getenv("GITHUB_TOKEN")
-        }
-    }
-
-    maven {
-        name = "github"
-        url = uri("https://maven.pkg.github.com/Minevictus/toml4j")
-        credentials {
-            username = project.findProperty("username") as String? ?: System.getenv("GITHUB_USERNAME")
-            password = project.findProperty("password") as String? ?: System.getenv("GITHUB_TOKEN")
-        }
-    }
 }
 
 dependencies {
@@ -34,12 +16,12 @@ dependencies {
     implementation("co.aikar:acf-paper:${rootProject.ext["acfVer"]}")
     implementation("de.themoep:inventorygui:1.5-SNAPSHOT")
     implementation("io.papermc:paperlib:1.0.7")
-    implementation("com.okkero.skedule:skedule:1.2.6")
+    implementation("com.github.Minevictus:Skedule:v1.2.7")
 
     implementation("co.aikar:idb-core:1.0.0-SNAPSHOT")
     implementation("com.zaxxer:HikariCP:5.0.0")
     implementation("redis.clients:jedis:4.0.0")
-    implementation("com.moandjiezana.toml:toml4j:0.7.4")
+    implementation("com.github.Minevictus:toml4j:v0.7.4")
     implementation("de.themoep:minedown:1.7.1-SNAPSHOT")
 }
 
