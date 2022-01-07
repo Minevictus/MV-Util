@@ -5,6 +5,7 @@ import java.util.*
 plugins {
     id("us.minevict.mvutil") version "0.4.0"
     id("com.github.hierynomus.license") version "0.15.0"
+    `maven-publish`
 }
 
 ext["acfVer"] = "0.5.0-SNAPSHOT"
