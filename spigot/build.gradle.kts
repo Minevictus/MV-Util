@@ -1,38 +1,35 @@
 import net.minecrell.pluginyml.bukkit.BukkitPluginDescription
 import us.minevict.mvutilgradleplugin.bukkit
-import us.minevict.mvutilgradleplugin.paperApi
 
 repositories {
     maven {
-        name = "lunari-repo"
-        url = uri("https://repo.lunari.studio/repository/maven-public/")
+        name = "papermc-repo"
+        url = uri("https://papermc.io/repo/repository/maven-public/")
     }
 }
 
 dependencies {
-    compileOnly(kotlin("stdlib-jdk8"))
-
-    compileOnly(paperApi("1.16.5"))
-    compileOnly("com.proximyst:mv-nms:0.+")
     api(project(":common"))
+    compileOnly(kotlin("stdlib-jdk8"))
+    compileOnly("io.papermc.paper:paper-api:1.18.1-R0.1-SNAPSHOT")
 
-    api("co.aikar:acf-paper:${rootProject.ext["acfVer"]}") {
-        exclude("org.bukkit")
-    }
-    api("de.themoep:inventorygui:1.4.2-SNAPSHOT") {
-        exclude("org.bukkit")
-    }
-    api("io.papermc:paperlib:1.0.6")
-    api("me.ddevil:skedule:0.1.3") {
-        exclude("org.bukkit")
-    }
+    implementation("co.aikar:acf-paper:${rootProject.ext["acfVer"]}")
+    implementation("de.themoep:inventorygui:1.5-SNAPSHOT")
+    implementation("io.papermc:paperlib:1.0.7")
+    implementation("com.github.Minevictus:Skedule:v1.2.7")
+
+    implementation("co.aikar:idb-core:1.0.0-SNAPSHOT")
+    implementation("com.zaxxer:HikariCP:5.0.0")
+    implementation("redis.clients:jedis:4.0.0")
+    implementation("com.github.Minevictus:toml4j:v0.7.4")
+    implementation("de.themoep:minedown:1.7.1-SNAPSHOT")
 }
 
 bukkit {
     name = "MV-Util"
     description = "The main core plugin for Minevictus."
     main = "us.minevict.mvutil.spigot.MinevictusUtilsSpigot"
-    apiVersion = "1.16"
+    apiVersion = "1.18"
     authors = listOf("Proximyst", "NahuLD")
     load = BukkitPluginDescription.PluginLoadOrder.STARTUP
     softDepend = listOf("MV-NMS")
