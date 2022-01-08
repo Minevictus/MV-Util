@@ -1,4 +1,4 @@
-rootProject.name = "MV-Util"
+rootProject.name = "mv-util"
 include("common")
 include("spigot")
 include("bungee")

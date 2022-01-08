@@ -38,5 +38,5 @@ jobs:
       - name: Publish with Gradle
         run: ./gradlew publish --no-daemon
         env:
-          GITHUB_USERNAME: 'github'
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_USERNAME: ${{ secrets.DEPLOY_USERNAME }}
+          GITHUB_TOKEN: ${{ secrets.DEPLOY_PASSWORD }}
